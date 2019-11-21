@@ -9,6 +9,10 @@ const opts = {
     alias: 'e',
     describe: 'env code',
     demandOption: true
+  },
+  debugLevel :{ 
+    alias:"l",
+    describe:"debug level"
   }
 };
 
@@ -20,7 +24,6 @@ const options =
 const main = require(path.resolve(__dirname, "..", "lib/main"));
 
 main.init(options).then(async () => {
-
   process.exit(0)
   
 }).catch(err => {
