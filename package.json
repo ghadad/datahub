@@ -1,0 +1,37 @@
+{
+  "name": "datahub",
+  "version": "1.0.0",
+  "description": "datahub reactor",
+  "main": "bin/reactor.js",
+  "bin": {
+    "datahub": "datahub.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghadad/datahub.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ghadad/datahub/issues"
+  },
+  "homepage": "https://github.com/ghadad/datahub#readme",
+  "dependencies": {
+    "async": "^3.1.0",
+    "axios": "^0.19.0",
+    "lodash": "^4.17.15",
+    "md5": "^2.2.1",
+    "moment": "^2.24.0",
+    "oracledb": "^4.0.1",
+    "pino": "^5.14.0",
+    "simple-oracledb": "^1.4.2",
+    "validator": "^12.1.0",
+    "xml-js": "^1.6.11"
+  }
+}
