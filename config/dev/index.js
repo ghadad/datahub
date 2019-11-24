@@ -6,16 +6,16 @@ module.exports = {
         pools: [
             {
                 poolAlias: "db1",
-                user: "pelmafc",
-                password: "pelmafc",
-                connectString: "pet7maf"
+                user: "******",
+                password: "*******",
+                connectString: "******"
               }],
             usage: [{
                 poolAlias: "db2",
                 pools: 1,
-                user: "pelusg1c",
-                password: "pelusg1c",
-                connectString: "pet7usg1",
+                user: "******",
+                password: "******",
+                connectString: "******",
                 _enableStats: true,
                 poolMax: 4,
                 poolMin: 4,
