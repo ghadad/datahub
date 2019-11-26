@@ -1,3 +1,5 @@
 <template>
-<div><h1>top menu </h1></div>
+  <md-app-toolbar class="md-primary">
+        <span class="md-title">My Title</span>
+      </md-app-toolbar>
 </template>
