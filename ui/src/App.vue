@@ -1,17 +1,21 @@
 <template>
   <div id="app">
+     <top-menu />
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <left-menu></left-menu>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import leftMenu from '@/components/leftmenu.vue';
+import topMenu from '@/components/topMenu.vue';
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  components:{
+    leftMenu,
+    topMenu,
   }
 }
 </script>
