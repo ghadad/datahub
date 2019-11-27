@@ -1,57 +1,40 @@
-
 <template>
   <div class="page-container">
     <md-app>
-    <top-menu />
-    
-      <md-app-toolbar class="md-primary">
-        <span class="md-title">My Title</span>
-      </md-app-toolbar>
-        <md-app-drawer md-permanent="full">
-
+     <md-app-drawer md-permanent="full">
         <md-toolbar class="md-transparent" md-elevation="2">
-           Navigation
+          DATAHUB5
         </md-toolbar>
-
         <md-list>
-          <md-list-item>
-            <md-icon>move_to_inbox</md-icon>
-            <span class="md-list-item-text">Projects</span>
+          <md-list-item v-for="(mItem,index) in menu.leftMenu" :key="index">
+            <md-icon>{{mItem.icon}}</md-icon>
+            <span class="md-list-item-text">
+              <router-link :to="mItem.routerLink"> {{mItem.title}}</router-link></span>
           </md-list-item>
-
-          <md-list-item>
-            <md-icon>send</md-icon>
-            <span class="md-list-item-text">Jobs</span>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon>delete</md-icon>
-            <span class="md-list-item-text">Scheduler</span>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon>error</md-icon>
-            <span class="md-list-item-text">Docs</span>
-          </md-list-item>
-        </md-list>
+       </md-list>
       </md-app-drawer>
-      
       <md-app-content>
-       <router-view></router-view>
+        <router-view></router-view>
       </md-app-content>
     </md-app>
+  
   </div>
 </template>
 
 <script>
-  import leftMenu from '@/components/leftmenu.vue';
-  import topMenu from '@/components/topMenu.vue';
+  import Menu from '@/core/config/menu';
 
   export default {
     name: 'app',
-    components: {
-      leftMenu,
-      topMenu,
+    data: function () {
+      return {
+        menu: Menu
+      }
+    },computed:{
+      routes:function() { 
+        return this.$route;
+      },
+     
     }
   }
 </script>
@@ -65,4 +48,9 @@
     color: #2c3e50;
     margin-top: 60px;
   }
+  
+md-tabs.md-no-animation md-tab-content {
+    transition: none;
+}
+.md-drawer {width:200px !important }
 </style>

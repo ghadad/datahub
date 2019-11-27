@@ -1,5 +1,10 @@
 const path = require("path");
+const os =require("os");
 module.exports = {
+    server :{
+        port:3000,
+        hostname:os.hostname()
+    },
     oracle: {   
         defaultGroup: "db1",
         sqlDirectory: path.resolve(__base, "sql"),
