@@ -1,4 +1,4 @@
-export default async function(data) { 
+module.exports =  async function(data) { 
    //all good things are exposed 
    // __app.dal
    // __app.logger

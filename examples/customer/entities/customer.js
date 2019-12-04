@@ -1,4 +1,4 @@
-export default { 
+module.exports= { 
  name:"customer",
  properties : [ 
 	{
@@ -15,8 +15,9 @@ export default {
         },
 	{
 	name:"contacts",
-        type:Ref("contact"),
+	type:'Ref',
+	to:"contact",
         rel:"o2m"
-        }];
+        }]
 }
 

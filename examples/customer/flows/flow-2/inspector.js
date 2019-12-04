@@ -1,4 +1,4 @@
-export default function(data) { 
+module.exports =  function(data) { 
     // get last active record
     // get current record 
     // compare by key def 

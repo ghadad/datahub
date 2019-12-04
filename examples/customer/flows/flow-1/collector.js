@@ -1,4 +1,4 @@
-export default { 
+module.exports=  { 
 	name:"flow-1-csv-collect",
 	sourceType:"csv",
         sourceFile:"/tmp/customer.csv",

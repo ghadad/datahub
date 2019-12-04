@@ -1,4 +1,4 @@
-export default { 
+module.exports=  { 
  name:"contact",
  properties : [ 
 	{
@@ -16,6 +16,6 @@ export default {
 	{
 	name:"car",
  	type:"string"
-        }];
-}
+        }]
+};
 
