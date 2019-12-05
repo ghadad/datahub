@@ -4,5 +4,6 @@ module.exports=  async function(data) {
    // __app.logger
    // __app.lodash
    // etc ..
+   __app.logger.info("in handler:",data);
    return data;
 }
