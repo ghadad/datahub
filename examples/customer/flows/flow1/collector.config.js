@@ -8,5 +8,6 @@ module.exports=  {
 	//      return data[3] + data[4];
 	// }
 	//pkHeader:"COMPANY_NAME"
-	target:"myDb.Customer",
+	targetDb:"mydb",
+	targetEntity:"customer"
 }
