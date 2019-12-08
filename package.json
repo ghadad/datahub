@@ -50,6 +50,7 @@
     "pino-pretty": "^3.4.0",
     "pouchdb": "^7.1.1",
     "pouchdb-find": "^7.1.1",
+    "pouchdb-upsert": "^2.2.0",
     "pug": "^2.0.4",
     "sequelize": "^5.21.2",
     "simple-oracledb": "^1.4.2",
