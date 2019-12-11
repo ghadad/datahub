@@ -32,14 +32,13 @@ var argv = yargs
         }).argv;
 
 
-console.log("options:",argv,argv);
 const main = require(path.resolve(__dirname, "..", "lib/main"));
 
 
 main.init(argv).then(async () => {
   const Project = __app.require(__app.lib,"project");
   const Flow = __app.require(__app.lib,"flow");
-  let project = new Project({path:"D:/datahub/examples/customer"})
+  let project = new Project({path:__app.examples+"/customer"})
   let flowConfig = project.getFlow(argv.flow);
   let flow = new Flow(flowConfig);
   await  flow.collect();
