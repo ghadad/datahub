@@ -1,13 +1,13 @@
-module.exports=  { 
-	name:"flow-1-csv-collect",
-	sourceType:"csv",
+module.exports = {
+	name: "flow-1-csv-collect",
+	sourceType: "csv",
 	//sourceFile:"/tmp/customer.csv",
-	sourceFile:"./customer.csv",
-	pkIndex:2,
+	sourceFile: __app.path.resolve(__app.examples, "testData/customer.csv"),
+	pkIndex: 2,
 	//pkHandler:function(date) { 
 	//      return data[3] + data[4];
 	// }
 	//pkHeader:"COMPANY_NAME"
-	targetDb:"mydb",
-	targetEntity:"customer"
+	targetDb: "mydb",
+	targetEntity: "customer"
 }
