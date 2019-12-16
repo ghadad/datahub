@@ -9,5 +9,6 @@ module.exports = {
 	// }
 	//pkHeader:"COMPANY_NAME"
 	targetDb: "mydb",
+	dbAlias: "maria1",
 	targetEntity: "customer"
 }
