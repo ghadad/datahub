@@ -1,14 +1,14 @@
-2019/12/16-23:21:48.118 2254 Recovering log #198
-2019/12/16-23:21:48.119 2254 Level-0 table #200: started
-2019/12/16-23:21:48.124 2254 Level-0 table #200: 27050 bytes OK
-2019/12/16-23:21:48.132 2254 Delete type=0 #198
-2019/12/16-23:21:48.132 2254 Delete type=3 #196
-2019/12/16-23:21:48.246 bd0 Compacting 4@0 + 1@1 files
-2019/12/16-23:21:48.255 bd0 Generated table #202@0: 175 keys, 15934 bytes
-2019/12/16-23:21:48.255 bd0 Compacted 4@0 + 1@1 files => 15934 bytes
-2019/12/16-23:21:48.257 bd0 compacted to: files[ 0 1 0 0 0 0 0 ]
-2019/12/16-23:21:48.257 bd0 Delete type=2 #189
-2019/12/16-23:21:48.257 bd0 Delete type=2 #191
-2019/12/16-23:21:48.258 bd0 Delete type=2 #194
-2019/12/16-23:21:48.258 bd0 Delete type=2 #197
-2019/12/16-23:21:48.259 bd0 Delete type=2 #200
+2019/12/17-22:46:20.826 f0 Recovering log #276
+2019/12/17-22:46:20.826 f0 Level-0 table #278: started
+2019/12/17-22:46:20.843 f0 Level-0 table #278: 1640 bytes OK
+2019/12/17-22:46:20.851 f0 Delete type=0 #276
+2019/12/17-22:46:20.852 f0 Delete type=3 #274
+2019/12/17-22:46:20.893 ef0 Compacting 4@0 + 1@1 files
+2019/12/17-22:46:20.904 ef0 Generated table #280@0: 211 keys, 20113 bytes
+2019/12/17-22:46:20.904 ef0 Compacted 4@0 + 1@1 files => 20113 bytes
+2019/12/17-22:46:20.906 ef0 compacted to: files[ 0 1 0 0 0 0 0 ]
+2019/12/17-22:46:20.906 ef0 Delete type=2 #267
+2019/12/17-22:46:20.907 ef0 Delete type=2 #269
+2019/12/17-22:46:20.907 ef0 Delete type=2 #272
+2019/12/17-22:46:20.907 ef0 Delete type=2 #275
+2019/12/17-22:46:20.907 ef0 Delete type=2 #278
