@@ -1,5 +1,26 @@
-2019/12/16-23:21:33.538 f10 Recovering log #195
-2019/12/16-23:21:33.539 f10 Level-0 table #197: started
-2019/12/16-23:21:33.544 f10 Level-0 table #197: 26262 bytes OK
-2019/12/16-23:21:33.553 f10 Delete type=0 #195
-2019/12/16-23:21:33.553 f10 Delete type=3 #193
+2019/12/17-10:17:26.232 5cfc Recovering log #15
+2019/12/17-10:17:26.232 5cfc Recovering log #17
+2019/12/17-10:17:26.233 5cfc Recovering log #18
+2019/12/17-10:17:26.234 5cfc Recovering log #19
+2019/12/17-10:17:26.235 5cfc Recovering log #20
+2019/12/17-10:17:26.237 5cfc Recovering log #21
+2019/12/17-10:17:26.238 5cfc Recovering log #22
+2019/12/17-10:17:26.239 5cfc Recovering log #23
+2019/12/17-10:17:26.549 5cfc Delete type=0 #15
+2019/12/17-10:17:26.551 5cfc Delete type=2 #16
+2019/12/17-10:17:26.554 5cfc Delete type=0 #17
+2019/12/17-10:17:26.556 5cfc Delete type=0 #18
+2019/12/17-10:17:26.558 5cfc Delete type=0 #19
+2019/12/17-10:17:26.560 5cfc Delete type=0 #20
+2019/12/17-10:17:26.563 5cfc Delete type=0 #21
+2019/12/17-10:17:26.565 5cfc Delete type=0 #22
+2019/12/17-10:17:26.566 5cfc Delete type=0 #23
+2019/12/17-10:17:26.568 5cfc Delete type=3 #13
+2019/12/17-10:17:26.571 6394 Compacting 4@0 + 0@1 files
+2019/12/17-10:17:26.650 6394 Generated table #25@0: 12 keys, 960 bytes
+2019/12/17-10:17:26.650 6394 Compacted 4@0 + 0@1 files => 960 bytes
+2019/12/17-10:17:26.715 6394 compacted to: files[ 0 1 0 0 0 0 0 ]
+2019/12/17-10:17:26.715 6394 Delete type=2 #5
+2019/12/17-10:17:26.718 6394 Delete type=2 #8
+2019/12/17-10:17:26.725 6394 Delete type=2 #11
+2019/12/17-10:17:26.728 6394 Delete type=2 #14
