@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-/examples/systen.db/
+examples/systen.db/
 /dist
 
 # local env files
