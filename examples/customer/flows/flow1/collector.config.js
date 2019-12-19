@@ -3,6 +3,7 @@ module.exports = {
 	sourceType: "csv",
 	//sourceFile:"/tmp/customer.csv",
 	sourceFile: __app.path.resolve(__app.examples, "testData/customer.csv"),
+	ignoreFirstLine: false,
 	pkIndex: 2,
 	//pkHandler:function(date) { 
 	//      return data[3] + data[4];
