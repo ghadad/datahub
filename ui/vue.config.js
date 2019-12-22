@@ -2,6 +2,8 @@ const glob = require('glob')
 const titles = require("./titles");
 const pages = {}
 
+
+
 glob.sync('./pages/**/main.js').forEach(path => {
     const chunk = path.split('./pages/')[1].split('/main.js')[0]
     pages[chunk] = {

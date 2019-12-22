@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <h1> Home comp{{ msg }}</h1> 
+    <h2>   <a href="/admin">Admin </a> | <a href="/hub">Hub </a> | <a href="/interface">Interface </a> 
+</h2>
     </div>
 </template>
 

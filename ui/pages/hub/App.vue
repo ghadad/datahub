@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import Menu from "./config/menu";
 
 export default {
+  props:"menu",
   name: "app",
   data: function() {
     return {
-      menu: Menu
+      menu1: Menu
     };
   },
   computed: {
