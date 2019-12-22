@@ -41,11 +41,12 @@ module.exports = [{
     ],
   },
   {
-    const: "4",
+    const: "aaa_abb_bb",
     //poolAlias :"any",
-    goTo: "queryResult",
+    goTo: "allAroundProperty",
     transform: [
-      ['toNumber'], (v, r, n) => v + v
+      ['camelCase'],
+      ['kebabCase'], (v, r, n) => v + v
     ],
     validate: [
       ['between', 4, 9],
