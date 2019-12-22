@@ -9,7 +9,7 @@ module.exports = [{
   {
     hash: true,
     key: "name",
-    handler: (v, r, n) => v + ":" + v,
+    handler: (v, r, n, p) => v + ":" + v,
     goTo: "lastName"
   },
   {
@@ -30,12 +30,12 @@ module.exports = [{
   {
     hash: false,
     package: "mypackage.run()",
-    handler: (v, r, n) => v.length,
+    handler: (v, r, n, p) => v.length,
     //poolAlias :"any",
     goTo: "queryResult",
     validate: [
       ['lt', 1, 4],
-      function (v, r, n) {
+      function (v, r, n, p) {
         return true;
       }
     ],
@@ -45,7 +45,7 @@ module.exports = [{
     //poolAlias :"any",
     goTo: "queryResult",
     transform: [
-      ['toNumber'], (v, r, n) => v + v
+      ['toNumber'], (v, r, n, p) => v + v
     ],
     validate: [
       ['between', 4, 9],
@@ -54,7 +54,7 @@ module.exports = [{
     drop: [
       ['isNull'],
       ['gt', 5000],
-      (r, n, v) => true
+      (r, n, v, p) => true
     ]
   }
 ]
