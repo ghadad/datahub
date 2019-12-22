@@ -19,6 +19,18 @@ fastify.register(require('fastify-static'), {
   wildcard: "**",
   //prefix: '/public/', // optional: default '/'
 })
+fastify.get('/admin', function (req, reply) {
+  reply.sendFile('admin.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
+})
+fastify.get('/hub', function (req, reply) {
+  reply.sendFile('hub.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
+})
+fastify.get('/interface', function (req, reply) {
+  reply.sendFile('interface.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
+})
+
+
+
 var argv = yargs
         .usage("Usage: $0 -e dev")
         .option("env", {
