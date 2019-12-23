@@ -11,12 +11,15 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon bin/ui-server.js -- -e dev",
-    "ui":"cd ui & npm run serve",
-    "all":"npx npm-run-all -p ui dev"
+    "dev": "nodemon bin/ui-server.js -- -e dev",
+    "ui": "cd ui & npm run serve",
+    "all": "npx npm-run-all -p ui dev"
   },
   "nodemonConfig": {
-    "ignore": ["test/*", "docs/*"],
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
     "delay": "2500"
   },
   "repository": {
@@ -67,6 +70,7 @@
     "pug": "^2.0.4",
     "sequelize": "^5.21.2",
     "simple-oracledb": "^1.4.2",
+    "upath": "^1.2.0",
     "validator": "^12.1.0",
     "xml-js": "^1.6.11"
   },
