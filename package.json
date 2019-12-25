@@ -41,6 +41,7 @@
     "delay": "^4.3.0",
     "fast-csv": "^3.4.0",
     "fastify": "^2.10.0",
+    "fastify-cors": "^3.0.0",
     "fastify-routes": "^2.0.3",
     "fastify-static": "^2.5.0",
     "find": "^0.3.0",
