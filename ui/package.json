@@ -10,8 +10,11 @@
   "dependencies": {
     "buefy": "^0.8.8",
     "core-js": "^2.6.5",
+    "fastify-cors": "^3.0.0",
     "iview": "^3.5.4",
     "less-loader": "^5.0.0",
+    "serialize-javascript": "^2.1.2",
+    "upath": "^1.2.0",
     "vue": "^2.6.10",
     "vue-material": "^1.0.0-beta-11",
     "vue-router": "^3.1.3",
