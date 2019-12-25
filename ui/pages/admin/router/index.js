@@ -11,9 +11,9 @@ import Api from "../components/api/routes.js";
 Vue.use(VueRouter);
 export default new VueRouter({
 	mode: "hash",
-	routes: [Projects,Databases,Job,Api,
+	routes: [Projects, Databases, Job, Api,
 		{
-			name:"home",
+			name: "home",
 			path: "/",
 			component: Home
 		},

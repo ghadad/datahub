@@ -11,7 +11,7 @@ const fastify = require("fastify")({
 const getPort = require('get-port');
 fastify.register(require("fastify-routes"));
 fastify.register(require('fastify-cors'), {
-  origin: /localhost/
+  origin: /.*/
 })
 
 
