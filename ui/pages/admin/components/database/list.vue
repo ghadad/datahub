@@ -40,8 +40,9 @@ export default {
     };
   },
   methods: {
-    deleteDb(dbAlias) {
-      this.$http.delete("databases", { dbAlias: dbAlias });
+    async deleteDb(dbAlias) {
+      await this.$http.delete("databases", { dbAlias: dbAlias });
+       this.list = await this.$parent.fetch();
     },
     update(dbAlias) {
       this.$router.push({
