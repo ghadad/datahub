@@ -8,4 +8,6 @@ Vue.use(Buefy)
 import Http from "@/services/http";
 Vue.prototype.$http = Http;
 
+Http.get("config").then(r => window.$serverConfig = r);
+
 export default Vue;

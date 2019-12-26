@@ -2,7 +2,8 @@
   <div class="page-container">
     <md-app>
       <md-app-drawer md-permanent="full">
-        <md-toolbar class="md-transparent" md-elevation="2">DATAHUB5</md-toolbar>
+        <md-toolbar class="md-transparent" md-elevation="2"><router-link :to="{path:'/'}"> DATAHUB5</router-link>
+        </md-toolbar>
         <md-list>
           <md-list-item v-for="(mItem,index) in menu.leftMenu" :key="index">
             <md-icon>{{mItem.icon}}</md-icon>
@@ -20,13 +21,13 @@
 </template>
 
 <script>
+import Menu from "./config/menu";
 
 export default {
-  props:"menu",
   name: "app",
   data: function() {
     return {
-      menu1: Menu
+      menu: Menu
     };
   },
   computed: {

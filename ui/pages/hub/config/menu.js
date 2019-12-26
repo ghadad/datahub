@@ -1,15 +1,26 @@
 export default {
     leftMenu: [{
             title: "Projects",
-            icon: "settings_applications",
-            routerLink: "/project"
-        }, {
-            title: "Entities",
             icon: "storage",
-            routerLink: "/entities"
+            routerLink: "/project"
         },
         {
-            title: "Jobs",
+            title: "hosts",
+            icon: "move_to_inbox",
+            routerLink: "/job"
+        },
+        {
+            title: "Users",
+            icon: "storage",
+            routerLink: "/users"
+        },
+        {
+            title: "Configuration",
+            icon: "move_to_inbox",
+            routerLink: "/config"
+        },
+        {
+            title: "jobs",
             icon: "move_to_inbox",
             routerLink: "/job"
         },

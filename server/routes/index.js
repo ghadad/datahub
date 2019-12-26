@@ -4,5 +4,8 @@ module.exports = function (fastify, opts, next) {
             success: true
         });
     });
+    fastify.get('/config', function (req, res, next) {
+        res.send(__app.config);
+    });
     next()
 }

@@ -1,4 +1,4 @@
 <template>
-<div> <h1>Edit project</h1> 
+<div> <h1>Edit Database</h1> 
 </div>
 </template>
