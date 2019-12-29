@@ -7,7 +7,8 @@ import Menu from "./config/menu";
 new Vue({
   render: h => h(App, {
     props: {
-      menu: Menu
+      menu: Menu,
+      title: "Admin"
     }
   }),
   router,

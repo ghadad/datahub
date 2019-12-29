@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 class="title" v-show="!dbAlias">Set new database</h2>
-    <h2 class="title" v-show="dbAlias">Update database</h2>
+    <h2 class="title" v-show="!dbAlias">Set new project</h2>
+    <h2 class="title" v-show="dbAlias">Update project</h2>
 
     <div class="columns">
       <div class="column is-2">
@@ -140,10 +140,10 @@ export default {
   },
   methods: {
     async update() {
-      await this.$http.put("databases", this.formData);
+      await this.$http.put("projects", this.formData);
     },
     async create() {
-      await this.$http.post("databases", this.formData);
+      await this.$http.post("projects", this.formData);
     }
   },
   computed: {}

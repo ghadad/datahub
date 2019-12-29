@@ -21,27 +21,27 @@ export default {
       menu: [
         {
           title: "Databases",
-          link: "/database/list"
+          link: "/project/list"
         },
         {
           title: "Edit/create Database",
-          link: "/database/upsert"
+          link: "/project/upsert"
         },
         {
           title: "Help",
-          link: "/database/help"
+          link: "/project/help"
         }
       ]
     };
   },
   methods: {
     async fetch() {
-      return await this.$http.get("databases");
+      return await this.$http.get("projects");
     }
   },
   async mounted() {
     this.list = await this.fetch();
-    this.$router.push("/database/list");
+    this.$router.push("/project/list");
   }
 };
 </script>

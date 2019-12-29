@@ -41,12 +41,12 @@ export default {
   },
   methods: {
     async deleteDb(dbAlias) {
-      await this.$http.delete("databases", { dbAlias: dbAlias });
-       this.list = await this.$parent.fetch();
+      await this.$http.delete("project", { dbAlias: dbAlias });
+      this.list = await this.$parent.fetch();
     },
     update(dbAlias) {
       this.$router.push({
-        path: "/database/upsert",
+        path: "/project/upsert",
         query: { dbAlias: dbAlias }
       });
     }

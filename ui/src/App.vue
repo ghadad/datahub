@@ -4,7 +4,7 @@
       <div class="column is-2">
         <aside class="menu">
           <p class="menu-label">
-            <router-link :to="{path:'/'}">DATAHUB5</router-link>
+            <router-link :to="{path:'/'}">DATAHUB5 {{$props.title}}</router-link>
           </p>
           <ul class="menu-list">
             <li v-for="(mItem,index) in menu.leftMenu" :key="index">
@@ -37,7 +37,7 @@
 <script>
 export default {
   name: "app",
-  props: ["menu"],
+  props: ["menu", "title"],
   data: function() {
     return {
       globalError: null,
