@@ -1,0 +1,22 @@
+{
+  "cxx2": {
+    "projectName": "cxx2",
+    "description": "dsd dsd",
+    "enableStaging": true
+  },
+  "dsdsdsdsdsd": {
+    "projectName": "dsdsdsdsdsd",
+    "description": "dssd ds dsd d sdsd ",
+    "enableStaging": true
+  },
+  "dddddssss": {
+    "projectName": "dddddssss",
+    "description": "ssss",
+    "enableStaging": null
+  },
+  "ddddsss": {
+    "projectName": "ddddsss",
+    "description": null,
+    "enableStaging": null
+  }
+}

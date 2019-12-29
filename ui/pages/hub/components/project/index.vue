@@ -20,11 +20,11 @@ export default {
       list: [],
       menu: [
         {
-          title: "Databases",
+          title: "Projects",
           link: "/project/list"
         },
         {
-          title: "Edit/create Database",
+          title: "Edit/create Project",
           link: "/project/upsert"
         },
         {

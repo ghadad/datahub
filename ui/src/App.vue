@@ -9,6 +9,11 @@
           <ul class="menu-list">
             <li v-for="(mItem,index) in menu.leftMenu" :key="index">
               <router-link :to="mItem.routerLink">{{mItem.title}}</router-link>
+              <ul v-if="mItem.children && mItem.children.length" class="menu-list">
+                <li v-for="(sm,index) in mItem.children" :key="index">
+                  <router-link :to="sm.routerLink">{{sm.title}}</router-link>
+                </li>
+              </ul>
             </li>
           </ul>
         </aside>

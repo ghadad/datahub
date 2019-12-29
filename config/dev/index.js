@@ -6,6 +6,5 @@ module.exports = {
         hostname: os.hostname()
     },
     systemDbPath: upath.join(__app.base, "system.db"),
-    projectsPath: upath.join(__app.base, "system.db", "projects")
-
+    projectsPath: upath.join(__app.base, "system.db", "projects"),
 }

@@ -3,27 +3,27 @@
     <table class="table">
       <thead>
         <tr>
-          <th>DB Alias</th>
-          <th>Client</th>
-          <th>Hostname</th>
-          <th>User</th>
-          <th>Password</th>
-          <th>Port</th>
+          <th>Project name</th>
+          <th>Description</th>
+          <th>version</th>
+          <th>Enable staging</th>
           <th>Actions</th>
         </tr>
       </thead>
+      <tbody v-if="Object.values(list).length==0">
+        <th colspan="4" class="has-border-dark">No projects found on server</th>
+      </tbody>
       <tbody>
-        <tr v-for="(d,dbAlias) in list" :key="dbAlias">
-          <td>{{dbAlias}}</td>
-          <td>{{d.client}}</td>
-          <td>{{d.connection.host}}</td>
-          <td>{{d.connection.user}}</td>
-          <td>{{d.connection.password}}</td>
-          <td>{{d.connection.port}}</td>
+        <tr v-for="(p,projectName) in list" :key="projectName">
+          <td>{{projectName}}</td>
+          <td>{{p.description}}</td>
+          <td>{{p.version}}</td>
+          <td>{{p.enableStaging}}</td>
           <td>
             <div class="buttons">
-              <button class="button is-info" @click="update(dbAlias,d)">Update</button>
-              <button class="button is-danger" @click="deleteDb(dbAlias)">Delete</button>
+              <button class="button is-primary" @click="explore(projectName)">Explore</button>
+              <button class="button is-info" @click="update(projectName,p)">Update</button>
+              <button class="button is-danger" @click="deleteDb(projectName)">Delete</button>
             </div>
           </td>
         </tr>
@@ -33,21 +33,26 @@
 </template>
 <script>
 export default {
-  name: "databases-list",
+  name: "projects-list",
   data() {
     return {
-      list: []
+      list: {}
     };
   },
   methods: {
-    async deleteDb(dbAlias) {
-      await this.$http.delete("project", { dbAlias: dbAlias });
+    async deleteDb(projectName) {
+      await this.$http.delete("projects", { projectName: projectName });
       this.list = await this.$parent.fetch();
     },
-    update(dbAlias) {
+    explore(projectName) {
+      this.$router.push({
+        path: `/project/explore/${projectName}`
+      });
+    },
+    update(projectName) {
       this.$router.push({
         path: "/project/upsert",
-        query: { dbAlias: dbAlias }
+        query: { projectName: projectName }
       });
     }
   },

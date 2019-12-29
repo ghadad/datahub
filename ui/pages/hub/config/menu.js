@@ -1,38 +1,48 @@
-export default {
-    leftMenu: [{
-            title: "Projects",
-            icon: "storage",
-            routerLink: "/project"
-        },
-        {
-            title: "hosts",
+const menu = function (routes) {
+    let children = []
+    if (routes.path.match(/project.explore/))
+        children = [{
+            title: "Entities",
             icon: "move_to_inbox",
-            routerLink: "/job"
-        },
-        {
-            title: "Users",
-            icon: "storage",
-            routerLink: "/users"
-        },
-        {
-            title: "Configuration",
+            routerLink: "entitiy"
+        }, {
+            title: "Flows",
             icon: "move_to_inbox",
-            routerLink: "/config"
-        },
-        {
-            title: "jobs",
+            routerLink: "flows"
+        }, {
+            title: "Jobs",
             icon: "move_to_inbox",
-            routerLink: "/job"
-        },
-        {
-            title: "API-s",
-            icon: "move_to_inbox",
-            routerLink: "/api"
-        },
-        {
-            title: "Docs",
-            icon: "import_contacts",
-            routerLink: "/projects"
-        }
-    ]
+            routerLink: "jobs"
+        }];
+
+    return {
+        leftMenu: [{
+                title: "Projects",
+                icon: "storage",
+                routerLink: "/project",
+                children: children
+            }, {
+                title: "Configuration",
+                icon: "move_to_inbox",
+                routerLink: "/config"
+            },
+            {
+                title: "jobs",
+                icon: "move_to_inbox",
+                routerLink: "/job"
+            },
+            {
+                title: "API-s",
+                icon: "move_to_inbox",
+                routerLink: "/api"
+            },
+            {
+                title: "Docs",
+                icon: "import_contacts",
+                routerLink: "/projects"
+            }
+        ]
+    }
 };
+
+export default menu;

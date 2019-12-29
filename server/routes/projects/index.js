@@ -1,17 +1,19 @@
-const glob = require("glob-promise")
 const upath = require("upath")
+const Project = require(upath.join(__app.lib, "project"));
 module.exports = function (fastify, opts, next) {
-    fastify.get('/', async function (req, res, next) {
-        return await glob(upath.join(__app.projectsPath + "/**proj.json"));
+    fastify.get('/', function (req, res, next) {
+        return res.send(__app.configManager.getDb("projects").getState());
     });
-    fastify.post('/', function (req, res, next) {
-        return res.send(__app.configManager.getDb("projects").set(req.body.dbAlias, req.body.db).write());
+    fastify.post('/', async function (req, res, next) {
+        await Project.create(req.body);
+        let newProj = __app.configManager.getDb("projects").set(req.body.projectName, req.body).write();
+        return newProj;
     });
     fastify.put('/', function (req, res, next) {
-        return res.send(__app.configManager.getDb("projects").set(req.body.dbAlias, req.body.db).write());
+        return res.send(__app.configManager.getDb("projects").set(req.body.projectName, req.body).write());
     });
     fastify.delete('/', function (req, res, next) {
-        return res.send(__app.configManager.getDb("projects").unset(req.query.dbAlias).write());
+        return res.send(__app.configManager.getDb("projects").unset(req.query.projectName).write());
     });
     next()
 }
