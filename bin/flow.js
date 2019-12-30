@@ -1,6 +1,6 @@
 #!nnode
 
-const path = require("path");
+const upath = require("upath");
 const yargs = require("yargs");
 const delay = require("delay");
 
@@ -32,14 +32,15 @@ var argv = yargs
   }).argv;
 
 
-const main = require(path.resolve(__dirname, "..", "lib/main"));
+const main = require(upath.join(__dirname, "..", "lib/main"));
 
 
 main.init(argv).then(async () => {
   const Project = __app.require(__app.lib, "project");
   const Flow = __app.require(__app.lib, "flow");
   let project = new Project({
-    path: __app.examples + "/customer"
+    name: argv.project,
+    path: upath.join(__app.config.projectsPath, argv.project)
   })
   let flowConfig = project.getFlow(argv.flow);
   __app.logger.info("flowConfig:", flowConfig)

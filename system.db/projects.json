@@ -1,22 +1,7 @@
 {
-  "cxx2": {
-    "projectName": "cxx2",
-    "description": "dsd dsd",
+  "customer": {
+    "projectName": "customer",
+    "description": "customer",
     "enableStaging": true
-  },
-  "dsdsdsdsdsd": {
-    "projectName": "dsdsdsdsdsd",
-    "description": "dssd ds dsd d sdsd ",
-    "enableStaging": true
-  },
-  "dddddssss": {
-    "projectName": "dddddssss",
-    "description": "ssss",
-    "enableStaging": null
-  },
-  "ddddsss": {
-    "projectName": "ddddsss",
-    "description": null,
-    "enableStaging": null
   }
 }

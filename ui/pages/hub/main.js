@@ -1,5 +1,13 @@
 import Vue from '@/main'
 
+import sj from 'serialize-javascript';
+Vue.prototype.$sj = sj;
+
+function deserialize(serializedJavascript) {
+  return eval('(' + serializedJavascript + ')');
+}
+Vue.prototype.$dj = deserialize;
+
 
 import App from '@/App.vue'
 import router from "./router/";

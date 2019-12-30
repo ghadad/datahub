@@ -1,14 +1,16 @@
 import Projects from './index.vue';
 import New from "./upsert.vue";
 import List from "./list.vue";
-import Edit from "./edit.vue";
 import Help from "./help.vue";
-
+import Explore from "./explore.vue"
 
 export default {
     path: "/project",
     component: Projects,
     children: [{
+        path: 'explore/:project',
+        component: Explore
+    }, {
         path: 'list',
         component: List
     }, {

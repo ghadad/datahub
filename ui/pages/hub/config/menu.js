@@ -1,19 +1,28 @@
 const menu = function (routes) {
+    console.log(routes)
     let children = []
-    if (routes.path.match(/project.explore/))
+    let uriPath = routes.path
+    if (routes.params.project)
         children = [{
-            title: "Entities",
-            icon: "move_to_inbox",
-            routerLink: "entitiy"
-        }, {
-            title: "Flows",
-            icon: "move_to_inbox",
-            routerLink: "flows"
-        }, {
-            title: "Jobs",
-            icon: "move_to_inbox",
-            routerLink: "jobs"
-        }];
+                title: "Project:" + routes.params.project,
+                icon: "move_to_inbox",
+                routerLink: uriPath,
+                class: "header"
+            },
+            {
+                title: "Entities",
+                icon: "move_to_inbox",
+                routerLink: uriPath + "/entities"
+            }, {
+                title: "Flows",
+                icon: "move_to_inbox",
+                routerLink: uriPath + "/flows"
+            }, {
+                title: "Jobs",
+                icon: "move_to_inbox",
+                routerLink: uriPath + "/jobs"
+            }
+        ];
 
     return {
         leftMenu: [{

@@ -1,7 +1,7 @@
 import Index from "./index.vue";
 
 export default {
-    path: "/project/explore/:project/flow/:flow",
+    path: "/project/explore/:project/entity/:entity",
     component: Index,
-    name: "flow"
+    name: "entity"
 }
