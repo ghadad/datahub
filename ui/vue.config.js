@@ -19,16 +19,15 @@ console.log(pages)
 module.exports = {
     pages: pages,
     chainWebpack: config => config.plugins.delete('named-chunks'),
-    //devServer: {
-    /*     proxy: { 
+    devServer: {
+         proxy: { 
              '/api': {
                  target: 'http://127.0.0.1:8080',
                  changeOrigin: true,
-                 pathRewrite: {
-                     '^/api': ''
-                 }
+                 //pathRewrite: {
+                  //   '^/api': ''
+                // }
              }
          }
-         */
-    //}
+    }
 }
