@@ -1,8 +1,6 @@
 module.exports = {
     apps: [{
-        name: "WEB",
-        pwd: "./ui",
-        script: "./node_modules/@vue/cli-service/bin/vue-cli-service.js",
-        args: "serve"
+        name: "dashboard",
+        script: "bin/ui-server.js -- -e dev",
     }]
 };

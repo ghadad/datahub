@@ -10,9 +10,7 @@ const fastify = require("fastify")({
 
 const getPort = require('get-port');
 fastify.register(require("fastify-routes"));
-fastify.register(require('fastify-cors'), {
-  origin: /.*/
-})
+fastify.register(require('fastify-cors'));
 
 
 let publicRoot = path.resolve(__dirname, "..", 'ui/dist');
