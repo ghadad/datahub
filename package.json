@@ -12,7 +12,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon bin/ui-server.js -- -e dev",
-    "ui": "cd ui & npm run serve",
+    "ui": "npm run --prefix ui serve",
     "all": "npx npm-run-all -p ui dev"
   },
   "nodemonConfig": {
