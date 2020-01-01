@@ -78,6 +78,7 @@
     "simple-oracledb": "^1.4.2",
     "upath": "^1.2.0",
     "validator": "^12.1.0",
+    "vuedraggable": "^2.23.2",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
