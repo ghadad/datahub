@@ -1,8 +1,15 @@
 <template>
   <div v-if="jobData.name">
     <h1>jobData & scheduling</h1>
-    <b-message title="params" type="is-info">{{$route.params}}</b-message>
-    <b-message title="jobData" type="is-info">{{jobData}}</b-message>
+    <div class="control">
+      <input
+        class="input"
+        type="text"
+        placeholder="Entity name"
+        v-model="jobData.name"
+        pattern="/\w+/"
+      />
+    </div>
   </div>
 </template> 
 <script>
