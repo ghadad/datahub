@@ -1,32 +1,20 @@
 <template>
   <div class="hello">
-    <h2>   <a href="/admin">Admin </a> | <a href="/hub">Hub </a> | <a href="/interface">Interface </a> 
-</h2>    </div>
+<section class="hero is-primary">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title is-1">
+        Interfaces
+      </h1>
+      <h2 class="subtitle">
+        Create interfaces quickly and without any hard work
+      </h2>      <p>
+          <router-link :to='{name:"inetrfaces"}' class="button is-rounded">Manage Inerfaces</router-link>
+                    </p>
+    </div>
+  </div>
+</section>   </div>
 </template>
-
-<script>
-export default {
-  name: 'Home',
-  props: {
-    msg: String
-  }
-}
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+.button { margin-right:10px}
 </style>

@@ -1,33 +1,22 @@
 <template>
   <div class="hello">
-    <h2>   <a href="/admin">Admin </a> | <a href="/hub">Hub </a> | <a href="/interface">Interface </a> 
-</h2>
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title is-1">
+        ADMIN BOARD
+      </h1>
+      <h2 class="subtitle">
+          Manage databases users and environments  for the the Datahub functionality </h2>
+          <p>
+          <router-link :to='{name:"database"}' class="button is-rounded">Manage databases</router-link>
+          <router-link :to='{name:"users"}' class="button is-rounded">Manage Users & RBAC</router-link>
+          <router-link :to='{name:"hosts"}' class="button is-rounded">Manage hosts</router-link>
+          </p>
     </div>
+  </div>
+</section>   </div>
 </template>
-
-<script>
-export default {
-  name: 'Home',
-  props: {
-    msg: String
-  }
-}
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+.button { margin-right:10px}
 </style>

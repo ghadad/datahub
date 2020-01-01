@@ -1,10 +1,10 @@
 <template>
   <div class="container is-fluid">
     <div class="columns">
-      <div class="column is-2">
+      <div class="column is-2 has-background-white-ter">
         <aside class="menu">
           <p class="menu-label">
-            <router-link :to="{path:'/'}">DATAHUB5 {{$props.title}}</router-link>
+            <h1 class="tag is-dark is-large has-text-center title is-4">DATAHUB5>{{$props.title}} </h1>
           </p>
           <ul class="menu-list">
             <li v-for="(mItem,index) in menu.leftMenu" :key="index">
@@ -16,7 +16,15 @@
               </ul>
             </li>
           </ul>
+            <p class="menu-label is-4 title"> </p>
+           <ul  class="menu-list">
+               <li><p class="menu-label is-5 title"> DASHBOARDS</p></li>
+                <li><a href="admin">Admin</a></li>
+                <li><a href="hub">HUB</a></li>
+                <li><a href="interfaces">Interfaces</a></li>
+              </ul>
         </aside>
+        
       </div>
       <div class="column">
         <div v-if="globalError">
@@ -85,3 +93,4 @@ md-tabs.md-no-animation md-tab-content {
   width: 200px !important;
 }
 </style>
+

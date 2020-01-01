@@ -1,7 +1,7 @@
 "use strict";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "@/components/pages/home.vue";
+import Home from "../components/pages/home.vue";
 import NotFound from "@/components/pages/notFound.vue";
 import Projects from "../components/project/routes.js";
 import Entities from "../components/entity/routes.js";

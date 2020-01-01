@@ -6,6 +6,7 @@ import Help from "./help.vue";
 
 
 export default {
+    name:"database",
     path: "/database",
     component: Databases,
     children: [{

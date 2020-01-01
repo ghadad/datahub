@@ -5,6 +5,7 @@ import Help from "./help.vue";
 import Explore from "./explore.vue"
 
 export default {
+    name:"projects",
     path: "/project",
     component: Projects,
     children: [{
