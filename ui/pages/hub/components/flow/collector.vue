@@ -33,6 +33,15 @@
         </div>
       </div>
       <div class="column is-2">
+        <div class="field">
+          <label class="label">Concurrency</label>
+          <div class="select">
+            <select v-model="flowData.collector.config.concurrency">
+              <option v-for="(c,index) in [1,2,3,4,5,6,7,8,9,10]" :key="index" :value="c">{{c}}</option>
+            </select>
+          </div>
+        </div>
+
         <div class="field" v-if="flowData.collector.config.sourceType=='query'">
           <label class="label">Source type</label>
           <div class="select">
@@ -125,6 +134,7 @@ export default {
 
   async mounted() {
     this.flowData = this.$parent.$data.flowData;
+    this.$_.set(this.flowData, "collector.config.concurrency", 1);
   }
 };
 </script>
