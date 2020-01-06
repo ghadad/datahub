@@ -1,15 +1,15 @@
 
-import Projects from './index.vue';
+import Interfaces from './index.vue';
 import New from "./new.vue";
 import List from "./list.vue";
-import Edit from "./edit.vue";
 import Help from "./help.vue";
 
 
 export default {
-        path: "/project",
-        component: Projects,
+        path: "/interface",
+        component: Interfaces,
         children: [{
+            name:"inetrfaces-list",
             path: 'list',
             component: List
         },{
