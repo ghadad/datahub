@@ -2,41 +2,30 @@
   <div>
     <h1>DB query properties</h1>
     <div class="columns">
-      <div class="column is-1">
+      <div class="column is-6">
         <div class="field">
-          <label class="label">seperator</label>
+          <label class="label">Source query</label>
           <div class="control">
-            <input
+            <textarea
               size="1"
-              class="input"
-              type="text"
-              placeholder="Seperator"
-              v-model="value.seperator"
+              class="textarea"
+              rows="40"
+              v-model="value.query"
               pattern="/\w+/"
             />
           </div>
         </div>
       </div>
-      <div class="column is-8">
+      <div class="column is-2">
         <div class="field">
-          <label class="label">Source Path</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Entity name"
-              v-model="value.sourcePath"
-              pattern="/\w+/"
-            />
-          </div>
+          <label class="label">DB alias</label>
         </div>
       </div>
     </div>
-
     <div class="columns">
       <div class="column is-2">
         <div class="field">
-          <label class="label">Source type</label>
+          <label class="label">Define the entity key method</label>
           <div class="select">
             <select v-model="keyType">
               <option v-for="(desc,kt) in keyTypes" :key="kt" :value="kt">{{desc}}</option>
@@ -44,19 +33,11 @@
           </div>
         </div>
       </div>
-      <div class="column is-1" v-if="keyType=='pkIndex'">
+      <div class="column is-4" v-if="keyType=='pkField'">
         <div class="field">
-          <label class="label">Field Position</label>
+          <label class="label">Field Name (must existgs in Query result)</label>
           <div class="control">
-            <input class="input" v-model="value.pkIndex" type="integer" />
-          </div>
-        </div>
-      </div>
-      <div class="column is-2" v-if="keyType=='pkHeader'">
-        <div class="field">
-          <label class="label">Field header</label>
-          <div class="control">
-            <input class="input" v-model="value.pkHeader" type="text" />
+            <input class="input" v-model="value.pkField" type="text" />
           </div>
         </div>
       </div>
@@ -84,9 +65,8 @@ export default {
       }`,
       keyType: null,
       keyTypes: {
-        pkIndex: "Field position",
         pkHandler: "function/handler",
-        pkHeader: "Header field"
+        pkField: "Header field"        
       }
     };
   },

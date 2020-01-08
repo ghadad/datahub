@@ -36,7 +36,7 @@
     <div class="columns">
       <div class="column is-2">
         <div class="field">
-          <label class="label">Source type</label>
+          <label class="label"Define the entity key </label>
           <div class="select">
             <select v-model="keyType">
               <option v-for="(desc,kt) in keyTypes" :key="kt" :value="kt">{{desc}}</option>
