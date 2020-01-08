@@ -1,18 +1,17 @@
 <template>
   <div v-if="flowData.collector">
     <h1>FLOW</h1>
-    <b-message title="params" type="is-info" aria-close-label="Close message">{{$route.params}}</b-message>
-      <b-message
-      title="mapping.config"
-      type="is-info"
-      aria-close-label="Close message"
-    >{{flowData.mapping.config}}</b-message>
-    <b-message
-      title="mapping.handler"
-      type="is-info"
-      aria-close-label="Close message"
-    >{{flowData.mapping.handler}}</b-message>
-<pre>{{functions}}</pre>
+    <div class="columns">
+      <div class="column is-2">flowData.mapping :{{flowData.mapping}}</div>
+      <div class="column is-3">
+        <h3 class="title">transforms:</h3>
+        {{functions.transforms}}
+      </div>
+      <div class="column is-6">
+        <h3 class="title">validations:</h3>
+        {{functions.validations}}
+      </div>
+    </div>
   </div>
 </template> 
 <script>
@@ -20,16 +19,16 @@ export default {
   name: "mapping",
   data: function() {
     return {
-      functions:null,
-      route:null,
-      flowData: {} 
+      functions: null,
+      route: null,
+      flowData: {}
     };
   },
 
   async mounted() {
-    this.functions = await this.$http.get("helpers/functions");;
+    this.functions = await this.$http.get("helpers/functions");
     this.route = this.$route;
-      this.flowData = this.$parent.$data.flowData ;
+    this.flowData = this.$parent.$data.flowData;
   }
 };
 </script>
