@@ -31,6 +31,10 @@ const menu = function (routes) {
                 routerLink: "/project",
                 children: children
             }, {
+                title: "Datasets",
+                icon: "move_to_inbox",
+                routerLink: "/dataset"
+            }, {
                 title: "Configuration",
                 icon: "move_to_inbox",
                 routerLink: "/config"
