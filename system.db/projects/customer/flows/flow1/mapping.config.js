@@ -1,4 +1,5 @@
 module.exports = [{
+  targeting:"property",
     hash: true,
     keyIndex: 1,
     goTo: "firstName",
@@ -8,6 +9,7 @@ module.exports = [{
   },
   {
     hash: true,
+    targeting:"property",
     keyIndex: 1,
     handler: (v, r, n, p) => v + ":" + v,
     goTo: "lastName"
@@ -15,6 +17,7 @@ module.exports = [{
   {
     hash: false,
     const: 12345,
+    targeting:"property",
     goTo: "companyId",
     validate: [
       ['in', 123456, 12345]

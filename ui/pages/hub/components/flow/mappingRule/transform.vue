@@ -1,28 +1,24 @@
 <template>
-    <section>
-        <strong>Transform pipeline</strong>
+    <section v-if="value">
+        <strong>transform rules</strong>
            <div class="columns">
       <div class="column is-2">
         <div class="field">
-          <label class="label">Trasformation pipeline</label>
           <div class="select">
-            <select v-model="activeTransformation">
-              <option v-for="(vk,vf) in functions.transforms" :key="vk" :value="vk">{{vf}}</option>
+            <select v-model="activeFunc">
+              <option v-for="(vk,vf) in functions.transforms" :key="vf" :value="vf">{{vf}}</option>
             </select>
           </div>
         </div>
       </div>
-      <div class="column is-8">{{activeTransformation.desc}}</div>
+      <div class="column is-8">{{activeFunc}}</div>
       <div class="column is-2">
-        {{activeTransformation.params}}
-        <button>Add to pipeline</button>
+        {{activeFunc}}
+        <button @click="addrule" class="buttun">Add to Validations</button>
       </div>
     </div>
-       
-        <!--div class="panel-block" v-show="targeting=='property'">
-      {{entity.properties}}
-      <pre>{{filteredDataArray}}</pre>
-    </div-->
+    <div>{{value.validate}}</div>
+
     </section>
 </template>
 
@@ -31,14 +27,17 @@
         props: ["value", "functions"],
         data() {
             return {
-                  activeTransformation:{}
+                  activeFunc:null
             };
         },
+
         mounted: function () {
-         
+         this.value.transform = this.value.transform || [];
         },
-        methods: {
-         
+        methods:{
+          addrule:function(){
+          this.value.transform.push([this.activeFunc])
+         }
         },
         computed: {
          
