@@ -1,6 +1,6 @@
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-	host:      'mysql-mysql.apps.ca-central-1.starter.openshift-online.com',
+  host:      'mysql-mysql.apps.ca-central-1.starter.openshift-online.com',
   database : 'my_db'
 });
  
