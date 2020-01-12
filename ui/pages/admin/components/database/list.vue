@@ -13,17 +13,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(d,dbAlias) in list" :key="dbAlias">
-          <td>{{dbAlias}}</td>
-          <td>{{d.client}}</td>
-          <td>{{d.connection.host}}</td>
-          <td>{{d.connection.user}}</td>
-          <td>{{d.connection.password}}</td>
-          <td>{{d.connection.port}}</td>
+        <tr v-for="(d,index) in list" :key="d._id">
+          <td>{{d._id}}</td>
+          <td>{{d.db.client}}</td>
+          <td>{{d.db.connection.host}}</td>
+          <td>{{d.db.connection.user}}</td>
+          <td>{{d.db.connection.password}}</td>
+          <td>{{d.db.connection.port}}</td>
           <td>
             <div class="buttons">
-              <button class="button is-info" @click="update(dbAlias,d)">Update</button>
-              <button class="button is-danger" @click="deleteDb(dbAlias)">Delete</button>
+              <button class="button is-info" @click="update(d.db._id)">Update</button>
+              <button class="button is-danger" @click="deleteDb(d)">Delete</button>
             </div>
           </td>
         </tr>
@@ -37,17 +37,17 @@ export default {
   data() {
     return {
       list: []
-    };
+    }; 
   },
   methods: {
-    async deleteDb(dbAlias) {
-      await this.$http.delete("databases", { dbAlias: dbAlias });
+    async deleteDb(doc) {
+      await this.$http.delete("databases", { id: doc._id,rev: doc._rev });
        this.list = await this.$parent.fetch();
     },
-    update(dbAlias) {
+    update(id) {
       this.$router.push({
         path: "/database/upsert",
-        query: { dbAlias: dbAlias }
+        query: { dbAlias: id }
       });
     }
   },

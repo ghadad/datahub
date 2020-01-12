@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="title" v-show="!dbAlias">Set new database</h2>
+    <h2 class="title" v-show="!_id">Set new database</h2>
     <h2 class="title" v-show="dbAlias">Update database</h2>
 
     <div class="columns">
@@ -12,9 +12,9 @@
               class="input"
               type="text"
               placeholder="DB alias"
-              v-model="formData.dbAlias"
+              v-model="formData._id"
               pattern="/\w+/"
-              :disabled="dbAlias"
+              :disabled="_id"
             />
           </div>
           <p class="help">unique name . use only alphanumeric letters</p>
@@ -99,8 +99,8 @@
     </div>
     <div>
       <div class="buttons">
-        <button class="button is-primary" v-show="!dbAlias" @click="update">Create</button>
-        <button class="button is-link" v-show="dbAlias" @click="create">Update</button>
+        <button class="button is-primary" v-show="!_id" @click="update">Create</button>
+        <button class="button is-link" v-show="_id" @click="create">Update</button>
       </div>
     </div>
   </div>
@@ -116,9 +116,9 @@ export default {
         { val: "oracle", desc: "Oracle" },
         { val: "sqlite", desc: "Sqlite" }
       ],
-      dbAlias: null,
+      _id: null,
       formData: {
-        dbAlias: null,
+        _id: null,
         db: {
           client: null,
           connection: {
@@ -134,8 +134,8 @@ export default {
   async mounted() {
     this.list = await this.$parent.fetch();
     if (this.$route.query.dbAlias) {
-      this.formData.dbAlias = this.dbAlias = this.$route.query.dbAlias;
-      this.$set(this.formData, "db", this.list[this.dbAlias]);
+      this.formData._id = this._id = this.$route.query.dbAlias;
+      this.$set(this.formData, "db", this.list[this._id]);
     }
   },
   methods: {

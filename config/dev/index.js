@@ -7,4 +7,5 @@ module.exports = {
     },
     systemDbPath: upath.join(__app.base, "system.db"),
     projectsPath: upath.join(__app.base, "system.db", "projects"),
+    couchDbUrl:'http://localhost:5984'
 }

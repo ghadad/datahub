@@ -16,5 +16,15 @@
       "password": "admin",
       "database": "myapp_test"
     }
+  },
+  "mariadb1": {
+    "client": "mysql",
+    "connection": {
+      "host": "localhost",
+      "port": null,
+      "user": "root",
+      "password": "admin",
+      "database": "my_db"
+    }
   }
 }

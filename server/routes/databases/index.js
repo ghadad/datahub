@@ -1,15 +1,22 @@
+
 module.exports = function (fastify, opts, next) {
-    fastify.get('/', function (req, res, next) {
-        return res.send(__app.configManager.getDb("databases").getState());
+    fastify.get('/', async function (req, res, next) {
+       // await __app.couchDb.createDb("databases");
+        let allDocs = await __app.couchDb.getAll("databases");
+        return res.send(allDocs);
     });
-    fastify.post('/', function (req, res, next) {
-        return res.send(__app.configManager.getDb("databases").set(req.body.dbAlias, req.body.db).write());
+    fastify.post('/', async function (req, res, next) {
+        let isExists = await __app.couchDb.isExists("databases",req.body.id);
+        return res.send(isExists);
+        let insStatus = await __app.couchDb.create("databases",req.body);
+        return res.send(insStatus);
     });
-    fastify.put('/', function (req, res, next) {
-        return res.send(__app.configManager.getDb("databases").set(req.body.dbAlias, req.body.db).write());
+    fastify.put('/', async function (req, res, next) {
+        let updateStatus = await __app.couchDb.create("databases",req.body);
+        return res.send(updateStatus);
     });
-    fastify.delete('/', function (req, res, next) {
-        return res.send(__app.configManager.getDb("databases").unset(req.query.dbAlias).write());
+    fastify.delete('/', async function (req, res, next) {
+        return res.send(await __app.couchDb.delete("databases",req.query.id,req.query.rev));
     });
     next()
 }
