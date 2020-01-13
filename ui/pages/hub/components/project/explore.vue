@@ -46,8 +46,8 @@ export default {
     };
   },
   async mounted() {
-    this.projectData = this.$dj(
-      await this.$http.get("projects/" + this.$route.params.project)
+    this.projectData = await this.$http.get(
+      "projects/" + this.$route.params.project
     );
   },
   computed: {

@@ -67,7 +67,7 @@ export default {
   async mounted() {
     this.list = await this.$parent.fetch();
     if (this.$route.query.projectName) {
-      this.formData.projectName = this.projectName = this.$route.query.projectName;
+      this.formData._id = this.formData.projectName = this.projectName = this.$route.query.projectName;
       this.$set(this, "formData", this.list[this.projectName]);
     }
   },
@@ -89,7 +89,7 @@ export default {
         this.errors.push("Invalid project name  :use only [a-z] and _ letters");
       }
 
-      this.formData.projectName = this.formData.projectName.toLowerCase();
+      this.formData._id = this.formData.projectName = this.formData.projectName.toLowerCase();
       return hasError;
     },
     async update() {

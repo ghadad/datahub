@@ -53,6 +53,7 @@
     </div>
 
     <div class="column is-12">
+      <button class="button is-link" @click="update">Update</button>
       <pre>{{flowData.collector}}</pre>
     </div>
   </div>
@@ -75,6 +76,12 @@ export default {
       sources: $serverConfig.sources,
       flowData: {}
     };
+  },
+
+  methods: {
+    update() {
+      this.$root.$emit("update-project");
+    }
   },
 
   async mounted() {

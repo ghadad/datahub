@@ -39,6 +39,7 @@ export default {
   name: "flow",
   data: function() {
     return {
+      project: null,
       flowData: {},
       entityModel: {},
       route: null
@@ -46,13 +47,19 @@ export default {
   },
 
   async mounted() {
+    let self = this;
     this.route = this.$route;
-    let project = this.$dj(
-      await this.$http.get(`projects/${this.$route.params.project}`)
+    this.project = await this.$http.get(
+      `projects/${this.$route.params.project}`
     );
-    this.flowData = project.flows[this.$route.params.flow];
+
+    this.$root.$on("update-project", async function() {
+      await self.$http.put("projects", self.project);
+    });
+
+    this.flowData = this.project.flows[this.$route.params.flow];
     let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
-    this.entityModel = project.entities[targetEntity];
+    this.entityModel = this.project.entities[targetEntity];
     this.$router.push({
       name: "collector"
     });

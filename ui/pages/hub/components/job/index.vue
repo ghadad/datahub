@@ -21,9 +21,10 @@ export default {
     };
   },
   async mounted() {
-    let project = this.$dj(
-      await this.$http.get(`projects/${this.$route.params.project}`)
+    let project = await this.$http.get(
+      `projects/${this.$route.params.project}`
     );
+
     this.jobData = project.jobs[this.$route.params.job];
   }
 };

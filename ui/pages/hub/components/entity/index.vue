@@ -59,6 +59,7 @@
         <button class="button is-link" v-show="entityData.name" @click="update">Update</button>
       </div>
     </div>
+    <pre>{{project}}</pre>
   </div>
 </template> 
 <script>
@@ -72,32 +73,30 @@ export default {
   },
   data: function() {
     return {
+      project: null,
       errors: [],
       initEntuty: { name: null, description: null, properties: [] },
       entityData: {}
     };
   },
   methods: {
-    update() {
-      this.$set(
-        this.entityData,
-        "properties",
-        this.$refs.properties.properties
-      );
+    async update() {
+      await this.$http.put("projects", this.project);
     },
+
     create() {
       this.$set(this.entityData.properties, this.$refs.properties.properties);
     }
   },
   async mounted() {
-    let project = this.$dj(
-      await this.$http.get(`projects/${this.$route.params.project}`)
+    this.project = await this.$http.get(
+      `projects/${this.$route.params.project}`
     );
 
     this.$set(
       this,
       "entityData",
-      project.entities[this.$route.params.entity] || {}
+      this.project.entities[this.$route.params.entity] || {}
     );
   }
 };
