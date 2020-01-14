@@ -1,53 +1,29 @@
 <template>
   <div v-if="entityData">
-    <h1>Entity & Properties</h1>
+    <h1 class="title">Entity & Properties</h1>
     <div class="columns">
-      <div class="column">
-        <p v-for="(e,index) in errors" :key="index" class="has-text-danger">{{e}}</p>
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column is-5">
-        <div class="columns">
-          <div class="column is-5">
-            <div class="field">
-              <label class="label">Entity name</label>
-              <div class="control">
-                <input
-                  class="input"
-                  type="text"
-                  placeholder="Entity name"
-                  v-model="entityData.name"
-                  pattern="/\w+/"
-                />
-              </div>
-              <p class="help">unique name . use only alphanumeric letters</p>
-              <p v-for="(e,index) in errors" :key="index">{{e}}</p>
+      <div class="column is-6">
+        <section>
+          <div class="field">
+            <label class="label">Entity name</label>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                placeholder="Entity name"
+                v-model="entityData.name"
+                pattern="/\w+/"
+              />
             </div>
+            <p class="help">unique name . use only alphanumeric letters</p>
+            <p v-for="(e,index) in errors" :key="index">{{e}}</p>
           </div>
-          <div class="column is-5">
-            <div class="field">
-              <label class="label">Entity name</label>
-              <div class="control">
-                <input
-                  class="input"
-                  type="text"
-                  placeholder="Entity name"
-                  v-model="entityData.name"
-                  pattern="/\w+/"
-                />
-              </div>
-              <p class="help">unique name . use only alphanumeric letters</p>
-
-              <p v-for="(e,index) in errors" :key="index">{{e}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="column is-12">
+        </section>
+        <section>
           <b-field label="Description">
-            <b-input maxlength="300" type="textarea" v-model="entityData.description"></b-input>
+            <b-input rows="20" maxlength="300" type="textarea" v-model="entityData.description"></b-input>
           </b-field>
-        </div>
+        </section>
       </div>
       <div class="column is-6">
         <properties ref="properties" v-if="entityData.properties" :list="entityData.properties"></properties>
@@ -59,9 +35,9 @@
         <button class="button is-link" v-show="entityData.name" @click="update">Update</button>
       </div>
     </div>
-    <pre>{{project}}</pre>
   </div>
 </template> 
+
 <script>
 import Properties from "./properties";
 export default {
@@ -81,11 +57,22 @@ export default {
   },
   methods: {
     async update() {
-      await this.$http.put("projects", this.project);
+      this.$set(
+        this.entityData,
+        "properties",
+        this.$refs.properties.properties
+      );
+      let res = await this.$http.put("projects", this.project);
+      this.project._rev = res.rev;
+      this.$root.$emit("global-ok", res.ok || fasle);
     },
 
     create() {
-      this.$set(this.entityData.properties, this.$refs.properties.properties);
+      this.$set(
+        this.entityData,
+        "properties",
+        this.$refs.properties.properties
+      );
     }
   },
   async mounted() {

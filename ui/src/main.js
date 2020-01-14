@@ -9,6 +9,9 @@ Vue.use(Buefy)
 import Http from "@/services/http";
 Vue.prototype.$http = Http;
 
+import ValidationProvider from "./validate.js";
+Vue.component('ValidationProvider', ValidationProvider);
+
 Http.get("config").then(r => window.$serverConfig = r);
 
 export default Vue;

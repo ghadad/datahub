@@ -16,6 +16,7 @@
     "lodash": "^4.17.15",
     "serialize-javascript": "^2.1.2",
     "upath": "^1.2.0",
+    "vee-validate": "^3.2.1",
     "vue": "^2.6.10",
     "vue-codemirror-lite": "^1.0.4",
     "vue-material": "^1.0.0-beta-11",

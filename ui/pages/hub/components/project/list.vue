@@ -23,7 +23,7 @@
             <div class="buttons">
               <button class="button is-primary" @click="explore(p._id)">Explore</button>
               <button class="button is-info" @click="update(p)">Update</button>
-              <button class="button is-danger" @click="deleteDb(_id)">Delete</button>
+              <button class="button is-danger" @click="deleteDb(p)">Delete</button>
             </div>
           </td>
         </tr>
@@ -40,8 +40,8 @@ export default {
     };
   },
   methods: {
-    async deleteDb(_id) {
-      await this.$http.delete("projects", { _id: _id });
+    async deleteDb(p) {
+      await this.$http.delete("projects", { id: p._id, rev: p._rev });
       this.list = await this.$parent.fetch();
     },
     explore(id) {
