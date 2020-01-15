@@ -6,6 +6,9 @@
     <transform class="rule-section" v-model="value" :functions="functions"></transform>
     <validation class="rule-section" v-model="value" :functions="functions"></validation>
     <drop v-model="value" :functions="functions"></drop>
+    <div class="column is-12">
+      <button class="button is-link" @click="update">Update</button>
+    </div>
   </div>
 </template>
 <script>
@@ -18,7 +21,7 @@ import Drop from "./drop.vue";
 export default {
   name: "csv-collector",
   props: ["value", "functions", "entity"],
-  components: { Target,Origin,Transform,Validation ,Drop},
+  components: { Target, Origin, Transform, Validation, Drop },
   data: function() {
     return {
       activeDrop: {},
@@ -32,8 +35,11 @@ export default {
       }`
     };
   },
-  watch: {
- 
+  watch: {},
+  methods: {
+    update() {
+      this.$root.$emit("update-project");
+    }
   },
   mounted() {
     //this.value.ruleHandler = this.handlerTemplate;
@@ -41,5 +47,8 @@ export default {
 };
 </script>
 <style>
-.rule-section {padding:20px  0 20px 0 ;border-bottom:1px dotted #CCC}
+.rule-section {
+  padding: 20px 0 20px 0;
+  border-bottom: 1px dotted #ccc;
+}
 </style>

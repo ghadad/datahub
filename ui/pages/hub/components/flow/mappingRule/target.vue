@@ -7,24 +7,24 @@
           <div class="field">
             <section>
               <div class="block">
-                <b-radio v-model="value.targeting" name="name" native-value="property">
+                <b-radio v-model="value.targetType" name="name" native-value="property">
                   Targeting
                   {{entity.name}} property
                 </b-radio>
-                <b-radio v-model="value.targeting" name="name" native-value="variable">Variable</b-radio>
-                <b-radio v-model="value.targeting" name="name" native-value="''">Not targeting</b-radio>
+                <b-radio v-model="value.targetType" name="name" native-value="variable">Variable</b-radio>
+                <b-radio v-model="value.targetType" name="name" native-value="''">Not targeting</b-radio>
               </div>
             </section>
           </div>
         </div>
       </div>
-      <div class="column is-4" v-show="value.targeting=='property'">
+      <div class="column is-4" v-show="value.targetType=='property'">
         <div class="field">
           <b-checkbox v-model="value.hash">Revision factor</b-checkbox>
         </div>
       </div>
     </div>
-    <div class="columns" v-show="value.targeting=='property'">
+    <div class="columns" v-show="value.targetType=='property'">
       <div class="column is-3">
         <strong class="label">Pick propery from {{entity.name}} entity</strong>
       </div>
@@ -40,7 +40,7 @@
         </b-autocomplete>
       </div>
     </div>
-    <div class="columns" v-show="value.targeting=='variable'">
+    <div class="columns" v-show="value.targetType=='variable'">
       <div class="column is-3">
         <strong class="label">case sensitive variabe name</strong>
       </div>
@@ -60,24 +60,21 @@ export default {
   props: ["value", "entity"],
   data() {
     return {
-      goToValue: this.value.goTo||"",
-      
+      goToValue: this.value.goTo || ""
     };
   },
-  mounted: function() {
-  
-  },
+  mounted: function() {},
   computed: {
     filteredDataArray() {
       let self = this;
-      
+
       return this.entity.properties
         .filter(option => {
           return (
             option.name
               .toString()
               .toLowerCase()
-              .indexOf((self.goToValue||"").toLowerCase()) >= 0
+              .indexOf((self.goToValue || "").toLowerCase()) >= 0
           );
         })
         .map(e => e.name);

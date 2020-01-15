@@ -54,7 +54,7 @@
 
     <div class="column is-12">
       <button class="button is-link" @click="update">Update</button>
-      <pre>{{flowData.collector}}</pre>
+      <pre style="max-width:800px">{{flowData.collector}}</pre>
     </div>
   </div>
 </template>

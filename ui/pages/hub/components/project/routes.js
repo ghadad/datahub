@@ -5,12 +5,13 @@ import Help from "./help.vue";
 import Explore from "./explore.vue"
 
 export default {
-    name:"projects",
+    name: "projects",
     path: "/project",
     component: Projects,
     children: [{
         path: 'explore/:project',
         component: Explore
+
     }, {
         path: 'list',
         component: List

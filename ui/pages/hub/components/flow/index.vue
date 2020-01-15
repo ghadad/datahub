@@ -17,19 +17,14 @@
         </li>
       </ul>
     </nav>
-    <div class="tabs">
-      <ul>
-        <li class="is-active">
-          <router-link :to="{name:'collector'}">Collector</router-link>
-        </li>
-        <li>
-          <router-link :to="{name:'mapping'}">Mapping</router-link>
-        </li>
-        <li>
-          <router-link :to="{name:'discover'}">Discover</router-link>
-        </li>
-      </ul>
-    </div>
+    <section>
+      <b-steps v-model="activeStep" :animated="true" :has-navigation="false">
+        <b-step-item label="Collector" :clickable="true"></b-step-item>
+        <b-step-item label="Mapping" :clickable="true"></b-step-item>
+        <b-step-item label="Discover" :clickable="true"></b-step-item>
+      </b-steps>
+    </section>
+
     <router-view></router-view>
     <b-message title="params" type="is-info" aria-close-label="Close message">{{$route.params}}</b-message>
   </div>
@@ -39,13 +34,24 @@ export default {
   name: "flow",
   data: function() {
     return {
+      stepRoute: [
+        { name: "collector" },
+        { name: "mapping" },
+        { name: "discover" }
+      ],
+      activeStep: 0,
       project: null,
       flowData: {},
       entityModel: {},
       route: null
     };
   },
-
+  watch: {
+    activeStep: function(newVal) {
+      //alert(newVal);
+      this.$router.push(this.stepRoute[newVal]);
+    }
+  },
   async mounted() {
     let self = this;
     this.route = this.$route;
