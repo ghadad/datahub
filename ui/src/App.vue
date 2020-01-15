@@ -12,7 +12,7 @@
                     style="background:none;position:fixed;margin-top:-20px"
                     :active.sync="globalOk"
                     type="is-clear"
-                    auto-close="2"
+                    :auto-close="true"
                     :closable="false"
                   >
                     <b-tag rounded v-show="globalOk" class="is-success">:)</b-tag>
@@ -51,7 +51,6 @@
           </ul>
         </aside>
       </div>
-      <sction></sction>
       <div class="column">
         <h1 class="main-title title">
           {{routeTitle}}
@@ -68,7 +67,7 @@
             type="is-danger"
             aria-close-label="Close notification"
             role="alert"
-            auto-close="5"
+            :auto-close="true"
           >
             <h1 class="h1 title">Error</h1>
             <p>{{globalError.err}}</p>

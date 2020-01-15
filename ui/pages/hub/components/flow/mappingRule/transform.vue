@@ -1,6 +1,6 @@
 <template>
     <section v-if="value">
-        <strong>transform rules</strong>
+        <strong>Transforms rules</strong>
            <div class="columns">
       <div class="column is-2">
         <div class="field">
@@ -14,10 +14,10 @@
       <div class="column is-8">{{activeFunc}}</div>
       <div class="column is-2">
         {{activeFunc}}
-        <button @click="addrule" class="buttun">Add to Validations</button>
+        <button @click="addrule" class="buttun">Add to Transforms</button>
       </div>
     </div>
-    <div>{{value.validate}}</div>
+    <div>{{value.transform}}</div>
 
     </section>
 </template>

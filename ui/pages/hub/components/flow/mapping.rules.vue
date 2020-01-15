@@ -2,7 +2,7 @@
   <div>
     <div class="columns">
       <div class="rules-list column is-3">
-        <h1 class="title h6 has-text-left">Mapping source data</h1>
+        <h1 class="strong h6 has-text-left">Exists rules</h1>
         <table class="table is-fullwidth is-dark">
           <draggable v-model="rules" tag="tbody">
             <tr
@@ -35,7 +35,7 @@ export default {
   components: { draggable, ruleForm },
   data: function() {
     return {
-      rules: this.value,
+      rules: this.$_.cloneDeep(this.$props.value),
       activeRule: null,
       activeIndex: null,
       route: null,

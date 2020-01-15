@@ -7,16 +7,16 @@
           <div class="field">
             <section>
               <div class="block">
-                <b-radio v-model="value.targetType" name="name" native-value="property">
+                <b-radio v-model="value.targetType" native-value="property">
                   Targeting
                   {{entity.name}} property
                 </b-radio>
-                <b-radio v-model="value.targetType" name="name" native-value="variable">Variable</b-radio>
-                <b-radio v-model="value.targetType" name="name" native-value="''">Not targeting</b-radio>
+                <b-radio v-model="value.targetType"  native-value="variable">Variable</b-radio>
+                <b-radio v-model="value.targetType"  :native-value="''">Not targeting</b-radio>
               </div>
             </section>
           </div>
-        </div>
+        </div>  
       </div>
       <div class="column is-4" v-show="value.targetType=='property'">
         <div class="field">
