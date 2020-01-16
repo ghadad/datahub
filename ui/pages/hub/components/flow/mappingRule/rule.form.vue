@@ -38,7 +38,7 @@ export default {
   watch: {},
   methods: {
     update() {
-      this.$root.$emit("update-project");
+      this.$root.$emit("rule-update");
     }
   },
   mounted() {

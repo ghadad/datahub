@@ -60,7 +60,8 @@ export default {
     );
 
     this.$root.$on("update-project", async function() {
-      await self.$http.put("projects", self.project);
+      let res = await self.$http.put("projects", self.project);
+      self.project._rev = res.rev;
     });
 
     this.flowData = this.project.flows[this.$route.params.flow];
