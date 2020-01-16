@@ -1,7 +1,9 @@
 <template>
-    <section v-if="value">
-        <strong>drop rules</strong>
-           <div class="columns">
+  <section v-if="value">
+    <div class="columns">
+      <div class="column is-2 tag-head">
+        <strong class="tag title is-7 is-dark">Drop rules</strong>
+      </div>
       <div class="column is-2">
         <div class="field">
           <div class="select">
@@ -18,29 +20,27 @@
       </div>
     </div>
     <div>{{value.drop}}</div>
-<hr>
-    </section>
+    <hr />
+  </section>
 </template>
 
 <script>
-    export default {
-        props: ["value", "functions"],
-        data() {
-            return {
-                  activeFunc:null
-            };
-        },
-
-        mounted: function () {
-         this.value.drop = this.value.drop || [];
-        },
-        methods:{
-          addrule:function(){
-          this.value.drop.push([this.activeFunc])
-         }
-        },
-        computed: {
-         
-        }
+export default {
+  props: ["value", "functions"],
+  data() {
+    return {
+      activeFunc: null
     };
+  },
+
+  mounted: function() {
+    this.value.drop = this.value.drop || [];
+  },
+  methods: {
+    addrule: function() {
+      this.value.drop.push([this.activeFunc]);
+    }
+  },
+  computed: {}
+};
 </script>

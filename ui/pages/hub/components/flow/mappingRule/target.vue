@@ -1,22 +1,21 @@
 <template>
   <section v-if="value">
-    <strong>Targeting</strong>
     <div class="columns">
-      <div class="column is-6">
+      <div class="column is-2 tag-head">
+        <strong class="tag title is-7 is-dark">Targeting</strong>
+      </div>
+      <div class="column">
         <div class="block">
           <div class="field">
             <section>
               <div class="block">
-                <b-radio v-model="value.targetType" native-value="property">
-                  Targeting
-                  {{entity.name}} property
-                </b-radio>
-                <b-radio v-model="value.targetType"  native-value="variable">Variable</b-radio>
-                <b-radio v-model="value.targetType"  :native-value="''">Not targeting</b-radio>
+                <b-radio v-model="value.targetType" native-value="property">{{entity.name}} property</b-radio>
+                <b-radio v-model="value.targetType" native-value="variable">Variable</b-radio>
+                <b-radio v-model="value.targetType" :native-value="''">Irrelevant</b-radio>
               </div>
             </section>
           </div>
-        </div>  
+        </div>
       </div>
       <div class="column is-4" v-show="value.targetType=='property'">
         <div class="field">
@@ -24,7 +23,8 @@
         </div>
       </div>
     </div>
-    <div class="columns" v-show="value.targetType=='property'">
+
+    <div class="columns" v-if="value.targetType=='property'">
       <div class="column is-3">
         <strong class="label">Pick propery from {{entity.name}} entity</strong>
       </div>
@@ -40,7 +40,7 @@
         </b-autocomplete>
       </div>
     </div>
-    <div class="columns" v-show="value.targetType=='variable'">
+    <div class="columns" v-if="value.targetType=='variable'">
       <div class="column is-3">
         <strong class="label">case sensitive variabe name</strong>
       </div>
@@ -48,10 +48,6 @@
         <input type="text" class="control" v-model="value.$var" />
       </div>
     </div>
-    <!--div class="panel-block" v-show="targeting=='property'">
-      {{entity.properties}}
-      <pre>{{filteredDataArray}}</pre>
-    </div-->
   </section>
 </template>
 

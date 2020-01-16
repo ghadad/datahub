@@ -1,60 +1,78 @@
 <template>
   <div v-if="flowData.collector">
-    <h1>FLOW</h1>
-    <div class="columns">
-      <div class="column is-2">
-        <div class="field">
-          <label class="label">Collector name</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Collector  name"
-              v-model="flowData.collector.config.name"
-              pattern="/\w+/"
-            />
+    <div v-if="!$route.query.handler">
+      <div>
+        <h1>FLOW</h1>
+        <div class="columns">
+          <div class="column is-2">
+            <div class="field">
+              <label class="label">Collector name</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="Collector  name"
+                  v-model="flowData.collector.config.name"
+                  pattern="/\w+/"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column is-2">
+            <div class="field">
+              <label class="label">Source type</label>
+              <div class="select">
+                <select v-model="flowData.collector.config.sourceType">
+                  <option
+                    v-for="source in sources"
+                    :key="source.type"
+                    :value="source.type"
+                  >{{source.description}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="column is-2">
+            <div class="field">
+              <label class="label">Concurrency</label>
+              <div class="select">
+                <select v-model="flowData.collector.config.concurrency">
+                  <option v-for="(c,index) in [1,2,3,4,5,6,7,8,9,10]" :key="index" :value="c">{{c}}</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="column is-2">
-        <div class="field">
-          <label class="label">Source type</label>
-          <div class="select">
-            <select v-model="flowData.collector.config.sourceType">
-              <option
-                v-for="source in sources"
-                :key="source.type"
-                :value="source.type"
-              >{{source.description}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="column is-2">
-        <div class="field">
-          <label class="label">Concurrency</label>
-          <div class="select">
-            <select v-model="flowData.collector.config.concurrency">
-              <option v-for="(c,index) in [1,2,3,4,5,6,7,8,9,10]" :key="index" :value="c">{{c}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div v-if="flowData.collector.config.sourceType=='csv'">
-      <csv-form v-model="flowData.collector.config"></csv-form>
-    </div>
-    <div v-if="flowData.collector.config.sourceType=='restapi'">
-      <restapi-form v-model="flowData.collector.config"></restapi-form>
-    </div>
-    <div v-if="flowData.collector.config.sourceType=='query'">
-      <query-form v-model="flowData.collector.config"></query-form>
-    </div>
+        <div v-if="flowData.collector.config.sourceType=='csv'">
+          <csv-form v-model="flowData.collector.config"></csv-form>
+        </div>
+        <div v-if="flowData.collector.config.sourceType=='restapi'">
+          <restapi-form v-model="flowData.collector.config"></restapi-form>
+        </div>
+        <div v-if="flowData.collector.config.sourceType=='query'">
+          <query-form v-model="flowData.collector.config"></query-form>
+        </div>
 
-    <div class="column is-12">
-      <button class="button is-link" @click="update">Update</button>
-      <pre style="max-width:800px">{{flowData.collector}}</pre>
+        <div class="column is-12">
+          <button class="button is-link" @click="update">Update</button>
+          <pre style="max-width:800px">{{flowData.collector}}</pre>
+        </div>
+      </div>
+    </div>
+    <div v-if="$route.query.handler">
+      <div class="field">
+        <label class="label">Source query</label>
+        <div class="control">
+          <textarea
+            size="1"
+            class="textarea"
+            rows="20"
+            v-model="flowData.collector.handler"
+            pattern="/\w+/"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>

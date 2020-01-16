@@ -20,7 +20,9 @@
     <section>
       <b-steps v-model="activeStep" :animated="true" :has-navigation="false">
         <b-step-item label="Collector" :clickable="true"></b-step-item>
+        <b-step-item label="Handler" :clickable="true"></b-step-item>
         <b-step-item label="Mapping" :clickable="true"></b-step-item>
+        <b-step-item label="Handler" :clickable="true"></b-step-item>
         <b-step-item label="Discover" :clickable="true"></b-step-item>
       </b-steps>
     </section>
@@ -36,7 +38,9 @@ export default {
     return {
       stepRoute: [
         { name: "collector" },
+        { name: "collector", query: { handler: true } },
         { name: "mapping" },
+        { name: "mapping", query: { handler: true } },
         { name: "discover" }
       ],
       activeStep: 0,

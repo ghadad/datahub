@@ -1,11 +1,10 @@
 <template>
   <div v-if="value">
-    <h1>Rule setup</h1>
     <target class="rule-section" v-model="value" :entity="entity"></target>
     <origin class="rule-section" v-model="value" :entity="entity"></origin>
     <transform class="rule-section" v-model="value" :functions="functions"></transform>
     <validation class="rule-section" v-model="value" :functions="functions"></validation>
-    <drop v-model="value" :functions="functions"></drop>
+    <drop v-model="value" class="rule-section" :functions="functions"></drop>
     <div class="column is-12">
       <button class="button is-link" @click="update">Update</button>
     </div>
@@ -25,7 +24,6 @@ export default {
   data: function() {
     return {
       activeDrop: {},
-
       activeValdation: {},
       activeTransformation: {},
       handlerTemplate: `function(data){
@@ -48,7 +46,21 @@ export default {
 </script>
 <style>
 .rule-section {
-  padding: 20px 0 20px 0;
+  padding: 10px;
+  margin-bottom: 5px;
+  background: #eee;
   border-bottom: 1px dotted #ccc;
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+}
+.tag-head {
+  padding: 1px;
+}
+
+.tag-head .tag {
+  border-radius: 2px;
+}
+is-7 {
+  font-size: 1.2em;
 }
 </style>

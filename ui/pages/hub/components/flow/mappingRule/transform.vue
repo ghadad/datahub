@@ -1,7 +1,9 @@
 <template>
-    <section v-if="value">
-        <strong>Transforms rules</strong>
-           <div class="columns">
+  <section v-if="value">
+    <div class="columns">
+      <div class="column is-2 tag-head">
+        <strong class="tag title is-7 is-dark">Transforms rules</strong>
+      </div>
       <div class="column is-2">
         <div class="field">
           <div class="select">
@@ -18,29 +20,26 @@
       </div>
     </div>
     <div>{{value.transform}}</div>
-
-    </section>
+  </section>
 </template>
 
 <script>
-    export default {
-        props: ["value", "functions"],
-        data() {
-            return {
-                  activeFunc:null
-            };
-        },
-
-        mounted: function () {
-         this.value.transform = this.value.transform || [];
-        },
-        methods:{
-          addrule:function(){
-          this.value.transform.push([this.activeFunc])
-         }
-        },
-        computed: {
-         
-        }
+export default {
+  props: ["value", "functions"],
+  data() {
+    return {
+      activeFunc: null
     };
+  },
+
+  mounted: function() {
+    this.value.transform = this.value.transform || [];
+  },
+  methods: {
+    addrule: function() {
+      this.value.transform.push([this.activeFunc]);
+    }
+  },
+  computed: {}
+};
 </script>

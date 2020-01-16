@@ -1,22 +1,38 @@
 <template>
-  <div v-if="$parent.$data.flowData.collector">
-    <button class="button is-link" @click="update">Update</button>
+  <div id="mapping-rules" v-if="$parent.$data.flowData.mapping">
+    <div v-if="!$route.query.handler">
+      <mapping-rules
+        ref="existsRules"
+        v-model="$parent.$data.flowData.mapping.config"
+        :functions="functions"
+        :entity="entity"
+      ></mapping-rules>
 
-    <mapping-rules
-      ref="existsRules"
-      v-model="$parent.$data.flowData.mapping.config"
-      :functions="functions"
-      :entity="entity"
-    ></mapping-rules>
-
-    <pre>{{$parent.$data.flowData.mapping.config}}</pre>
+      <pre>{{$parent.$data.flowData.mapping.config}}</pre>
+    </div>
+    <div v-if="$route.query.handler">
+      <div class="field">
+        <label class="label">Post mapping Handler</label>
+        <div class="control">
+          <textarea
+            size="1"
+            class="textarea"
+            rows="20"
+            v-model="$parent.$data.flowData.mapping.handler"
+            pattern="/\w+/"
+          />
+        </div>
+      </div>
+    </div>
   </div>
-</template> 
+</template>
 <script>
 import MappingRules from "./mapping.rules.vue";
 export default {
   name: "mapping",
-  components: { MappingRules },
+  components: {
+    MappingRules
+  },
   data: function() {
     return {
       functions: null,
