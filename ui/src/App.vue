@@ -55,7 +55,7 @@
         <h1 class="main-title title">
          {{$route.meta.title|| $route.name||$route.path}}
           <b-tag
-            :type="is-info"
+            type="is-info"
             size="is-medium"
             v-for="(v,p) in routeParams"
             :key="p"

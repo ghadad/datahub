@@ -1,9 +1,9 @@
 <template>
   <section v-if="value">
-    <div class="columns">
-      <div class="column is-2 tag-head">
+        <div class="tag-head">
         <strong class="tag title is-7 is-dark">Targeting</strong>
       </div>
+    <div class="columns">
       <div class="column">
         <div class="block">
           <div class="field">

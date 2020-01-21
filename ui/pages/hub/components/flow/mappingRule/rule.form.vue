@@ -2,30 +2,28 @@
   <div v-if="value">
     <target class="rule-section" v-model="value" :entity="entity"></target>
     <origin class="rule-section" v-model="value" :entity="entity"></origin>
-    <transform class="rule-section" v-model="value" :functions="functions"></transform>
-    <validation class="rule-section" v-model="value" :functions="functions"></validation>
-    <drop v-model="value" class="rule-section" :functions="functions"></drop>
+    <functions title="Transform rules" class="rule-section" :list.sync="value.transform" :functions="functions.transforms"></functions>
+    <functions title="Validtion rules" class="rule-section" :list.sync="value.validate" :functions="functions.validations"></functions>
+    <functions title="Drop  rules" class="rule-section" :list.sync="value.drop" :functions="functions.validations"></functions>
     <div class="column is-12">
       <button class="button is-link" @click="update">Update</button>
     </div>
+    <div>{{value.drop}}</div>
   </div>
 </template>
 <script>
 import Target from "./target.vue";
 import Origin from "./origin.vue";
-import Transform from "./transform.vue";
-import Validation from "./validation.vue";
-import Drop from "./drop.vue";
+import Functions from "./functions.vue";
+
 
 export default {
   name: "csv-collector",
   props: ["value", "functions", "entity"],
-  components: { Target, Origin, Transform, Validation, Drop },
+  components: { Target, Origin, Functions },
   data: function() {
     return {
-      activeDrop: {},
-      activeValdation: {},
-      activeTransformation: {},
+ 
       handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
@@ -40,13 +38,16 @@ export default {
     }
   },
   mounted() {
+        this.value.validate = this.value.validate||[];
+   this.value.transform = this.value.transform||[];
+    this.value.drop = this.value.drop||[];
     //this.value.ruleHandler = this.handlerTemplate;
   }
 };
 </script>
 <style>
 .rule-section {
-  padding: 10px;
+  padding: 7px;
   margin-bottom: 5px;
   background: #eee;
   border-bottom: 1px dotted #ccc;
@@ -54,8 +55,10 @@ export default {
   border-radius: 3px;
 }
 .tag-head {
-  padding: 1px;
-  position:absolute;
+position:relative;
+top:-8px;
+left:-8px;
+border-radius:3px;
 }
 .sub-tag-head {
  margin-top:15px;
