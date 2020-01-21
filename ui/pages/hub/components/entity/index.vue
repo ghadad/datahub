@@ -43,10 +43,7 @@ import Properties from "./properties";
 export default {
   name: "entity",
   components: { Properties },
-  methods: {
-    create() {},
-    update() {}
-  },
+
   data: function() {
     return {
       project: null,
@@ -64,7 +61,7 @@ export default {
       );
       let res = await this.$http.put("projects", this.project);
       this.project._rev = res.rev;
-      this.$root.$emit("global-ok", res.ok || fasle);
+      this.$root.$emit("global-ok", res.ok || false);
     },
 
     create() {
@@ -76,6 +73,11 @@ export default {
     }
   },
   async mounted() {
+     this.$root.$emit("breadcrumbs",[
+        {name:'projects'},
+        {name:'explore',title:this.$route.params.project},
+        {title:this.$route.params.entity+" Entity",active:true}
+      ]);
     this.project = await this.$http.get(
       `projects/${this.$route.params.project}`
     );

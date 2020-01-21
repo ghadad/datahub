@@ -62,15 +62,9 @@
     </div>
     <div v-if="$route.query.handler">
       <div class="field">
-        <label class="label">Source query</label>
+        <label class="label">Post collector handler</label>
         <div class="control">
-          <textarea
-            size="1"
-            class="textarea"
-            rows="20"
-            v-model="flowData.collector.handler"
-            pattern="/\w+/"
-          />
+        <codemirror v-model="flowData.collector.handler"></codemirror>        
         </div>
       </div>
     </div>
@@ -90,6 +84,7 @@ export default {
   },
   data: function() {
     return {
+     
       errors: [],
       sources: $serverConfig.sources,
       flowData: {}

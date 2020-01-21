@@ -14,13 +14,7 @@
       <div class="field">
         <label class="label">Post mapping Handler</label>
         <div class="control">
-          <textarea
-            size="1"
-            class="textarea"
-            rows="20"
-            v-model="$parent.$data.flowData.mapping.handler"
-            pattern="/\w+/"
-          />
+                <codemirror  v-model="$parent.$data.flowData.mapping.handler"  ></codemirror>        
         </div>
       </div>
     </div>
@@ -28,6 +22,7 @@
 </template>
 <script>
 import MappingRules from "./mapping.rules.vue";
+
 export default {
   name: "mapping",
   components: {
@@ -35,6 +30,7 @@ export default {
   },
   data: function() {
     return {
+    
       functions: null,
       route: null,
       entity: {}
@@ -51,6 +47,7 @@ export default {
     }
   },
   async mounted() {
+    
     let self = this;
     this.$root.$on("rule-update", function() {
       self.update();

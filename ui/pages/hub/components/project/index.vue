@@ -40,8 +40,10 @@ export default {
     }
   },
   async mounted() {
+    let self = this;
+     this.$root.$emit("breadcrumbs",[]);
     this.list = await this.fetch();
-    this.$router.push("/project/list");
+    //this.$router.push("/project/list");
   }
 };
 </script>

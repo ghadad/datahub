@@ -55,8 +55,12 @@ export default {
 }
 .tag-head {
   padding: 1px;
+  position:absolute;
 }
-
+.sub-tag-head {
+ margin-top:15px;
+ margin-left:10px;
+}
 .tag-head .tag {
   border-radius: 2px;
 }

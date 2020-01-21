@@ -1,22 +1,7 @@
 <template>
   <div v-if="flowData.collector">
     <h1>FLOW</h1>
-    <nav class="breadcrumb" aria-label="breadcrumbs">
-      <ul>
-        <li>
-          <a href="#">Bulma</a>
-        </li>
-        <li>
-          <a href="#">Documentation</a>
-        </li>
-        <li>
-          <a href="#">Components</a>
-        </li>
-        <li class="is-active">
-          <a href="#" aria-current="page">Breadcrumb</a>
-        </li>
-      </ul>
-    </nav>
+
     <section>
       <b-steps v-model="activeStep" :animated="true" :has-navigation="false">
         <b-step-item label="Collector" :clickable="true"></b-step-item>
@@ -36,7 +21,12 @@ export default {
   name: "flow",
   data: function() {
     return {
-      stepRoute: [
+      breadcrumbs:[
+        {name:'projects'},
+        {name:'explore',title:this.$route.params.project},
+        {title:this.$route.params.flow,active:true}
+      ],
+        stepRoute: [
         { name: "collector" },
         { name: "collector", query: { handler: true } },
         { name: "mapping" },
@@ -57,6 +47,7 @@ export default {
     }
   },
   async mounted() {
+    this.$root.$emit("breadcrumbs",this.breadcrumbs);
     let self = this;
     this.route = this.$route;
     this.project = await this.$http.get(

@@ -53,9 +53,9 @@
       </div>
       <div class="column">
         <h1 class="main-title title">
-          {{routeTitle}}
+         {{$route.meta.title|| $route.name||$route.path}}
           <b-tag
-            type="is-primary"
+            :type="is-info"
             size="is-medium"
             v-for="(v,p) in routeParams"
             :key="p"
@@ -75,6 +75,7 @@
             <p>{{globalError.info}}</p>
           </b-notification>
         </div>
+        <breadcrumb></breadcrumb>
         <router-view></router-view>
       </div>
     </div>
@@ -87,6 +88,7 @@ export default {
   props: ["menu", "title"],
   data: function() {
     return {
+      
       globalError: null,
       globalOk: null,
       menu1: {},
@@ -102,6 +104,7 @@ export default {
   },
   async mounted() {
     let self = this;
+    
     this.$root.$on("global-ok", function(data) {
       self.globalOk = data;
     });
@@ -123,31 +126,8 @@ export default {
   }
 };
 </script>
-
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-md-tabs.md-no-animation md-tab-content {
-  transition: none;
-}
-.md-drawer {
-  width: 200px !important;
-}
-h1.title {
-}
-.main-title .tag {
-  margin-left: 50px;
-  margin-left: 10px;
-}
-.side-title {
-  width: 100%;
-}
+.main-title .tag {margin-right:10px;border:1px solid black}
 </style>
+
 

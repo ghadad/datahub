@@ -39,21 +39,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-md-tabs.md-no-animation md-tab-content {
-  transition: none;
-}
-.md-drawer {
-  width: 200px !important;
-}
-</style>

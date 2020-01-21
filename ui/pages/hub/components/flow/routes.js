@@ -11,13 +11,16 @@ export default {
         path: "collector",
         component: Collector,
         name: "collector",
+        meta:{title:"Flow"}
     }, {
         path: "mapping",
         component: Mapping,
         name: "mapping",
+        meta:{title:"Mapping rules"}
     }, {
         path: "discover",
         component: Discover,
         name: "discover",
+        meta:{title:"Discover"}
     }]
 }

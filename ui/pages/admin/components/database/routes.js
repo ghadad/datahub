@@ -9,14 +9,21 @@ export default {
     name:"database",
     path: "/database",
     component: Databases,
+    
     children: [{
         path: 'list',
-        component: List
+        component: List,
+        meta:{title:"Databases"}
     }, {
         path: 'upsert',
-        component: New
+        component: New,
+        name:"UpsertDatabse",
+        meta:{title:"Upsert Database"}
     }, {
         path: "help",
-        component: Help
+        component: Help,
+        name:"databsesHelp",
+        meta:{title:"Databasess docs"}
+
     }]
 }

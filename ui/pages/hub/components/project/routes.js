@@ -10,10 +10,12 @@ export default {
     component: Projects,
     children: [{
         path: 'explore/:project',
-        component: Explore
+        component: Explore,
+        name:"explore"
 
     }, {
         path: 'list',
+        name:"projects",
         component: List
     }, {
         path: 'upsert',
