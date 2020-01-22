@@ -38,6 +38,7 @@ export default {
     }
   },
   mounted() {
+    
         this.value.validate = this.value.validate||[];
    this.value.transform = this.value.transform||[];
     this.value.drop = this.value.drop||[];

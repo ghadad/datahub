@@ -7,13 +7,7 @@
           <div class="field">
             <label class="label">Entity name</label>
             <div class="control">
-              <input
-                class="input"
-                type="text"
-                placeholder="Entity name"
-                v-model="entityData.name"
-                pattern="/\w+/"
-              />
+              <input class="input" type="text" placeholder="Entity name" v-model="entityData.name" pattern="/\w+/" />
             </div>
             <p class="help">unique name . use only alphanumeric letters</p>
             <p v-for="(e,index) in errors" :key="index">{{e}}</p>
@@ -33,60 +27,115 @@
       <div class="buttons">
         <button class="button is-primary" v-show="!entityData.name" @click="create">Create</button>
         <button class="button is-link" v-show="entityData.name" @click="update">Update</button>
+        <button class="button is-danger" v-show="deleteFlag==0" @click="deleteEntity(1)">Delete</button>
+        <button class="button is-danger" v-show="deleteFlag==1" @click="deleteEntity(2)">Are you sure</button>
       </div>
     </div>
   </div>
-</template> 
+</template>
 
 <script>
-import Properties from "./properties";
-export default {
-  name: "entity",
-  components: { Properties },
-
-  data: function() {
-    return {
-      project: null,
-      errors: [],
-      initEntuty: { name: null, description: null, properties: [] },
-      entityData: {}
-    };
-  },
-  methods: {
-    async update() {
-      this.$set(
-        this.entityData,
-        "properties",
-        this.$refs.properties.properties
-      );
-      let res = await this.$http.put("projects", this.project);
-      this.project._rev = res.rev;
-      this.$root.$emit("global-ok", res.ok || false);
+  import Properties from "./properties";
+  export default {
+    name: "entity",
+    components: {
+      Properties
     },
 
-    create() {
+    data: function () {
+      return {
+        deleteFlag: 0,
+        origEntityKeyName: null,
+        project: null,
+        errors: [],
+        initEntuty: {
+          name: null,
+          description: null,
+          properties: []
+        },
+        entityData: {}
+      };
+    },
+    methods: {
+      async deleteEntity(flag) {
+        let self = this;
+        this.deleteFlag = flag;
+        if (this.deleteFlag == 2) {
+          delete this.project.entities[this.$route.params.entity];
+          let res = await this.$http.put("projects", this.project);
+          this.project._rev = res.rev;
+          this.$root.$emit("global-ok", res.ok || false);
+          this.$router.push({
+            name: "explore",
+            params: this.$route.params
+          });
+        }
+        if (this.deleteFlag == 1) {
+          setTimeout(function () {
+            self.deleteFlag = 0
+          }, 3000)
+        }
+
+      },
+      async update() {
+        this.$set(
+          this.entityData,
+          "properties",
+          this.$refs.properties.properties
+        );
+
+        if (this.origEntityKeyName != this.entityData.name) {
+          if (this.project.entities[this.entityData.name]) {
+            throw new Error(`entity ${this.entityData.name} already exists in this project`)
+          }
+
+          this.project.entities[this.entityData.name] = this.$_.cloneDeep(this.entityData);
+          delete this.project.entities[this.origEntityKeyName];
+        }
+
+        let res = await this.$http.put("projects", this.project);
+        this.project._rev = res.rev;
+        this.$root.$emit("global-ok", res.ok || false);
+        this.$route.params.entity = this.entityData.name;
+        this.$router.push({
+          name: "entity",
+          params: this.$route.params
+        });
+
+      },
+
+      create() {
+        this.$set(
+          this.entityData,
+          "properties",
+          this.$refs.properties.properties
+        );
+      }
+    },
+    async mounted() {
+      this.origEntityKeyName = this.$route.params.entity;
+
+      this.$root.$emit("breadcrumbs", [{
+          name: 'projects'
+        },
+        {
+          name: 'explore',
+          title: this.$route.params.project
+        },
+        {
+          title: this.$route.params.entity + " Entity",
+          active: true
+        }
+      ]);
+      this.project = await this.$http.get(
+        `projects/${this.$route.params.project}`
+      );
+
       this.$set(
-        this.entityData,
-        "properties",
-        this.$refs.properties.properties
+        this,
+        "entityData",
+        this.project.entities[this.$route.params.entity] || {}
       );
     }
-  },
-  async mounted() {
-     this.$root.$emit("breadcrumbs",[
-        {name:'projects'},
-        {name:'explore',title:this.$route.params.project},
-        {title:this.$route.params.entity+" Entity",active:true}
-      ]);
-    this.project = await this.$http.get(
-      `projects/${this.$route.params.project}`
-    );
-
-    this.$set(
-      this,
-      "entityData",
-      this.project.entities[this.$route.params.entity] || {}
-    );
-  }
-};
+  };
 </script>
