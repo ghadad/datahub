@@ -58,10 +58,18 @@ export default {
       let res = await self.$http.put("projects", self.project);
       self.project._rev = res.rev;
     });
+    if (this.$route.params.flow) {
+      this.flowData = this.project.flows[this.$route.params.flow];
+      let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
+      this.entityModel = this.project.entities[targetEntity] || {};
+    } else {
+      this.flowData = {
+        collector: {
+          config: {}
+        }
+      };
+    }
 
-    this.flowData = this.project.flows[this.$route.params.flow];
-    let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
-    this.entityModel = this.project.entities[targetEntity] || {};
     this.$router.push({
       name: "collector"
     });
