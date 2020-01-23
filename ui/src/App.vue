@@ -52,14 +52,9 @@
         </aside>
       </div>
       <div class="column">
-        <h1 class="main-title title">
-         {{$route.meta.title|| $route.name||$route.path}}
-          <b-tag
-            type="is-info"
-            size="is-medium"
-            v-for="(v,p) in routeParams"
-            :key="p"
-          >{{p}}:{{v}}</b-tag>
+        <h1 class="main-title title" v-if="$route.name!='home'">
+          {{$route.meta.title|| $route.name||$route.path}}
+          <b-tag type="is-info" size="is-medium" v-for="(v,p) in routeParams" :key="p">{{p}}:{{v}}</b-tag>
         </h1>
         <div v-if="globalError">
           <b-notification
@@ -88,7 +83,6 @@ export default {
   props: ["menu", "title"],
   data: function() {
     return {
-      
       globalError: null,
       globalOk: null,
       menu1: {},
@@ -104,7 +98,7 @@ export default {
   },
   async mounted() {
     let self = this;
-    
+
     this.$root.$on("global-ok", function(data) {
       self.globalOk = data;
     });
@@ -127,7 +121,10 @@ export default {
 };
 </script>
 <style>
-.main-title .tag {margin-right:10px;border:1px solid black}
+.main-title .tag {
+  margin-right: 10px;
+  border: 1px solid black;
+}
 </style>
 
 

@@ -2,9 +2,24 @@
   <div v-if="value">
     <target class="rule-section" v-model="value" :entity="entity"></target>
     <origin class="rule-section" v-model="value" :entity="entity"></origin>
-    <functions title="Transform rules" class="rule-section" :list.sync="value.transform" :functions="functions.transforms"></functions>
-    <functions title="Validtion rules" class="rule-section" :list.sync="value.validate" :functions="functions.validations"></functions>
-    <functions title="Drop  rules" class="rule-section" :list.sync="value.drop" :functions="functions.validations"></functions>
+    <functions
+      title="Transform rules"
+      class="rule-section"
+      :list.sync="value.transform"
+      :functions="functions.transforms"
+    ></functions>
+    <functions
+      title="Validtion rules"
+      class="rule-section"
+      :list.sync="value.validate"
+      :functions="functions.validations"
+    ></functions>
+    <functions
+      title="Drop  rules"
+      class="rule-section"
+      :list.sync="value.drop"
+      :functions="functions.validations"
+    ></functions>
     <div class="column is-12">
       <button class="button is-link" @click="update">Update</button>
     </div>
@@ -16,14 +31,12 @@ import Target from "./target.vue";
 import Origin from "./origin.vue";
 import Functions from "./functions.vue";
 
-
 export default {
   name: "csv-collector",
   props: ["value", "functions", "entity"],
   components: { Target, Origin, Functions },
   data: function() {
     return {
- 
       handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
@@ -38,10 +51,6 @@ export default {
     }
   },
   mounted() {
-    
-        this.value.validate = this.value.validate||[];
-   this.value.transform = this.value.transform||[];
-    this.value.drop = this.value.drop||[];
     //this.value.ruleHandler = this.handlerTemplate;
   }
 };
@@ -56,14 +65,14 @@ export default {
   border-radius: 3px;
 }
 .tag-head {
-position:relative;
-top:-8px;
-left:-8px;
-border-radius:3px;
+  position: relative;
+  top: -8px;
+  left: -8px;
+  border-radius: 3px;
 }
 .sub-tag-head {
- margin-top:15px;
- margin-left:10px;
+  margin-top: 15px;
+  margin-left: 10px;
 }
 .tag-head .tag {
   border-radius: 2px;

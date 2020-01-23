@@ -1,15 +1,23 @@
 <template>
   <section v-if="value">
-        <div class="tag-head">
-        <strong class="tag title is-7 is-dark">Targeting</strong>
-      </div>
+    <div class="tag-head">
+      <strong class="tag title is-7 is-dark">Targeting</strong>
+      <span v-show="!entity.name">
+        Please note ! there is no entity defined in collector setting !
+        <router-link :to="{name:'collector'}">add it here</router-link>
+      </span>
+    </div>
     <div class="columns">
       <div class="column">
         <div class="block">
           <div class="field">
             <section>
               <div class="block">
-                <b-radio v-model="value.targetType" native-value="property">{{entity.name}} property</b-radio>
+                <b-radio
+                  v-if="entity.name"
+                  v-model="value.targetType"
+                  native-value="property"
+                >{{entity.name}} property</b-radio>
                 <b-radio v-model="value.targetType" native-value="variable">Variable</b-radio>
                 <b-radio v-model="value.targetType" :native-value="''">Irrelevant</b-radio>
               </div>
@@ -24,7 +32,7 @@
       </div>
     </div>
 
-    <div class="columns" v-if="value.targetType=='property'">
+    <div class="columns" v-if="value.targetType=='property' && entity.name">
       <div class="column is-3">
         <strong class="label">Pick propery from {{entity.name}} entity</strong>
       </div>

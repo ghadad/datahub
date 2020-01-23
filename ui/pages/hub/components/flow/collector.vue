@@ -20,6 +20,22 @@
           </div>
           <div class="column is-2">
             <div class="field">
+              <label class="label">Target entity</label>
+              <div class="select">
+                <select v-model="flowData.collector.config.targetEntity">
+                  <option value>----</option>
+                  <option
+                    v-for="entityName in entitiesKeys"
+                    :key="entityName"
+                    :value="entityName"
+                  >{{entityName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="column is-2">
+            <div class="field">
               <label class="label">Source type</label>
               <div class="select">
                 <select v-model="flowData.collector.config.sourceType">
@@ -64,7 +80,7 @@
       <div class="field">
         <label class="label">Post collector handler</label>
         <div class="control">
-        <codemirror v-model="flowData.collector.handler"></codemirror>        
+          <codemirror v-model="flowData.collector.handler"></codemirror>
         </div>
       </div>
     </div>
@@ -84,7 +100,7 @@ export default {
   },
   data: function() {
     return {
-     
+      entitiesKeys: [],
       errors: [],
       sources: $serverConfig.sources,
       flowData: {}
@@ -99,6 +115,7 @@ export default {
 
   async mounted() {
     this.flowData = this.$parent.$data.flowData;
+    this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
     this.$_.set(this.flowData, "flowData.collector.config.concurrency", 1);
   }
 };

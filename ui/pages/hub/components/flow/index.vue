@@ -21,12 +21,12 @@ export default {
   name: "flow",
   data: function() {
     return {
-      breadcrumbs:[
-        {name:'projects'},
-        {name:'explore',title:this.$route.params.project},
-        {title:this.$route.params.flow,active:true}
+      breadcrumbs: [
+        { name: "projects" },
+        { name: "explore", title: this.$route.params.project },
+        { title: this.$route.params.flow, active: true }
       ],
-        stepRoute: [
+      stepRoute: [
         { name: "collector" },
         { name: "collector", query: { handler: true } },
         { name: "mapping" },
@@ -47,7 +47,7 @@ export default {
     }
   },
   async mounted() {
-    this.$root.$emit("breadcrumbs",this.breadcrumbs);
+    this.$root.$emit("breadcrumbs", this.breadcrumbs);
     let self = this;
     this.route = this.$route;
     this.project = await this.$http.get(
@@ -61,7 +61,7 @@ export default {
 
     this.flowData = this.project.flows[this.$route.params.flow];
     let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
-    this.entityModel = this.project.entities[targetEntity];
+    this.entityModel = this.project.entities[targetEntity] || {};
     this.$router.push({
       name: "collector"
     });

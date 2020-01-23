@@ -47,6 +47,14 @@ export default {
       flowData: {}
     };
   },
+  watch: {
+    // fullfill function if missing
+    activeRule: function() {
+      this.$set(this.activeRule, "transform", this.activeRule.transform || []);
+      this.$set(this.activeRule, "validate", this.activeRule.validate || []);
+      this.$set(this.activeRule, "drop", this.activeRule.drop || []);
+    }
+  },
   async mounted() {
     this.activeIndex = 0;
     this.activeRule = this.rules[0];

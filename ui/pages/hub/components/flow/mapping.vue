@@ -14,7 +14,7 @@
       <div class="field">
         <label class="label">Post mapping Handler</label>
         <div class="control">
-                <codemirror  v-model="$parent.$data.flowData.mapping.handler"  ></codemirror>        
+          <codemirror v-model="$parent.$data.flowData.mapping.handler"></codemirror>
         </div>
       </div>
     </div>
@@ -30,7 +30,6 @@ export default {
   },
   data: function() {
     return {
-    
       functions: null,
       route: null,
       entity: {}
@@ -47,7 +46,6 @@ export default {
     }
   },
   async mounted() {
-    
     let self = this;
     this.$root.$on("rule-update", function() {
       self.update();
