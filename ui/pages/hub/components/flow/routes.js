@@ -1,5 +1,7 @@
 import Index from "./index.vue";
 import Collector from "./collector.vue";
+import FlowConfig from "./flow.config.vue";
+
 import Mapping from "./mapping.vue";
 import Discover from "./discover.vue";
 
@@ -8,6 +10,11 @@ export default {
     component: Index,
     name: "flow",
     children: [{
+        path: "flow-config",
+        component: FlowConfig,
+        name: "flowConfig",
+        meta:{title:"flowConfig"}
+    },{
         path: "collector",
         component: Collector,
         name: "collector",

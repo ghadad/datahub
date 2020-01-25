@@ -4,6 +4,7 @@
 
     <section>
       <b-steps v-model="activeStep" :animated="true" :has-navigation="false">
+        <b-step-item label="flowConfig" :clickable="true"></b-step-item>
         <b-step-item label="Collector" :clickable="true"></b-step-item>
         <b-step-item label="Handler" :clickable="true"></b-step-item>
         <b-step-item label="Mapping" :clickable="true"></b-step-item>
@@ -27,6 +28,7 @@ export default {
         { title: this.$route.params.flow, active: true }
       ],
       stepRoute: [
+        { name: "flowConfig" },
         { name: "collector" },
         { name: "collector", query: { handler: true } },
         { name: "mapping" },
@@ -58,20 +60,19 @@ export default {
       let res = await self.$http.put("projects", self.project);
       self.project._rev = res.rev;
     });
+
     if (this.$route.params.flow) {
       this.flowData = this.project.flows[this.$route.params.flow];
       let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
       this.entityModel = this.project.entities[targetEntity] || {};
     } else {
-      this.flowData = {
-        collector: {
-          config: {}
-        }
-      };
+      this.flowData =  await this.$http.get(
+      `projects/template/flow`
+    );
     }
 
     this.$router.push({
-      name: "collector"
+      name: "flowConfig"
     });
   }
 };

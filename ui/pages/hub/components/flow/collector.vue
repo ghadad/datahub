@@ -105,11 +105,7 @@ export default {
       sources: $serverConfig.sources,
       flowData: {},
       project: {},
-      newFlow: {
-        collector: {
-          config: {}
-        }
-      }
+     
     };
   },
 
@@ -120,11 +116,7 @@ export default {
   },
 
   async mounted() {
-    if (!this.$route.params.flow) {
-      this.flowData = this.newFlow;
-    } else {
-      this.flowData = this.$parent.$data.flowData;
-    }
+ this.flowData = this.$parent.$data.flowData;
     this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
     this.$_.set(this.flowData, "flowData.collector.config.concurrency", 1);
   }

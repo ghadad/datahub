@@ -20,7 +20,7 @@
             class="panel-block"
             v-for="(f,fkey) in flows"
             :key="fkey"
-          >{{f.collector.config.name}}</router-link>
+          >{{fkey}} > {{f.collector.config.name}}</router-link>
         </article>
       </div>
       <div class="column">

@@ -13,7 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon bin/ui-server.js -- -e dev",
     "ui": "npm run --prefix ui serve",
-    "all": "npx npm-run-all -p ui dev"
+    "all": "npx npm-run-all -p ui dev",
+    "build:ui": "npm run --prefix ui build"
   },
   "nodemonConfig": {
     "ignore": [
@@ -66,6 +67,7 @@
     "nano": "^8.1.0",
     "object-hash": "^2.0.0",
     "oracledb": "^4.0.1",
+    "p-map": "^3.0.0",
     "pino": "^5.14.0",
     "pino-pretty": "^3.4.0",
     "pm2": "^4.2.1",

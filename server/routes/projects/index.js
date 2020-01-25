@@ -7,11 +7,14 @@ const Project = require(upath.join(__app.lib, "project"));
 module.exports = function (fastify, opts, next) {
 
     fastify.get('/:id', async function (req, res, next) {
-
         let doc = await __app.couchDb.get("projects", req.params.id);
         return res.send(doc);
     });
 
+    fastify.get('/template/flow', function (req, res, next) {
+        return res.send(Project.getFlowTemplateTree());
+    });
+    
     fastify.get('/', async function (req, res, next) {
         // await __app.couchDb.createDb("databases");
         let allDocs = await __app.couchDb.getAll("projects");
