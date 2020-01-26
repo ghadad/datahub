@@ -1,4 +1,8 @@
 module.exports = {
+    config:{
+        name:"",
+        enableStaging:null
+    },
     collector: {
         config: {
             name: "",

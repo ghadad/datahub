@@ -2,11 +2,12 @@
   <div v-if="flowData.config">
     <div v-if="!$route.query.handler">
       <div>
-        <h1>FLOW</h1>
+        <h1 class="title">FLOW settings</h1>
         <div class="columns">
+        <div class="column is-1"><label class="label">Flow name</label>
+        </div>
           <div class="column is-2">
             <div class="field">
-              <label class="label">Flow name</label>
               <div class="control">
                 <input
                   class="input"
@@ -18,11 +19,17 @@
               </div>
             </div>
           </div>
+          <div class="column is-2">
+          <div class="field"><div class="control">
+            <b-checkbox v-model="flowData.config.enableStaging">Enable staging</b-checkbox>
+          </div>          </div>
+
+        </div>
         </div>
         <div class="columns"
         <div class="column">
-        <button class="button is-primary" v-show="!flowData.config.name" @click="create">Create</button>
-        <button class="button is-link" v-show="flowData.config.name" @click="update">Update</button>
+        <button class="button is-primary" v-show="!$route.params.flow" @click="create">Create</button>
+        <button class="button is-link" v-show="$route.params.flow" @click="update">Update</button>
         <button class="button is-danger" v-show="deleteFlag==0" @click="deleteFlow(1)">Delete</button>
             <button
           class="button is-danger"
@@ -31,7 +38,7 @@
         >Are you sure</button>
         </div>
         </div>
-
+<pre>{{project}}</pre>
      </div>
     </div>
   </div>
@@ -54,40 +61,48 @@ export default {
       let self = this;
       this.deleteFlag = flag;
       if (this.deleteFlag == 2) {
-        delete this.project.flows[this.$route.params.flow];
-        let res = await this.$http.put("projects", this.project);
-        this.project._rev = res.rev;
-        this.$root.$emit("global-ok", res.ok || false);
-        this.$router.push({
-          name: "explore",
-          params: this.$route.params
+      
+        this.$delete(this.project.flows,this.$route.params.flow);
+        
+       this.$root.$once("update-project",{
+         name: "explore",
+         params: this.$route.params
         });
       }
+      
       if (this.deleteFlag == 1) {
         setTimeout(function() {
           self.deleteFlag = 0;
         }, 3000);
       }
-    }, create() {
-    
+    }, async create() {
+      if (this.project.flows[this.flowData.config.name]) {
+          throw new Error(`entity ${this.flowData.config.name} already exists in this project` );
+        }
+      this.$set(this.project.flows,this.flowData.config.name, this.$_.cloneDeep(this.flowData));
+
+      this.origFlowKeyName = this.flowData.config.name;
+      this.$route.params.flow = this.flowData.config.name;
+   
+     this.$root.$once("update-project",{
+        name: "flow",
+        params: this.$route.params
+      });
+   
     },
     async update() {
-      
         if (this.origFlowKeyName != this.flowData.config.name) {
         if (this.project.flows[this.flowData.config.name]) {
           throw new Error(`entity ${this.flowData.config.name} already exists in this project` );
         }
-
-        this.project.flows[this.flowData.config.name] = this.$_.cloneDeep(this.flowData);
-        delete this.project.flows[this.origFlowKeyName];
+        this.$set(this.project.flows,this.flowData.config.name, this.$_.cloneDeep(this.flowData));
+        this.$delete(this.project.flows,this.$origFlowKeyName);
         this.origFlowKeyName = this.flowData.config.name;
       }
 
-      let res = await this.$http.put("projects", this.project);
-      this.project._rev = res.rev;
-      this.$root.$emit("global-ok", res.ok || false);
       this.$route.params.flow = this.flowData.config.name;
-      this.$router.push({
+
+      this.$root.$emit("update-project",{
         name: "flow",
         params: this.$route.params
       });
@@ -95,11 +110,15 @@ export default {
   },
 
   async mounted() {
-            this.origFlowKeyName = this.$route.params.flow;
-
+    this.origFlowKeyName = this.$route.params.flow;
       this.flowData = this.$parent.$data.flowData;
       this.project = this.$parent.$data.project;
       this.flowData.config = this.flowData.config ||{}
-     }
+     },
+
+beforeDestroy () {
+    this.$root.$bus.$off('update-project')
+ },
+
 };
 </script>

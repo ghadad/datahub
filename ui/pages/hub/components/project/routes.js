@@ -19,6 +19,7 @@ export default {
         component: List
     }, {
         path: 'upsert',
+        name:"upsert",
         component: New
     }, {
         path: "help",
