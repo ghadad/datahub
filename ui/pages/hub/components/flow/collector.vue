@@ -110,8 +110,11 @@ export default {
   },
 
   methods: {
-    update() {
-      this.$root.$emit("update-project");
+    async update() {
+        await this.$saveProject(this.$parent.$data.project,{
+        name: "collector",
+        params: this.$route.params
+      });
     }
   },
 

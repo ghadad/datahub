@@ -64,10 +64,10 @@ export default {
       
         this.$delete(this.project.flows,this.$route.params.flow);
         
-       this.$root.$once("update-project",{
-         name: "explore",
-         params: this.$route.params
-        });
+   await this.$saveProject(this.project,{
+        name: "explore",
+        params: this.$route.params
+      });
       }
       
       if (this.deleteFlag == 1) {
@@ -84,10 +84,7 @@ export default {
       this.origFlowKeyName = this.flowData.config.name;
       this.$route.params.flow = this.flowData.config.name;
    
-     this.$root.$once("update-project",{
-        name: "flow",
-        params: this.$route.params
-      });
+     await this.$saveProject(this.project);
    
     },
     async update() {
@@ -102,10 +99,7 @@ export default {
 
       this.$route.params.flow = this.flowData.config.name;
 
-      this.$root.$emit("update-project",{
-        name: "flow",
-        params: this.$route.params
-      });
+   await this.$saveProject(this.project);
     },
   },
 
@@ -116,9 +110,7 @@ export default {
       this.flowData.config = this.flowData.config ||{}
      },
 
-beforeDestroy () {
-    this.$root.$bus.$off('update-project')
- },
+
 
 };
 </script>
