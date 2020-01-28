@@ -4,7 +4,7 @@
       <div class="column is-2 tag-head">
         <strong class="tag title is-7 is-dark">Transforms rules</strong>
       </div>
-      <div class="column is-2">
+      <div class="column is-2" v-show="isOpen">
         <div class="field">
           <div class="select">
             <select v-model="activeFunc">
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="column is-8">{{activeFunc}}</div>
-      <div class="column is-2">
+      <div class="column is-2" v-show="isOpen">
         {{activeFunc}}
         <button @click="addrule" class="buttun">Add to Transforms</button>
       </div>
@@ -28,6 +28,7 @@ export default {
   props: ["value", "functions"],
   data() {
     return {
+      isOpen: false,
       activeFunc: null
     };
   },

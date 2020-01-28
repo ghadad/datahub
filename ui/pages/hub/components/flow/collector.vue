@@ -69,11 +69,6 @@
         <div v-if="flowData.collector.config.sourceType=='query'">
           <query-form v-model="flowData.collector.config"></query-form>
         </div>
-
-        <div class="column is-12">
-          <button class="button is-link" @click="update">Update</button>
-          <pre style="max-width:800px">{{flowData.collector}}</pre>
-        </div>
       </div>
     </div>
     <div v-if="$route.query.handler">
@@ -83,6 +78,10 @@
           <codemirror v-model="flowData.collector.handler"></codemirror>
         </div>
       </div>
+    </div>
+
+    <div class="column is-12">
+      <button class="button is-link" @click="update">Update</button>
     </div>
   </div>
 </template>
@@ -104,22 +103,18 @@ export default {
       errors: [],
       sources: $serverConfig.sources,
       flowData: {},
-      project: {},
-     
+      project: {}
     };
   },
 
   methods: {
     async update() {
-        await this.$saveProject(this.$parent.$data.project,{
-        name: "collector",
-        params: this.$route.params
-      });
+      await this.$saveProject(this.$parent.$data.project);
     }
   },
 
   async mounted() {
- this.flowData = this.$parent.$data.flowData;
+    this.flowData = this.$parent.$data.flowData;
     this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
     this.$_.set(this.flowData, "flowData.collector.config.concurrency", 1);
   }

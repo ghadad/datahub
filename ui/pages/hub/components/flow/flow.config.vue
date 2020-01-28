@@ -4,8 +4,9 @@
       <div>
         <h1 class="title">FLOW settings</h1>
         <div class="columns">
-        <div class="column is-1"><label class="label">Flow name</label>
-        </div>
+          <div class="column is-1">
+            <label class="label">Flow name</label>
+          </div>
           <div class="column is-2">
             <div class="field">
               <div class="control">
@@ -20,26 +21,24 @@
             </div>
           </div>
           <div class="column is-2">
-          <div class="field"><div class="control">
-            <b-checkbox v-model="flowData.config.enableStaging">Enable staging</b-checkbox>
-          </div>          </div>
-
+            <div class="field">
+              <div class="control">
+                <b-checkbox v-model="flowData.config.enableStaging">Enable staging</b-checkbox>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="column buttons-group">
+          <button class="button is-primary" v-show="!$route.params.flow" @click="create">Create</button>
+          <button class="button is-link" v-show="$route.params.flow" @click="update">Update</button>
+          <button class="button is-danger" v-show="deleteFlag==0" @click="deleteFlow(1)">Delete</button>
+          <button
+            class="button is-danger"
+            v-show="deleteFlag==1"
+            @click="deleteFlow(2)"
+          >Are you sure</button>
         </div>
-        <div class="columns"
-        <div class="column">
-        <button class="button is-primary" v-show="!$route.params.flow" @click="create">Create</button>
-        <button class="button is-link" v-show="$route.params.flow" @click="update">Update</button>
-        <button class="button is-danger" v-show="deleteFlag==0" @click="deleteFlow(1)">Delete</button>
-            <button
-          class="button is-danger"
-          v-show="deleteFlag==1"
-          @click="deleteFlow(2)"
-        >Are you sure</button>
-        </div>
-        </div>
-<pre>{{project}}</pre>
-     </div>
+      </div>
     </div>
   </div>
 </template>
@@ -48,11 +47,13 @@ export default {
   name: "flowConfig",
   data: function() {
     return {
-      deleteFlag:0,
+      deleteFlag: 0,
       errors: [],
-      origFlowKeyName :null ,
-      flowData: {config:null},
-      project: {},
+      origFlowKeyName: null,
+      flowData: {
+        config: null
+      },
+      project: {}
     };
   },
 
@@ -61,56 +62,64 @@ export default {
       let self = this;
       this.deleteFlag = flag;
       if (this.deleteFlag == 2) {
-      
-        this.$delete(this.project.flows,this.$route.params.flow);
-        
-   await this.$saveProject(this.project,{
-        name: "explore",
-        params: this.$route.params
-      });
+        this.$delete(this.project.flows, this.$route.params.flow);
+
+        await this.$saveProject(this.project, {
+          name: "explore",
+          params: this.$route.params
+        });
       }
-      
+
       if (this.deleteFlag == 1) {
         setTimeout(function() {
           self.deleteFlag = 0;
         }, 3000);
       }
-    }, async create() {
+    },
+    async create() {
       if (this.project.flows[this.flowData.config.name]) {
-          throw new Error(`entity ${this.flowData.config.name} already exists in this project` );
-        }
-      this.$set(this.project.flows,this.flowData.config.name, this.$_.cloneDeep(this.flowData));
+        throw new Error(
+          `entity ${this.flowData.config.name} already exists in this project`
+        );
+      }
+      this.$set(
+        this.project.flows,
+        this.flowData.config.name,
+        this.$_.cloneDeep(this.flowData)
+      );
 
       this.origFlowKeyName = this.flowData.config.name;
       this.$route.params.flow = this.flowData.config.name;
-   
-     await this.$saveProject(this.project);
-   
+
+      await this.$saveProject(this.project);
     },
     async update() {
-        if (this.origFlowKeyName != this.flowData.config.name) {
+      if (this.origFlowKeyName != this.flowData.config.name) {
         if (this.project.flows[this.flowData.config.name]) {
-          throw new Error(`entity ${this.flowData.config.name} already exists in this project` );
+          throw new Error(
+            `entity ${this.flowData.config.name} already exists in this project`
+          );
         }
-        this.$set(this.project.flows,this.flowData.config.name, this.$_.cloneDeep(this.flowData));
-        this.$delete(this.project.flows,this.$origFlowKeyName);
+        this.$set(
+          this.project.flows,
+          this.flowData.config.name,
+          this.$_.cloneDeep(this.flowData)
+        );
+        this.$delete(this.project.flows, this.$origFlowKeyName);
         this.origFlowKeyName = this.flowData.config.name;
       }
 
       this.$route.params.flow = this.flowData.config.name;
 
-   await this.$saveProject(this.project);
-    },
+      await this.$saveProject(this.project);
+    }
   },
 
   async mounted() {
     this.origFlowKeyName = this.$route.params.flow;
-      this.flowData = this.$parent.$data.flowData;
-      this.project = this.$parent.$data.project;
-      this.flowData.config = this.flowData.config ||{}
-     },
-
-
-
+    this.flowData = this.$parent.$data.flowData;
+    this.project = this.$parent.$data.project;
+    this.flowData.config = this.flowData.config || {};
+  }
 };
 </script>

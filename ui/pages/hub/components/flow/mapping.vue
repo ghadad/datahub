@@ -3,18 +3,17 @@
     <div v-if="!$route.query.handler">
       <mapping-rules
         ref="existsRules"
-        v-model="$parent.$data.flowData.mapping.config"
+        :rules="$parent.$data.flowData.mapping.config"
         :functions="functions"
         :entity="entity"
       ></mapping-rules>
-
-      <pre>{{$parent.$data.flowData.mapping.config}}</pre>
     </div>
     <div v-if="$route.query.handler">
       <div class="field">
         <label class="label">Post mapping Handler</label>
         <div class="control">
           <codemirror v-model="$parent.$data.flowData.mapping.handler"></codemirror>
+          <button class="button is-link" @click="update">Update</button>
         </div>
       </div>
     </div>
@@ -32,24 +31,17 @@ export default {
     return {
       functions: null,
       route: null,
-      entity: {}
+      entity: {},
+      project: this.$parent.$data.project
     };
   },
   methods: {
-    update(rules) {
-      this.$set(
-        this.$parent.$data.flowData.mapping,
-        "config",
-        this.$refs.existsRules.rules
-      );
-      this.$root.$emit("update-project");
+    async update() {
+      await this.$saveProject(this.project);
     }
   },
   async mounted() {
     let self = this;
-    this.$root.$on("rule-update", function() {
-      self.update();
-    });
     this.functions = await this.$http.get("helpers/functions");
     this.route = this.$route;
     this.entity = this.$parent.$data.entityModel;

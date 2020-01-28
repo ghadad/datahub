@@ -1,6 +1,5 @@
 <template>
   <div v-if="handler">
-
     <codemirror v-model="handler" :options="cmOptions"></codemirror>
 
     <button class="button is-link" @click="update">Update</button>
@@ -12,13 +11,13 @@ export default {
   props: ["handler"],
   data: function() {
     return {
-       cmOptions: {
+      cmOptions: {
         // codemirror options
         tabSize: 4,
-        mode: 'text/javascript',
-        theme: 'base16-dark',
+        mode: "text/javascript",
+        theme: "base16-dark",
         lineNumbers: true,
-        line: true,
+        line: true
         // more codemirror options, 更多 codemirror 的高级配置...
       },
       functions: null,

@@ -1,10 +1,18 @@
 <template>
   <section>
-        <div class="tag-head">
-        <strong class="tag title is-7 is-dark">Value origin</strong>
-      </div>
-    <div class="columns">
+    <div class="tag-head">
+      <strong class="tag title is-7 is-dark">Value origin</strong>
 
+      <span class="clickable" @click="toggle">
+        <b-icon
+          class="is-pulled-right clickable"
+          :icon="isOpen?'chevron-right':'chevron-down'"
+          size="is-medium"
+          type="is-info"
+        ></b-icon>
+      </span>
+    </div>
+    <div class="columns" v-show="isOpen">
       <div class="column is-8">
         <div class="block">
           <div class="field">
@@ -20,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="columns">
+    <div class="columns" v-show="isOpen">
       <div class="column is-1">
         <strong class="label">{{originLabel[value.originType]}}</strong>
       </div>
@@ -42,6 +50,7 @@ export default {
   props: ["value", "entity"],
   data() {
     return {
+      isOpen: false,
       originLabel: {
         value: "Simple value",
         query: "select one value query",
@@ -54,6 +63,9 @@ export default {
   },
   mounted: function() {},
   methods: {
+    toggle: function() {
+      this.isOpen = this.isOpen ? false : true;
+    },
     getOriginLabel: function() {}
   },
   computed: {}

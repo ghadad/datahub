@@ -46,8 +46,8 @@ export default {
   },
   watch: {},
   methods: {
-    update() {
-      this.$root.$emit("rule-update");
+    async update() {
+      await this.$saveProject(this.$parent.$data.project);
     }
   },
   mounted() {

@@ -2,29 +2,76 @@
   <div v-if="functions">
     <div class="columns">
       <div class="rules-list column is-3">
-        <h1 class="strong title is-6 has-text-left strong">Exists rules</h1>
+        <h1 class="strong title is-6 strong" style="direction:ltr">
+          Exists rules
+          <span class="clickable" @click="addNewRule" title="Add new mapping rule">
+            <b-icon
+              class="is-pulled-right clickable"
+              icon="plus-circle"
+              size="is-medium"
+              type="is-info"
+            ></b-icon>
+          </span>
+        </h1>
         <table class="table is-fullwidth is-dark">
-          <draggable id="rules-table" v-model="rules" tag="tbody">
+          <tr v-show="rules.length==0">
+            <th>No exists rules found ... be creative</th>
+          </tr>
+
+          <draggable id="rules-table " v-model="rules" tag="tbody">
             <tr
               v-for="(rule,index) in rules"
               :key="rule.name"
               :class="activeIndex==index?'active':''"
             >
-              <td @click="activeRule=rule;activeIndex=index">{{ rule.name||rule.goTo}}</td>
+              <td @click="activeRule=rule;activeIndex=index">
+                {{ rule.name||rule.goTo}}
+                <span class="is-pulled-right" v-show="activeIndex==index">
+                  <span class="clickable" @click="addNewRule(index)" title="Add new mapping rule">
+                    <b-icon
+                      class="is-pulled-right clickable"
+                      icon="plus-circle"
+                      size="is-small"
+                      type="is-dark"
+                    ></b-icon>
+                  </span>
+                </span>
+              </td>
               <td>{{ index+1 }}</td>
             </tr>
           </draggable>
         </table>
       </div>
       <div class="active-rule column is-9">
-        <h1 class="strong is-6 has-text-left title strong">
-          Rule config :{{activeRule.name || activeRule.goTo}}
-          <b-icon icon="account" size="is-small"></b-icon>
-        </h1>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal has-text-left">
+            <label class="label">Rule short name</label>
+          </div>
+          <div class="field-body">
+            <div class="field has-addons">
+              <p class="control">
+                <input class="input" type="text" value="me@example.com" v-model="activeRule.name" />
+              </p>
+            </div>
+          </div>
+
+          <div class="is-normal buttons-group">
+            <button class="button is-info" v-show="activeIndex==null">Add to list</button>
+            <button
+              class="button is-danger"
+              v-show="activeIndex>=0 && dStep==0"
+              @click="delRule(0)"
+            >Delete</button>
+            <button
+              class="button is-danger"
+              v-show="activeIndex>=0 && dStep==1"
+              @click="delRule(1)"
+            >Delete</button>
+          </div>
+        </div>
 
         <div class>
           <rule-form v-model="activeRule" :functions="functions" :entity="entity"></rule-form>
-          {{activeRule}}
         </div>
       </div>
     </div>
@@ -36,15 +83,16 @@ import ruleForm from "./mappingRule/rule.form.vue";
 
 export default {
   name: "MappingRules",
-  props: ["value", "functions", "entity"],
+  props: ["rules", "functions", "entity"],
   components: { draggable, ruleForm },
   data: function() {
     return {
-      rules: this.$_.cloneDeep(this.$props.value),
+      dStep: 0,
       activeRule: {},
       activeIndex: null,
       route: null,
-      flowData: {}
+      flowData: {},
+      project: this.$parent.$data.project
     };
   },
   watch: {
@@ -55,9 +103,23 @@ export default {
       this.$set(this.activeRule, "drop", this.activeRule.drop || []);
     }
   },
+  methods: {
+    addNewRule(index) {},
+    delRule(index) {}
+  },
   async mounted() {
-    this.activeIndex = 0;
-    this.activeRule = this.rules[0];
+    //this.activeIndex = 0;
+    this.activeRule = {};
+  },
+  computed: {
+    cRules: {
+      get: function() {
+        return this.$props.rules;
+      },
+      set(newValue) {
+        this.$emit("update:rules", newValue);
+      }
+    }
   }
 };
 </script>
