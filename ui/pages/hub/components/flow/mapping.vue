@@ -3,7 +3,7 @@
     <div v-if="!$route.query.handler">
       <mapping-rules
         ref="existsRules"
-        :rules="$parent.$data.flowData.mapping.config"
+        :rules.sync="$parent.$data.flowData.mapping.config"
         :functions="functions"
         :entity="entity"
       ></mapping-rules>
