@@ -3,7 +3,13 @@
     <div class="columns">
       <div class="column">
         <article class="panel is-link">
-          <p class="panel-heading">Entities <router-link :to="{name:'entity',params:{project:$route.params.project,entity:null}}" class="button is-pulled-right is-link is-light is-small">New entity</router-link></p>
+          <p class="panel-heading">
+            Entities
+            <router-link
+              :to="{name:'entity',params:{project:$route.params.project,entity:null}}"
+              class="button is-pulled-right is-link is-light is-small"
+            >New entity</router-link>
+          </p>
           <router-link
             :to="`/project/explore/${project}/entity/${eKey}`"
             class="panel-block"
@@ -14,7 +20,13 @@
       </div>
       <div class="column">
         <article class="panel is-link">
-          <p class="panel-heading">Flows <router-link :to="{name:'flow',params:{project:$route.params.project,flow:null}}" class="button is-pulled-right is-link is-light is-small">New Flow</router-link></p>
+          <p class="panel-heading">
+            Flows
+            <router-link
+              :to="{name:'flow',params:{project:$route.params.project,flow:null}}"
+              class="button is-pulled-right is-link is-light is-small"
+            >New Flow</router-link>
+          </p>
           <router-link
             :to="`/project/explore/${project}/flow/${fkey}`"
             class="panel-block"
@@ -25,7 +37,13 @@
       </div>
       <div class="column">
         <article class="panel is-link" :class="'is-link'">
-          <p class="panel-heading">Jobs <router-link :to="{name:'job' ,params:{project:$route.params.project}}" class="button is-pulled-right is-link is-light is-small">New Job</router-link></p>
+          <p class="panel-heading">
+            Jobs
+            <router-link
+              :to="{name:'job' ,params:{project:$route.params.project}}"
+              class="button is-pulled-right is-link is-light is-small"
+            >New Job</router-link>
+          </p>
           <router-link
             :to="`/project/explore/${project}/job/${jKey}`"
             class="panel-block"
@@ -46,9 +64,10 @@ export default {
     };
   },
   async mounted() {
-    
-      this.$root.$emit("breadcrumbs",   [{name:'projects'},
-                          {title:this.$route.params.project,active:true}]);
+    this.$root.$emit("breadcrumbs", [
+      { name: "projects" },
+      { title: this.$route.params.project, active: true }
+    ]);
     this.projectData = await this.$http.get(
       "projects/" + this.$route.params.project
     );

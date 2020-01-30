@@ -5,11 +5,11 @@
     <section>
       <b-steps v-model="activeStep" :animated="true" :has-navigation="false">
         <b-step-item label="flowConfig" :clickable="true"></b-step-item>
-        <b-step-item label="Collector" :clickable="$route.params.flow? true:false"></b-step-item>
-        <b-step-item label="Handler" :clickable="$route.params.flow? true:false"></b-step-item>
-        <b-step-item label="Mapping" :clickable="$route.params.flow? true:false"></b-step-item>
-        <b-step-item label="Handler" :clickable="$route.params.flow? true:false"></b-step-item>
-        <b-step-item label="Discover" :clickable="$route.params.flow? true:false"></b-step-item>
+        <b-step-item label="Collector" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item label="Handler" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item label="Mapping" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item label="Handler" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item label="Discover" :clickable="flowData.config.name? true:false"></b-step-item>
       </b-steps>
     </section>
     <router-view></router-view>

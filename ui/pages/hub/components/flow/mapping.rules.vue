@@ -4,7 +4,11 @@
       <div class="rules-list column is-3">
         <h1 class="strong title is-6 strong" style="direction:ltr">
           Exists rules
-          <span class="clickable" @click="addNewRule" title="Add new mapping rule">
+          <span
+            class="clickable"
+            @click="activeIndex=rules.length"
+            title="Add new mapping rule"
+          >
             <b-icon
               class="is-pulled-right clickable"
               icon="plus-circle"
@@ -22,12 +26,17 @@
             <tr
               v-for="(rule,index) in rules"
               :key="rule.name"
+              class="clickable"
               :class="activeIndex==index?'active':''"
             >
               <td @click="activeRule=rule;activeIndex=index">
                 {{ rule.name||rule.goTo}}
                 <span class="is-pulled-right" v-show="activeIndex==index">
-                  <span class="clickable" @click="addNewRule(index)" title="Add new mapping rule">
+                  <span
+                    class="clickable"
+                    @click="setNewRule(index+1,$event)"
+                    title="Add new mapping rule"
+                  >
                     <b-icon
                       class="is-pulled-right clickable"
                       icon="plus-circle"
@@ -42,10 +51,11 @@
           </draggable>
         </table>
       </div>
-      <div class="active-rule column is-9">
+      <div class="active-rule column is-9" v-show="newActiveIndex || activeIndex!==null">
         <div class="field is-horizontal">
           <div class="field-label is-normal has-text-left">
             <label class="label">Rule short name</label>
+            {{activeIndex}} {{newActiveIndex}}
           </div>
           <div class="field-body">
             <div class="field has-addons">
@@ -90,6 +100,7 @@ export default {
       dStep: 0,
       activeRule: {},
       activeIndex: null,
+      newActiveIndex: null,
       route: null,
       flowData: {},
       project: this.$parent.$data.project
@@ -104,6 +115,13 @@ export default {
     }
   },
   methods: {
+    setNewRule(index, e) {
+      setTimeout(() => {
+        this.newActiveIndex = index + 1;
+        this.activeIndex = null;
+        this.$set(this, "activeRule", {});
+      }, 100);
+    },
     addNewRule(index) {},
     delRule(index) {}
   },

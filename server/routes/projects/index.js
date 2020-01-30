@@ -14,7 +14,7 @@ module.exports = function (fastify, opts, next) {
     fastify.get('/template/flow', function (req, res, next) {
         return res.send(Project.getFlowTemplateTree());
     });
-    
+
     fastify.get('/', async function (req, res, next) {
         // await __app.couchDb.createDb("databases");
         let allDocs = await __app.couchDb.getAll("projects");
@@ -22,18 +22,26 @@ module.exports = function (fastify, opts, next) {
     });
 
     fastify.post('/', async function (req, res, next) {
+
         let isExists = await __app.couchDb.isExists("projects", req.body._id).catch(e => e);
         if (isExists.statusCode == 200)
-            return res.status(500, "doc exists").send({
+            return res.status(420, "doc exists").send({
                 ok: false,
                 message: "doc already exists"
             });
 
-        let insStatus = await __app.couchDb.create("projects", Object.assign(req.body, Project.getTemplateTree()));
+        let projectTemplate = {}
+
+        if (req.body.generated)
+            projectTemplate = Project.getTemplateTree();
+
+        let insStatus = await __app.couchDb.create("projects", Object.assign(req.body, projectTemplate));
+
         return res.send(insStatus);
     });
 
     fastify.put('/', async function (req, res, next) {
+
         let updateStatus = await __app.couchDb.create("projects", req.body);
         return res.send(updateStatus);
     });

@@ -8,8 +8,8 @@
           <input
             class="input"
             type="text"
-            placeholder="entityName"
-            v-model="entity.name"
+            placeholder="property Name"
+            v-model="property.name"
             pattern="/\w+/"
           />
         </div>
@@ -20,8 +20,8 @@
           <input
             class="input"
             type="text"
-            placeholder="entity type"
-            v-model="entity.type"
+            placeholder="property type"
+            v-model="property.type"
             pattern="/\w+/"
           />
         </div>
@@ -32,8 +32,8 @@
           <input
             class="input"
             type="text"
-            placeholder="entityName"
-            v-model="entity.restriction"
+            placeholder="Restrictions"
+            v-model="property.restriction"
             pattern="/\w+/"
           />
         </div>
@@ -55,8 +55,8 @@
               <th scope="col">Restrictions</th>
             </tr>
           </thead>
-          <draggable v-model="properties" tag="tbody">
-            <tr v-for="(item,index) in properties" :key="item.name">
+          <draggable v-model="dragableList" tag="tbody">
+            <tr v-for="(item,index) in dragableList" :key="item.name">
               <td>{{ index+1 }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.type }}</td>
@@ -77,10 +77,9 @@ export default {
   components: { draggable },
   data() {
     return {
-      properties: this.$_.cloneDeep(this.$props.list),
       enabled: true,
       dragging: false,
-      entity: {
+      property: {
         name: null,
         type: null,
         restriction: null
@@ -88,17 +87,29 @@ export default {
     };
   },
   mounted() {
+    this.dragableList = this.dragableList || [];
     //  alert(1);
   },
+
   methods: {
     add() {
-      if (!(this.entity.name && this.entity.type)) return;
-      this.properties.push(this.entity);
-      this.entity = {
+      if (!(this.property.name && this.property.type)) return;
+      this.dragableList.push(this.property);
+      this.property = {
         name: null,
         type: null,
         restriction: null
       };
+    }
+  },
+  computed: {
+    dragableList: {
+      get() {
+        return this.list;
+      },
+      set(newValue) {
+        this.$emit("update:list", newValue);
+      }
     }
   }
 };

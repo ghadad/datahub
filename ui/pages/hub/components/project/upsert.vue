@@ -17,9 +17,8 @@
               class="input"
               type="text"
               placeholder="Project name"
-              v-model="formData.projectName"
+              v-model="project.projectName"
               pattern="/\w+/"
-              :disabled="dbAlias"
             />
           </div>
 
@@ -28,23 +27,23 @@
           <p v-for="(e,index) in errors.projectName" :key="index">{{e}}</p>
         </div>
       </div>
+      <div class="column is-2" v-show="!this.$route.query.id">
+        <div class="field">
+          <b-checkbox v-model="project.generated">Grab example data</b-checkbox>
+        </div>
+      </div>
     </div>
     <div>
       <div class="columns">
         <div class="column is-7">
           <b-field label="Description">
-            <b-input maxlength="300" type="textarea" v-model="formData.description"></b-input>
+            <b-input maxlength="300" type="textarea" v-model="project.description"></b-input>
           </b-field>
-        </div>
-        <div class="column is-2">
-          <div class="field">
-            <b-checkbox v-model="formData.enableStaging">Enable staging</b-checkbox>
-          </div>
         </div>
       </div>
       <div class="buttons">
-        <button class="button is-primary" v-show="!projectName" @click="create">Create</button>
-        <button class="button is-link" v-show="projectName" @click="update">Update</button>
+        <button class="button is-primary" v-show="!$route.query.id" @click="create">Create</button>
+        <button class="button is-link" v-show="$route.query.id" @click="update">Update</button>
       </div>
     </div>
   </div>
@@ -57,48 +56,47 @@ export default {
       list: {},
       errors: [],
       projectName: null,
-      formData: {
+      project: null,
+      project: {
         projectName: null,
         description: null,
-        enableStaging: null
+        generated: null
       }
     };
   },
   async mounted() {
-    this.list = await this.$parent.fetch();
-    if (this.$route.query.projectName) {
-      this.formData._id = this.formData.projectName = this.projectName = this.$route.query.projectName;
-      this.$set(this, "formData", this.list[this.projectName]);
-    }
+    if (this.$route.query.id)
+      this.project = await this.$http.get("projects/" + this.$route.query.id);
   },
   methods: {
     validate() {
       this.errors = [];
       let hasError = false;
 
-      if (!this.formData.projectName) {
+      if (!this.project.projectName) {
         this.errors.push("missing project name");
         hasError = true;
       }
 
       if (
-        this.formData.projectName &&
-        this.formData.projectName.match(/[\W|\s]/)
+        this.project.projectName &&
+        this.project.projectName.match(/[\W|\s]/)
       ) {
         hasError = true;
         this.errors.push("Invalid project name  :use only [a-z] and _ letters");
       }
 
-      this.formData._id = this.formData.projectName = this.formData.projectName.toLowerCase();
+      //      this.project._id = this.project.projectName = this.project.projectName.toLowerCase();
+      this.project._id = this.project.projectName = this.project.projectName.toLowerCase();
       return hasError;
     },
     async update() {
       if (this.validate()) return;
-      await this.$http.put("projects", this.formData);
+      await this.$saveProject(this.project);
     },
     async create() {
       if (this.validate()) return;
-      await this.$http.post("projects", this.formData);
+      await this.$createProject(this.project, true, { name: "projects" });
     }
   },
   computed: {}

@@ -21,6 +21,14 @@ Vue.component('codemirror', VueCodeMirror.codemirror)
 
 import Http from "@/services/http";
 Vue.prototype.$http = Http;
+Vue.prototype.$createProject = async function (project, sample = false, routeParams = {}) {
+    let self = this;
+    let res = await self.$http.post("projects", project);
+    self.$set(project, '_rev', res.rev);
+    self.$root.$emit("global-ok", res.ok || false);
+    if (routeParams.name)
+        self.$router.push(routeParams);
+};
 Vue.prototype.$saveProject = async function (project, routeParams = {}) {
     let self = this;
     let res = await self.$http.put("projects", project);

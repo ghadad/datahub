@@ -11,15 +11,15 @@ export default {
     children: [{
         path: 'explore/:project',
         component: Explore,
-        name:"explore"
+        name: "explore"
 
     }, {
         path: 'list',
-        name:"projects",
+        name: "projects",
         component: List
     }, {
         path: 'upsert',
-        name:"upsert",
+        name: "projectUpsert",
         component: New
     }, {
         path: "help",

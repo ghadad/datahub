@@ -125,6 +125,10 @@ export default {
   margin-right: 10px;
   border: 1px solid black;
 }
+.clickable {
+  cursor: pointer;
+}
+
 .icon.clickable,
 .icon.clickable svg {
   pointer-events: initial !important;
