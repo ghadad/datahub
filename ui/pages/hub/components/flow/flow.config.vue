@@ -51,7 +51,7 @@ export default {
       errors: [],
       origFlowKeyName: null,
       flowData: {
-        config: null
+        config: {}
       },
       project: {}
     };
@@ -77,16 +77,23 @@ export default {
       }
     },
     async create() {
+          alert(this.project.flows[this.flowData.config.name])
       if (this.project.flows[this.flowData.config.name]) {
+            alert(this.flowData.config.name)
         throw new Error(
           `entity ${this.flowData.config.name} already exists in this project`
         );
       }
+        
+
+
       this.$set(
         this.project.flows,
         this.flowData.config.name,
         this.$_.cloneDeep(this.flowData)
       );
+
+      alert(this.flowData.config.name)
 
       this.origFlowKeyName = this.flowData.config.name;
       this.$route.params.flow = this.flowData.config.name;
@@ -118,7 +125,7 @@ export default {
   async mounted() {
     this.origFlowKeyName = this.$route.params.flow;
     this.flowData = this.$parent.$data.flowData;
-    this.project = this.$parent.$data.project;
+    this.project = this.$parent.$data.project ;
     this.flowData.config = this.flowData.config || {};
   }
 };

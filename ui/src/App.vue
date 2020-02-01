@@ -1,24 +1,21 @@
 <template>
-  <div class="container is-fluid">
-    <div class="columns">
-      <div class="column is-2 has-background-white-ter">
+  <div class="container is-fluid full-height main-layout">
+    <div class="columns full-height">
+      <div class="column is-2 has-background-white-ter full-height menu-container">
         <aside class="menu">
           <div class="menu-label">
-            <h1 class="side-title tag is-dark is-large has-text-center title">
-              <div class="columns">
-                <div class="column is-9">DATAHUB5 {{$props.title}}</div>
-                <div class="column is-3">
+            <h1 class="has-text-centered	has-background-dark has-text-white logo  title is-4">
                   <b-notification
-                    style="background:none;position:fixed;margin-top:-20px"
+                    style="background:none;position:fixed;left:0px;top:1px"
                     :active.sync="globalOk"
                     type="is-clear"
                     :auto-close="true"
                     :closable="false"
                   >
-                    <b-tag rounded v-show="globalOk" class="is-success">:)</b-tag>
+                    <b-icon  icon="check-circle" v-show="globalOk" type="is-success">:)</b-icon>
                   </b-notification>
-                </div>
-              </div>
+                DATAHUB5 {{$props.title}}
+              
             </h1>
           </div>
           <ul class="menu-list">
@@ -70,8 +67,8 @@
             <p>{{globalError.info}}</p>
           </b-notification>
         </div>
-        <breadcrumb></breadcrumb>
-        <router-view></router-view>
+        <breadcrumb class="breadcrumb-container"></breadcrumb>
+        <router-view class="main-view"></router-view>
       </div>
     </div>
   </div>
@@ -121,14 +118,24 @@ export default {
 };
 </script>
 <style>
+
+html,body {  height: 100%;
+}
+
+.main-title  {padding-top:30px;padding-left:30px}
 .main-title .tag {
   margin-right: 10px;
   border: 1px solid black;
 }
+.breadcrumb-container {margin-left:30px}
 .clickable {
   cursor: pointer;
 }
 
+.entry-page {
+  height: 100%;
+  padding-top:30px
+}
 .icon.clickable,
 .icon.clickable svg {
   pointer-events: initial !important;
@@ -137,5 +144,19 @@ export default {
 .buttons-group .button {
   margin-right: 5px;
 }
+.full-height{
+    height: 100%;
+
+}
+.main-layout > .column {padding:0rem !important}
+.menu {padding-left:24px;padding-top:20px}
+.container.is-fluid {
+    margin: 0 !important;
+    /* margin-right: 32px; */
+    max-width: none;
+}
+.logo {padding:7px;margin:5px;}
+.main-view {padding-left:45px }
+.CodeMirror { height: 100%; }
 </style>
 

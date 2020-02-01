@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="rules-list column is-3">
         <h1 class="strong title is-6 strong" style="direction:ltr">
-          Exists rules 
+          Exists rules
           <span class="clickable" @click="setNewRule(rules.length)"
             title="Add new mapping rule at the endof all existing rules">
             <b-icon class="is-pulled-right clickable" icon="plus-circle" size="is-medium" type="is-info"></b-icon>
@@ -34,8 +34,10 @@
           </draggable>
         </table>
       </div>
-      <div class="active-rule column is-9" v-show="newActiveIndex>=0 || activeIndex!==null">
+      <div class="active-rule column is-9"
+        v-show="newActiveIndex || activeIndex || activeIndex===0 || newActiveIndex===0">
         <div class="columns">
+          <div v-if="0">newActiveIndex:{{newActiveIndex}} ,activeIndex:{{activeIndex}}</div>
           <div class="column is-2" v-if="activeIndex != null && activeIndex>=0">
             <h2 class="title is-3"> Rule # {{activeIndex +1}}
             </h2>
@@ -59,20 +61,81 @@
             </div>
           </div>
 
-          <div class="column is-4">
+          <div class="column is-3">
             <div class="is-normal buttons-group ">
-              <button class="button is-info" v-show="activeIndex==null" @click="addNewRule">Add to list</button>
-              <button class="button is-danger" v-show="activeIndex>=0 && dStep==0" @click="delRule(1)">Delete</button>
-              <button class="button is-danger" v-show="activeIndex>=0 && dStep==1" @click="delRule(2)">Are you sure ? </button>
+              <button class="button is-info is-small" v-show="activeIndex==null" @click="addNewRule">Add</button>
+              <button class="button is-danger is-small" v-show="activeIndex>=0 && dStep==0"
+                @click="delRule(1)">Delete</button>
+              <button class="button is-danger is-small" v-show="activeIndex>=0 && dStep==1" @click="delRule(2)">Are you
+                sure ? </button>
             </div>
+          </div>
+          <div class="column">
+            <button v-show="displayState!='edit'" class="clickable" @click="display('edit')"
+              title="Add new mapping rule after this position !">
+              <b-icon class="is-pulled-right clickable" icon="edit" size="is-small" type="is-dark">
+              </b-icon>
+            </button>
+            <button v-show="displayState=='edit' && allCollapse==true" class="clickable" @click="display('expand')"
+              title="Add new mapping rule after this position !">
+              <b-icon class="is-pulled-right clickable" icon="chevron-down" size="is-small" type="is-dark">
+              </b-icon>
+            </button>
+            <button v-show="displayState=='edit' && allCollapse==false" class="clickable" @click="display('collapse')"
+              title="Add new mapping rule after this position !">
+              <b-icon class="is-pulled-right clickable" icon="chevron-up" size="is-small" type="is-dark">
+              </b-icon>
+            </button>
+
+            <button v-show="displayState!='code'" class="clickable" @click="display('code')"
+              title="Add new mapping rule after this position !">
+              <b-icon class="is-pulled-right clickable" icon="code" size="is-small" type="is-info">
+              </b-icon>
+            </button>
+            <button v-show="displayState!='list'" class="clickable" @click="display('list')"
+              title="Add new mapping rule after this position !">
+              <b-icon class="is-pulled-right clickable" icon="list" size="is-small" type="is-primary">
+              </b-icon>
+            </button>
           </div>
         </div>
 
-      <div class>
-        <rule-form v-model="activeRule" :functions="functions" :entity="entity"></rule-form>
+        <div v-if="displayState=='edit'">
+          <rule-form v-model="activeRule" :functions="functions" :entity="entity"></rule-form>
+        </div>
+
+        <div v-if="displayState=='code'">
+
+
+          <codemirror v-model="JSON.stringify(activeRule, null, 4)" class="full-height"></codemirror>
+
+
+        </div>
+
+        <div class="list-view" v-if="displayState=='list'">
+          <span class="tag is-primary">Targeting </span>  <span class="tag is-default">Type: {{activeRule.targetType}}  </span>
+           <span class="tag is-default">  Key factor :{{activeRule.hash}} </span> 
+           <span class="tag is-default">  goTo :{{activeRule.hash}} </span> 
+          <hr />
+         <span class="tag is-primary">Origin </span>  
+         <span class="tag is-default">  Origin type  :{{activeRule.originType}} </span> 
+                   <codemirror v-model="activeRule.origin"  class="full-height"></codemirror>
+
+                
+         <hr />
+         <span class="tag is-primary">Validate </span> 
+         <span class="tag is-default" v-for="(v,idx) in activeRule.validate" :key="idx">{{v}}</span>
+          <hr />
+         <span class="tag is-primary">Transform </span>          <span class="tag is-default" v-for="(v,idx) in activeRule.transform" :key="idx">{{v}}</span>
+
+          <hr />
+         <span class="tag is-primary">Drop </span> 
+          <span class="tag is-default" v-for="(v,idx) in activeRule.drop" :key="idx">{{v}}</span>
+        </div>
+
+
       </div>
     </div>
-  </div>
   </div>
 </template>
 <script>
@@ -88,6 +151,8 @@
     },
     data: function () {
       return {
+        allCollapse: true,
+        displayState: "edit",
         dStep: 0,
         activeRule: {},
         activeIndex: null,
@@ -106,22 +171,25 @@
       }
     },
     methods: {
+      display(state) {
+        this.displayState = state;
+      },
       setNewRule(index) {
         this.newActiveIndex = index;
         this.activeIndex = null;
         this.$set(this, "activeRule", {});
       },
       addNewRule() {
-        this.rules.splice(this.newActiveIndex,0,this.activeRule)
-        this.activeIndex= this.newActiveIndex;
+        this.rules.splice(this.newActiveIndex, 0, this.activeRule)
+        this.activeIndex = this.newActiveIndex;
         this.newActiveIndex = null;
       },
       delRule(step) {
-        this.dStep = step ;
-        if(this.dStep==2){
-          this.rules.splice(this.activeIndex,1)
-          this.dStep=0;
-             this.$set(this, "activeRule", {});
+        this.dStep = step;
+        if (this.dStep == 2) {
+          this.rules.splice(this.activeIndex, 1)
+          this.dStep = 0;
+          this.$set(this, "activeRule", {});
         }
 
 
@@ -168,4 +236,5 @@
   .strong {
     font-weight: bolder;
   }
+  .list-view .tag { font-weight:bolder;margin-left:10px;border:1px solid #CCC}
 </style>

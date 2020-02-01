@@ -60,7 +60,10 @@ export default {
       project: {
         projectName: null,
         description: null,
-        generated: null
+        generated: null,
+        flows:{},
+        entities:{},
+        jobs:{}
       }
     };
   },

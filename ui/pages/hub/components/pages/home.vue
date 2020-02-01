@@ -1,8 +1,7 @@
 <template>
-  <div class="hello">
-<section class="hero is-info">
-  <div class="hero-body">
-    <div class="container">
+<section class="hero is-info is-fullheight entry-page">
+ <div class="hero-head"> 
+ <div class="container">
       <h1 class="title is-1">
         Datahub
       </h1>
@@ -12,10 +11,14 @@
       </h2>
      <router-link :to='{name:"projects"}' class="button is-rounded">Explores hub projects</router-link>
                     </p>
-    </div>
+    </div></div>
+  <div class="hero-body">
+
   </div>
-</section>   </div>
+  <div class="hero-foot"></div>
+</section>  
 </template>
 <style scoped>
+
 .button { margin-right:10px}
 </style>

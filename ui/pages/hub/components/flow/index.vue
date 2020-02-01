@@ -45,6 +45,10 @@ export default {
     activeStep: function(newVal) {
       //alert(newVal);
       this.$router.push(this.stepRoute[newVal]);
+    },
+     '$route.query.activeStep': function(newVal) {
+      if(newVal)
+         this.activeStep = newVal
     }
   },
   async mounted() {
@@ -65,7 +69,7 @@ export default {
     if (self.$route.params.flow) {
       this.flowData = this.project.flows[this.$route.params.flow];
       let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
-      this.entityModel = this.project.entities[targetEntity] || {};
+      this.$set(this,'entityModel', this.project.entities[targetEntity] || {});
     } else {
       this.flowData = await this.$http.get(`projects/template/flow`);
     }

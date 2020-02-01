@@ -1,7 +1,7 @@
 <template>
   <div v-if="value">
-    <target class="rule-section" v-model="value" :entity="entity"></target>
-    <origin class="rule-section" v-model="value" :entity="entity"></origin>
+    <target class="rule-section" v-model="value" :entity="entityData"></target>
+    <origin class="rule-section" v-model="value" :entity="entityData"></origin>
     <functions
       title="Transform rules"
       class="rule-section"
@@ -32,11 +32,13 @@ import Origin from "./origin.vue";
 import Functions from "./functions.vue";
 
 export default {
-  name: "csv-collector",
+  name: "rule-form",
   props: ["value", "functions", "entity"],
   components: { Target, Origin, Functions },
   data: function() {
     return {
+      flowData : this.$parent.$data.project.flows[this.$route.params.flow],
+      entityData :{},
       handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
@@ -52,7 +54,12 @@ export default {
   },
   mounted() {
     //this.value.ruleHandler = this.handlerTemplate;
+    if(this.flowData.collector.config.targetEntity)
+      this.entityData = this.$parent.$data.project.entities[this.flowData.collector.config.targetEntity];
+      else 
+      this.entityData ={}
   }
+
 };
 </script>
 <style>

@@ -4,7 +4,7 @@
       <strong class="tag title is-7 is-dark">Targeting</strong>
       <span v-show="!entity.name">
         Please note ! there is no entity defined in collector setting !
-        <router-link :to="{name:'collector'}">add it here</router-link>
+        <router-link :to="{name:'collector',query:{activeStep:1}}">add it here</router-link>
       </span>
     </div>
     <div class="columns">
@@ -17,7 +17,7 @@
                   v-if="entity.name"
                   v-model="value.targetType"
                   native-value="property"
-                >{{entity.name}} property</b-radio>
+                ><Span class="tag  is-info">{{entity.name}} </span> property</b-radio>
                 <b-radio v-model="value.targetType" native-value="variable">Variable</b-radio>
                 <b-radio v-model="value.targetType" :native-value="''">Irrelevant</b-radio>
               </div>
@@ -64,11 +64,13 @@ export default {
   props: ["value", "entity"],
   data() {
     return {
+      
       goToValue: this.value.goTo || ""
     };
   },
   mounted: function() {},
   computed: {
+    
     filteredDataArray() {
       let self = this;
 

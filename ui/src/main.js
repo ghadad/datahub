@@ -7,11 +7,11 @@ import 'buefy/dist/buefy.css'
 import {
     FontAwesomeIcon
 } from "@fortawesome/vue-fontawesome";
+
 Vue.component('vue-fontawesome', FontAwesomeIcon);
 
 Vue.use(Buefy, {
     defaultIconComponent: 'vue-fontawesome',
-
     defaultIconPack: 'fas',
 })
 
