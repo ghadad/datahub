@@ -10,7 +10,7 @@
               size="1"
               class="textarea"
               rows="40"
-              v-model="value.query"
+              v-model="collector.query"
               pattern="/\w+/"
             />
           </div>
@@ -37,7 +37,7 @@
         <div class="field">
           <label class="label">Field Name (must existgs in Query result)</label>
           <div class="control">
-            <input class="input" v-model="value.pkField" type="text" />
+            <input class="input" v-model="collector.pkField" type="text" />
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-            <textarea rows="15" class="textarea" v-model="value.pkHandler"></textarea>
+            <textarea rows="15" class="textarea" v-model="collector.pkHandler"></textarea>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
 <script>
 export default {
   name: "csv-collector",
-  props: ["value"],
+  props: ["collector", "properties"],
   data: function() {
     return {
       handlerTemplate: `function(data){
@@ -66,13 +66,14 @@ export default {
       keyType: null,
       keyTypes: {
         pkHandler: "function/handler",
-        pkField: "Header field"        
+        pkField: "Header field"
       }
     };
   },
   watch: {
     keyType: function(newVal, oldVal) {
-      if (newVal == "pkHandler") this.value.pkHandler = this.handlerTemplate;
+      if (newVal == "pkHandler")
+        this.collector.pkHandler = this.handlerTemplate;
     }
   },
   async mounted() {}

@@ -1,7 +1,10 @@
 <template>
   <section>
     <div class="tag-head">
-      <strong class="tag title is-7 is-dark">Value origin</strong>
+      <strong class="tag is-dark">
+        Value origin
+        <span></span>
+      </strong>
 
       <span class="clickable" @click="toggle">
         <b-icon
@@ -18,6 +21,7 @@
           <div class="field">
             <section>
               <div class="block">
+                <b-radio v-model="value.originType" native-value="collector">Collector property</b-radio>
                 <b-radio v-model="value.originType" native-value="value">Simple value</b-radio>
                 <b-radio v-model="value.originType" native-value="query">select Query</b-radio>
                 <b-radio v-model="value.originType" native-value="dataset">Dataset</b-radio>

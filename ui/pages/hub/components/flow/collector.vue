@@ -61,13 +61,22 @@
         </div>
 
         <div v-if="flowData.collector.config.sourceType=='csv'">
-          <csv-form v-model="flowData.collector.config"></csv-form>
+          <csv-form
+            :collector="flowData.collector.config"
+            :properties.sync="flowData.collector.config.properties"
+          ></csv-form>
         </div>
         <div v-if="flowData.collector.config.sourceType=='restapi'">
-          <restapi-form v-model="flowData.collector.config"></restapi-form>
+          <restapi-form
+            :collector="flowData.collector.config"
+            :properties.sync="flowData.collector.config.properties"
+          ></restapi-form>
         </div>
         <div v-if="flowData.collector.config.sourceType=='query'">
-          <query-form v-model="flowData.collector.config"></query-form>
+          <query-form
+            :collector="flowData.collector.config"
+            :properties.sync="flowData.collector.config.properties"
+          ></query-form>
         </div>
       </div>
     </div>
@@ -115,8 +124,19 @@ export default {
 
   async mounted() {
     this.flowData = this.$parent.$data.flowData;
+
+    this.$_.set(
+      this.flowData,
+      "collector.config.concurrency",
+      this.$_.get(this.flowData, "collector.config.concurrency", 8)
+    );
+    this.$_.set(
+      this.flowData,
+      "collector.config.properties",
+      this.$_.get(this.flowData, "collector.config.properties", [])
+    );
+
     this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
-    this.$_.set(this.flowData, "flowData.collector.config.concurrency", 1);
   }
 };
 </script>
