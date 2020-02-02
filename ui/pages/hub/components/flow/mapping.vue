@@ -6,6 +6,7 @@
         :rules.sync="$parent.$data.flowData.mapping.config"
         :functions="functions"
         :entity="entity"
+        :collector="$parent.$data.flowData.collector.config"
       ></mapping-rules>
     </div>
     <div v-if="$route.query.handler">

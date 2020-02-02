@@ -171,6 +171,7 @@ body {
 }
 .main-view {
   padding-left: 25px;
+  padding-right:20px
 }
 .CodeMirror {
   height: 100%;
