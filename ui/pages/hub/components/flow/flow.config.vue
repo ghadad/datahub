@@ -77,9 +77,9 @@ export default {
       }
     },
     async create() {
-          alert(this.project.flows[this.flowData.config.name])
+          
       if (this.project.flows[this.flowData.config.name]) {
-            alert(this.flowData.config.name)
+          
         throw new Error(
           `entity ${this.flowData.config.name} already exists in this project`
         );
