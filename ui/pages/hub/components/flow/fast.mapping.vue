@@ -1,0 +1,130 @@
+<template>
+  <div>
+    <div class="columns">
+      <div class="column is-4">
+        <table class="fast-mapping table is-bordered is-fullwidth">
+          <thead>
+            <th colspan="3" class>Collector properties</th>
+          </thead>
+          <tbody>
+            <tr v-for="(p,index) in fastRules" :key="index" class="clickable">
+              <td class="dropzone">{{p.origin}}</td>
+              <td class="dropzone">
+                <b-icon icon="arrow-right"></b-icon>
+              </td>
+              <td style="border:3px dotted #CCC;padding:0">
+                <drag :transfer-data="p">
+                  <drop class="dropzone" @drop="handleDrop(p,...arguments)">
+                    <div v-show="!p.goTo" class="white-dropzone">Drop here</div>
+                    <div v-show="p.goTo" class>{{p.goTo}}</div>
+                  </drop>
+                </drag>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="column is-4">
+        <drop class @drop="handleReturnDrop">
+          <table class="fast-mapping table is-bordered is-fullwidth">
+            <thead>
+              <th>Target {{entity.name}} properties</th>
+            </thead>
+            <tbody>
+              <tr
+                v-show="visibilityList[p.name] != 'N'"
+                v-for="(p,index) in entityProperties"
+                :key="index"
+                class="clickable dropzone"
+              >
+                <td>
+                  <drag :transfer-data="p">{{p.name}}</drag>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </drop>
+      </div>
+      <div class="column is-2">
+        <button class="button is-info" @click="generate">Generate rules</button>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import draggable from "vuedraggable";
+import ruleForm from "./mappingRule/rule.form.vue";
+import { Drag, Drop } from "vue-drag-drop";
+
+export default {
+  name: "fastMapping",
+  props: ["rules", "entity", "collector"],
+  components: {
+    draggable,
+    Drag,
+    Drop
+  },
+  data: function() {
+    return {
+      visibilityList: {},
+      fastMappingIndex: [],
+      fastAssignment: false,
+      fastRules: [],
+      entityProperties: []
+    };
+  },
+  mounted() {
+    this.fastRules = this.$_.cloneDeep(
+      this.collector.properties.map(function(e) {
+        return { name: "map " + e, origin: e, originType: "property" };
+      })
+    );
+    //this.fastMappingIndex = this.$_.range(this.collectorProperties.length)
+    this.entityProperties = this.$_.cloneDeep(this.entity.properties);
+  },
+  methods: {
+    generate() {
+      this.$set(this, "cRules", this.fastRules);
+    },
+    handleReturnDrop(data) {
+      let self = this;
+      self.$set(self.visibilityList, data.goTo, "Y");
+      delete data.goTo;
+    },
+    handleDrop(p, data) {
+      let self = this;
+      if (data.name != p.goTo && p.goTo)
+        self.$set(self.visibilityList, p.goTo, "Y");
+      self.$set(self.visibilityList, data.name, "N");
+      self.$set(p, "goTo", data.name);
+      self.$set(p, "targetType", "property");
+      self.$set(p, "originType", "collector");
+    }
+  },
+  computed: {
+    cRules: {
+      get: function() {
+        return this.$props.rules;
+      },
+      set(newValue) {
+        this.$emit("update:rules", newValue);
+      }
+    }
+  }
+};
+</script>
+<style scoped>
+.dropzone {
+  padding: 15px;
+  font-weight: bolder;
+  line-height: 30px;
+}
+.dropzone div {
+  font-weight: bolder;
+  line-height: 30px;
+}
+.white-dropzone {
+  color: white;
+}
+</style>

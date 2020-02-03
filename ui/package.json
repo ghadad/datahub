@@ -23,6 +23,7 @@
     "vue": "^2.6.10",
     "vue-2-crumbs": "^0.5.4",
     "vue-codemirror-lite": "^1.0.4",
+    "vue-drag-drop": "^1.1.4",
     "vue-material": "^1.0.0-beta-11",
     "vue-prism-editor": "^0.3.0",
     "vue-router": "^3.1.3",

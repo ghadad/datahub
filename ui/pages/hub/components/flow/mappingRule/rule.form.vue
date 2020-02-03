@@ -20,10 +20,6 @@
       :list.sync="value.drop"
       :functions="functions.validations"
     ></functions>
-    <div class="column is-12">
-      <button class="button is-link" @click="update">Update</button>
-    </div>
-    <div>{{value.drop}}</div>
   </div>
 </template>
 <script>
@@ -37,8 +33,8 @@ export default {
   components: { Target, Origin, Functions },
   data: function() {
     return {
-      flowData : this.$parent.$data.project.flows[this.$route.params.flow],
-      entityData :{},
+      flowData: this.$parent.$data.project.flows[this.$route.params.flow],
+      entityData: {},
       handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
@@ -47,19 +43,15 @@ export default {
     };
   },
   watch: {},
-  methods: {
-    async update() {
-      await this.$saveProject(this.$parent.$data.project);
-    }
-  },
+  methods: {},
   mounted() {
     //this.value.ruleHandler = this.handlerTemplate;
-    if(this.flowData.collector.config.targetEntity)
-      this.entityData = this.$parent.$data.project.entities[this.flowData.collector.config.targetEntity];
-      else 
-      this.entityData ={}
+    if (this.flowData.collector.config.targetEntity)
+      this.entityData = this.$parent.$data.project.entities[
+        this.flowData.collector.config.targetEntity
+      ];
+    else this.entityData = {};
   }
-
 };
 </script>
 <style>
