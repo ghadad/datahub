@@ -24,8 +24,7 @@
           <tr v-show="rules.length==0">
             <th class="has-text-centered">
               <button class="button is-primary is-large" @click="displayFastAssign()">
-                Fast
-                mapping assignment
+                Fast assignments mapping
               </button>
             </th>
           </tr>
