@@ -14,7 +14,6 @@
               >
                 <b-icon icon="check-circle" v-show="globalOk" type="is-success">:)</b-icon>
               </b-notification>
-
               DATAHUB5 {{$props.title}}
             </h1>
           </div>
@@ -135,7 +134,7 @@ body {
   margin-left: 30px;
 }
 .clickable {
-  cursor: pointer;
+  cursor: grabbing;
 }
 
 .entry-page {
@@ -171,7 +170,7 @@ body {
 }
 .main-view {
   padding-left: 25px;
-  padding-right:20px
+  padding-right: 20px;
 }
 .CodeMirror {
   height: 100%;

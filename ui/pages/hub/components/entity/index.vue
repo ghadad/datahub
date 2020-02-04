@@ -1,6 +1,5 @@
 <template>
   <div v-if="entityData">
-    <h1 class="title">Entity & Properties</h1>
     <div class="columns">
       <div class="column is-6">
         <section>
@@ -13,6 +12,7 @@
                 placeholder="Entity name"
                 v-model="entityData.name"
                 pattern="/\w+/"
+                @change="entityData.name=$normalizeName(entityData.name)"
               />
             </div>
             <p class="help">unique name . use only alphanumeric letters</p>
@@ -21,8 +21,22 @@
         </section>
         <section>
           <b-field label="Description">
-            <b-input rows="20" maxlength="300" type="textarea" v-model="entityData.description"></b-input>
+            <b-input rows="10" maxlength="300" type="textarea" v-model="entityData.description"></b-input>
           </b-field>
+          <div class="buttons">
+            <button class="button is-primary" v-show="!origEntityKeyName" @click="create">Create</button>
+            <button class="button is-link" v-show="origEntityKeyName" @click="update">Update</button>
+            <button
+              class="button is-danger"
+              v-show="origEntityKeyName && deleteFlag==0"
+              @click="deleteEntity(1)"
+            >Delete</button>
+            <button
+              class="button is-danger"
+              v-show="deleteFlag==1"
+              @click="origEntityKeyName && deleteEntity(2)"
+            >Are you sure</button>
+          </div>
         </section>
       </div>
       <div class="column is-6">
@@ -33,22 +47,7 @@
         ></properties>
       </div>
     </div>
-    <div>
-      <div class="buttons">
-        <button class="button is-primary" v-show="!origEntityKeyName" @click="create">Create</button>
-        <button class="button is-link" v-show="origEntityKeyName" @click="update">Update</button>
-        <button
-          class="button is-danger"
-          v-show="origEntityKeyName && deleteFlag==0"
-          @click="deleteEntity(1)"
-        >Delete</button>
-        <button
-          class="button is-danger"
-          v-show="deleteFlag==1"
-          @click="origEntityKeyName && deleteEntity(2)"
-        >Are you sure</button>
-      </div>
-    </div>
+    <div></div>
   </div>
 </template>
 
@@ -59,7 +58,6 @@ export default {
   components: {
     Properties
   },
-
   data: function() {
     return {
       deleteFlag: 0,

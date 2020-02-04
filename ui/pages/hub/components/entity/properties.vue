@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Properties :</h2>
     <div class="columns">
       <div class="field column is-4">
         <label class="label">name</label>
@@ -11,6 +10,7 @@
             placeholder="property Name"
             v-model="property.name"
             pattern="/\w+/"
+            @change="property.name=$normalizeName(property.name)"
           />
         </div>
       </div>
@@ -45,43 +45,54 @@
     </div>
     <div class="columns">
       <div class="column">
-        <table class="table is-fullwidth is-dark">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Name</th>
-              <th scope="col">Type</th>
-              <th scope="col">PK</th>
-              <th scope="col">Restrictions</th>
-               <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <draggable v-model="dragableList" tag="tbody">
-            <tr v-for="(item,index) in dragableList" :key="index" class="clickable">
+        <div class="table" style="max-height:100%;height:100%px;overflow-y:true;x-overfloww:false">
+          <strong class="is-5">
+            Properties :
+            <input v-model="term" />
+          </strong>
+          <table class="table is-fullwidth is-dark">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">PK</th>
+                <th scope="col">Restrictions</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <draggable v-model="dragableList" tag="tbody">
+              <tr v-for="(item,index) in dragableList" :key="index" class="clickable">
+                <td>{{ index+1 }}</td>
+                <td v-if="activeEditIndex!=index">{{ item.name }}</td>
+                <td v-if="activeEditIndex==index">
+                  <input class="input" type="text" v-model="item.name" />
+                </td>
 
-   
-              <td>{{ index+1 }}</td>
-              <td v-if="activeEditIndex!=index">{{ item.name }}</td>
-              <td v-if="activeEditIndex==index"><input class="input" type="text" v-model="item.name"></td>
-
-              <td v-if="activeEditIndex!=index">{{ item.type }}</td>
-              <td v-if="activeEditIndex==index"><input class="input" type="text" v-model="item.type"></td>
-               <td v-if="activeEditIndex!=index">{{ item.pk }}</td>
-              <td v-if="activeEditIndex==index"><input class="input" type="text" v-model="item.pk"></td>
-               <td v-if="activeEditIndex!=index">{{ item.restrictions }}</td>
-              <td v-if="activeEditIndex==index"><input class="input" type="text" v-model="item.restrictions"></td>
-                                  <td>
-              <span class="icon  clickable" @click="activeEditIndex=index">
-              <b-icon icon="edit" type="is-link" size="is-small"></b-icon> 
-              </span>
-              <span class="icon clickable" @click="del(index)">
-              <b-icon icon="trash" type="is-danger" size="is-small"></b-icon>
-              </span>
-              </td>
-            </tr>
-            
-          </draggable>
-        </table>
+                <td v-if="activeEditIndex!=index">{{ item.type }}</td>
+                <td v-if="activeEditIndex==index">
+                  <input class="input" type="text" v-model="item.type" />
+                </td>
+                <td v-if="activeEditIndex!=index">{{ item.pk }}</td>
+                <td v-if="activeEditIndex==index">
+                  <input class="input" type="text" v-model="item.pk" />
+                </td>
+                <td v-if="activeEditIndex!=index">{{ item.restrictions }}</td>
+                <td v-if="activeEditIndex==index">
+                  <input class="input" type="text" v-model="item.restrictions" />
+                </td>
+                <td>
+                  <span class="icon clickable" @click="term='';activeEditIndex=index">
+                    <b-icon icon="edit" type="is-info" size="is-small"></b-icon>
+                  </span>
+                  <span class="icon clickable" @click="del(index)">
+                    <b-icon icon="trash" type="is-danger" size="is-small"></b-icon>
+                  </span>
+                </td>
+              </tr>
+            </draggable>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -94,7 +105,8 @@ export default {
   components: { draggable },
   data() {
     return {
-      activeEditIndex:null,
+      term: "",
+      activeEditIndex: null,
       enabled: true,
       dragging: false,
       property: {
@@ -110,14 +122,15 @@ export default {
   },
 
   methods: {
-    edit(index) {
-
-    },
-    del(index) { 
-      this.dragableList.splice(index,1)
+    edit(index) {},
+    del(index) {
+      this.dragableList.splice(index, 1);
     },
     add() {
       if (!(this.property.name && this.property.type)) return;
+      if (this.dragableList.filter(e => e.name == this.property.name).length)
+        throw Error(`${this.property.name}  Already exists`);
+
       this.dragableList.push(this.property);
       this.property = {
         name: null,
@@ -129,6 +142,8 @@ export default {
   computed: {
     dragableList: {
       get() {
+        let re = new RegExp(this.term, "i");
+        if (this.term) return this.list.filter(e => e.name.match(re));
         return this.list;
       },
       set(newValue) {
@@ -145,5 +160,25 @@ export default {
 .ghost {
   opacity: 0.5;
   background: #c8ebfb;
+}
+tr.clickable {
+  border: 1px solid #ccc;
+}
+tr.clickable:hover {
+  background: #eee !important;
+  font-weight: bolder;
+}
+
+tr td {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+div.table {
+  height: 700px;
+  max-height: 700px;
+  overflow-x: hidden;
+}
+div.table .table {
+  width: 95%;
 }
 </style>

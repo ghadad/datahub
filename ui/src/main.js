@@ -38,6 +38,13 @@ Vue.prototype.$saveProject = async function (project, routeParams = {}) {
         self.$router.push(routeParams);
 };
 
+Vue.prototype.$normalizeName = function (str = "") {
+    return str
+        .trim()
+        .replace(/-/g, "_")
+        .replace(/\s+/g, "_")
+        .toLowerCase();
+}
 Vue.prototype.$saveInterface = async function (Int) {
     await 1;
 };

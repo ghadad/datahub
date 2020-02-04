@@ -17,18 +17,19 @@
             ></b-icon>
           </span>
         </h1>
-        <table class="table is-fullwidth is-dark">
+        <table id="mapping-rules" class="table is-fullwidth is-dark">
           <tr v-show="rules.length==0">
             <th>No exists rules found ... be creative</th>
           </tr>
           <tr v-show="rules.length==0">
             <th class="has-text-centered">
-              <button class="button is-primary is-large" @click="displayFastAssign()">
-                Fast assignments mapping
-              </button>
+              <button
+                class="button is-primary is-large"
+                @click="displayFastAssign()"
+              >Fast assignments mapping</button>
             </th>
           </tr>
-          <draggable id="rules-table " v-model="cRules" tag="tbody">
+          <draggable v-model="cRules" tag="tbody">
             <tr
               v-for="(rule,index) in cRules"
               :key="rule.name"
@@ -336,5 +337,13 @@ tr.active {
 }
 .fast-mapping.table td {
   width: 100%;
+}
+
+#mapping-rules tr.clickable {
+  border: 1px solid #ccc !important;
+}
+
+#mapping-rules tr.clickable td {
+  padding: 5px;
 }
 </style>

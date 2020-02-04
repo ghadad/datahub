@@ -23,9 +23,20 @@
             </tr>
           </tbody>
         </table>
+        <b-notification v-if="!fastRules.length" type="is-danger" :closable="false">
+          <p>No proerties found in collector</p>
+          <router-link :to="{name:'collector',query:{activeStep:1}}">Add properties here</router-link>
+        </b-notification>
       </div>
 
-      <div class="column is-4">
+      <div v-if="!entityProperties.length" class="column is-4">
+        <b-notification type="is-danger" :closable="false">
+          <p>No proerties found for {{entity.name}} entity</p>
+          <router-link :to="{name:'entity',params:{entity:entity.name}}">Add properties here</router-link>
+        </b-notification>
+      </div>
+
+      <div v-if="entityProperties.length" class="column is-4">
         <drop class @drop="handleReturnDrop">
           <table class="fast-mapping table is-bordered is-fullwidth">
             <thead>
@@ -46,7 +57,7 @@
           </table>
         </drop>
       </div>
-      <div class="column is-2">
+      <div v-if="entityProperties.length" class="column is-2">
         <button class="button is-info" @click="generate">Generate rules</button>
       </div>
     </div>
@@ -76,12 +87,12 @@ export default {
   },
   mounted() {
     this.fastRules = this.$_.cloneDeep(
-      this.collector.properties.map(function(e) {
+      (this.collector.properties || []).map(function(e) {
         return { name: "map " + e, origin: e, originType: "property" };
       })
     );
     //this.fastMappingIndex = this.$_.range(this.collectorProperties.length)
-    this.entityProperties = this.$_.cloneDeep(this.entity.properties);
+    this.entityProperties = this.$_.cloneDeep(this.entity.properties || []);
   },
   methods: {
     generate() {
