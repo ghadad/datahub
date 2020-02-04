@@ -7,18 +7,21 @@
       class="rule-section"
       :list.sync="value.transform"
       :functions="functions.transforms"
+      op="->"
     ></functions>
     <functions
       title="Validtion rules"
       class="rule-section"
       :list.sync="value.validate"
       :functions="functions.validations"
+       op="and"
     ></functions>
     <functions
       title="Drop  rules"
       class="rule-section"
       :list.sync="value.drop"
       :functions="functions.validations"
+       op="or"
     ></functions>
   </div>
 </template>

@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     generate() {
-      this.$set(this, "cRules", this.fastRules);
+      this.$set(this, "cRules", this.fastRules.filter(e=>e.goTo));
     },
     handleReturnDrop(data) {
       let self = this;

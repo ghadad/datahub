@@ -16,7 +16,7 @@
       </span>
     </div>
     <div class="columns" v-show="isOpen">
-      <div class="column is-8">
+      <div class="column is-12">
         <div class="block">
           <div class="field">
             <section>
@@ -36,8 +36,11 @@
       <div class="column is-1">
         <strong class="label">{{originLabel[value.originType]}}</strong>
       </div>
-      <div class="column is-9">
+      <div class="column is-9" v-if="value.originType=='query'">
         <textarea rows="5" class="textarea" v-model="value.origin"></textarea>
+      </div>
+      <div class="column is-9" v-if="value.originType!='query'">
+         <input type="text" class="input text" v-model="value.origin"></input>
       </div>
     </div>
     <!--pre>{{value}}</pre-->
@@ -65,13 +68,20 @@ export default {
       originType: null
     };
   },
-  mounted: function() {},
+  watch:{
+    'value.originType':function() {
+       this.isOpen =  this.value.originType =='query' ? false : true;
+    }
+  },
+  mounted: function() {
+     this.isOpen =  this.value.originType =='query' ? false : true;
+  },
   methods: {
     toggle: function() {
       this.isOpen = this.isOpen ? false : true;
     },
     getOriginLabel: function() {}
   },
-  computed: {}
+  computed: {},
 };
 </script>

@@ -88,3 +88,6 @@ export default {
   }
 };
 </script>
+<style scope>
+label.b-radio.radio {margin-right :30px}
+</style>
