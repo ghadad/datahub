@@ -171,17 +171,17 @@ export default {
       return window.$serverConfig;
     },
     datatypes() {
-      if (this.config.propertiesTypes && this.entityData.dbEngine)
+      if (this.config.dataTypes && this.entityData.dbEngine)
         return [
           { type: "" },
           ...Object.values(
-            this.config.propertiesTypes[this.entityData.dbEngine]
+            this.config.dataTypes[this.entityData.dbEngine]
           )
         ];
       return [];
     },
     databases() {
-      return Object.keys(this.config.propertiesTypes);
+      return Object.keys(this.config.dataTypes);
     }
   }
 };
