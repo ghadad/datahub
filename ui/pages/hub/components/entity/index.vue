@@ -172,9 +172,12 @@ export default {
     },
     datatypes() {
       if (this.config.propertiesTypes && this.entityData.dbEngine)
-        return Object.values(
-          this.config.propertiesTypes[this.entityData.dbEngine]
-        );
+        return [
+          { type: "" },
+          ...Object.values(
+            this.config.propertiesTypes[this.entityData.dbEngine]
+          )
+        ];
       return [];
     },
     databases() {

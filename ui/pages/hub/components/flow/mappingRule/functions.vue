@@ -118,6 +118,7 @@ export default {
       let self = this;
       let errorFound = false;
       if (!self.activeFunc) return;
+
       let paramsSchema = self.functions[self.activeFunc].params || [];
       self.$set(
         self,
@@ -164,7 +165,7 @@ export default {
     },
     displayT: function(t) {
       let func = t[0];
-      let ps = this.functions[func].params || [];
+      let ps = this.functions[func.replace("!", "")].params || [];
       let params = [];
       for (let i = 1; i < t.length; i++) {
         params.push(t[i]);
