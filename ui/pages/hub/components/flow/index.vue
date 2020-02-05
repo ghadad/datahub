@@ -34,7 +34,7 @@ export default {
         { name: "mapping", query: { handler: true } },
         { name: "discover" }
       ],
-      activeStep: 0,
+      activeStep: null,
       project: null,
       flowData: {},
       entityModel: {},
@@ -42,16 +42,18 @@ export default {
     };
   },
   watch: {
+    "$route.name": function(newVal) {
+      this.activeStep = this.stepRoute.findIndex(e => e.name == newVal);
+    },
     activeStep: function(newVal) {
       //alert(newVal);
       this.$router.push(this.stepRoute[newVal]);
-    },
-     '$route.query.activeStep': function(newVal) {
-      if(newVal)
-         this.activeStep = newVal
     }
   },
   async mounted() {
+    this.activeStep =
+      this.stepRoute.findIndex(e => e.name == this.$route.name) || 0;
+    if (this.activeStep < 0) this.activeStep = 0;
     this.$root.$emit("breadcrumbs", this.breadcrumbs);
     let self = this;
     this.route = this.$route;
@@ -69,14 +71,10 @@ export default {
     if (self.$route.params.flow) {
       this.flowData = this.project.flows[this.$route.params.flow];
       let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
-      this.$set(this,'entityModel', this.project.entities[targetEntity] || {});
+      this.$set(this, "entityModel", this.project.entities[targetEntity] || {});
     } else {
       this.flowData = await this.$http.get(`projects/template/flow`);
     }
-
-    this.$router.push({
-      name: "flowConfig"
-    });
   }
 };
 </script>

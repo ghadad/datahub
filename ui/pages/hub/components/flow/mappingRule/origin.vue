@@ -40,7 +40,7 @@
         <textarea rows="5" class="textarea" v-model="value.origin"></textarea>
       </div>
       <div class="column is-9" v-if="value.originType!='query'">
-         <input type="text" class="input text" v-model="value.origin"></input>
+        <input type="text" class="input text" v-model="value.origin" />
       </div>
     </div>
     <!--pre>{{value}}</pre-->
@@ -54,7 +54,7 @@
 <script>
 export default {
   name: "origin",
-  props: ["value", "entity"],
+  props: ["value", "entity", "collapse"],
   data() {
     return {
       isOpen: false,
@@ -68,13 +68,16 @@ export default {
       originType: null
     };
   },
-  watch:{
-    'value.originType':function() {
-       this.isOpen =  this.value.originType =='query' ? false : true;
+  watch: {
+    "$props.collapse": function() {
+      this.isOpen = this.$props.collapse;
+    },
+    "value.originType": function() {
+      this.isOpen = this.value.originType == "query" ? false : true;
     }
   },
   mounted: function() {
-     this.isOpen =  this.value.originType =='query' ? false : true;
+    this.isOpen = this.value.originType == "query" ? false : true;
   },
   methods: {
     toggle: function() {
@@ -82,6 +85,6 @@ export default {
     },
     getOriginLabel: function() {}
   },
-  computed: {},
+  computed: {}
 };
 </script>

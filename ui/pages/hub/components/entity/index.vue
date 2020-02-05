@@ -3,20 +3,45 @@
     <div class="columns">
       <div class="column is-6">
         <section>
-          <div class="field">
-            <label class="label">Entity name</label>
-            <div class="control">
-              <input
-                class="input"
-                type="text"
-                placeholder="Entity name"
-                v-model="entityData.name"
-                pattern="/\w+/"
-                @change="entityData.name=$normalizeName(entityData.name)"
-              />
+          <div class="columns">
+            <div class="column is-6">
+              <div class="field">
+                <label class="label">Entity name</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    placeholder="Entity name"
+                    v-model="entityData.name"
+                    pattern="/\w+/"
+                    @change="entityData.name=$normalizeName(entityData.name)"
+                  />
+                </div>
+                <p class="help">unique name . use only alphanumeric letters</p>
+                <p v-for="(e,index) in errors" :key="index">{{e}}</p>
+              </div>
             </div>
-            <p class="help">unique name . use only alphanumeric letters</p>
-            <p v-for="(e,index) in errors" :key="index">{{e}}</p>
+            <div class="column is-6">
+              <div class="field">
+                <div class="label">
+                  <label class="label">Target Database engine</label>
+                </div>
+                <div class="field-body">
+                  <div class="field is-narrow">
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select
+                          v-model="entityData.dbEngine"
+                          :disabled="entityData.properties.length?true:false"
+                        >
+                          <option v-for="(db,index) in databases" :key="index" :value="db">{{db}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
         <section>
@@ -44,6 +69,7 @@
           ref="properties"
           v-if="entityData.properties"
           :list.sync="entityData.properties"
+          :datatypes="datatypes"
         ></properties>
       </div>
     </div>
@@ -139,6 +165,21 @@ export default {
           properties: []
         }
       );
+  },
+  computed: {
+    config() {
+      return window.$serverConfig;
+    },
+    datatypes() {
+      if (this.config.propertiesTypes && this.entityData.dbEngine)
+        return Object.values(
+          this.config.propertiesTypes[this.entityData.dbEngine]
+        );
+      return [];
+    },
+    databases() {
+      return Object.keys(this.config.propertiesTypes);
+    }
   }
 };
 </script>

@@ -129,7 +129,7 @@
             <button
               v-show="displayState=='edit' && allCollapse==true"
               class="clickable"
-              @click="display('expand')"
+              @click="allCollapse=false"
               title="Add new mapping rule after this position !"
             >
               <b-icon
@@ -142,7 +142,7 @@
             <button
               v-show="displayState=='edit' && allCollapse==false"
               class="clickable"
-              @click="display('collapse')"
+              @click="allCollapse=true"
               title="Add new mapping rule after this position !"
             >
               <b-icon
@@ -178,11 +178,16 @@
         </div>
 
         <div v-if="displayState=='edit'">
-          <rule-form v-model="activeRule" :functions="functions" :entity="entity"></rule-form>
+          <rule-form
+            v-model="activeRule"
+            :functions="functions"
+            :entity="entity"
+            :collapse="allCollapse"
+          ></rule-form>
         </div>
 
         <div v-if="displayState=='code'">
-          <codemirror v-model="ruleCode" class="full-height"></codemirror>
+          <codemirror v-model="ruleCode"></codemirror>
         </div>
 
         <div class="list-view" v-if="displayState=='list'">
@@ -193,7 +198,7 @@
           <hr />
           <span class="tag is-primary">Origin</span>
           <span class="tag is-default">Origin type :{{activeRule.originType}}</span>
-          <codemirror v-model="activeRule.origin" class="full-height"></codemirror>
+          <codemirror v-model="activeRule.origin"></codemirror>
 
           <hr />
           <span class="tag is-primary">Validate</span>
@@ -345,5 +350,13 @@ tr.active {
 
 #mapping-rules tr.clickable td {
   padding: 5px;
+}
+.CodeMirror {
+  border: 1px solid #ccc;
+}
+.CodeMirror-scroll {
+  height: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 </style>

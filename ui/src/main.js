@@ -48,11 +48,14 @@ Vue.prototype.$normalizeName = function (str = "") {
 Vue.prototype.$saveInterface = async function (Int) {
     await 1;
 };
+Vue.prototype.$eval = function (expr) {
+    return eval(expr)
+};
+
 import ValidationProvider from "./validate.js";
 import Breadcrumb from "./components/breadcrumb.vue";
 Vue.component('breadcrumb', Breadcrumb)
 Vue.component('ValidationProvider', ValidationProvider);
 
-Http.get("config").then(r => window.$serverConfig = r);
 
 export default Vue;

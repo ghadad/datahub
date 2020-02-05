@@ -1,27 +1,30 @@
 <template>
   <div v-if="value">
-    <target class="rule-section" v-model="value" :entity="entityData"></target>
-    <origin class="rule-section" v-model="value" :entity="entityData"></origin>
+    <target class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></target>
+    <origin class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></origin>
     <functions
       title="Transform rules"
       class="rule-section"
       :list.sync="value.transform"
       :functions="functions.transforms"
       op="->"
+      :collapse="collapse"
     ></functions>
     <functions
       title="Validtion rules"
       class="rule-section"
       :list.sync="value.validate"
       :functions="functions.validations"
-       op="and"
+      op="and"
+      :collapse="collapse"
     ></functions>
     <functions
       title="Drop  rules"
       class="rule-section"
       :list.sync="value.drop"
       :functions="functions.validations"
-       op="or"
+      op="or"
+      :collapse="collapse"
     ></functions>
   </div>
 </template>
@@ -32,7 +35,7 @@ import Functions from "./functions.vue";
 
 export default {
   name: "rule-form",
-  props: ["value", "functions", "entity"],
+  props: ["value", "functions", "entity", "collapse"],
   components: { Target, Origin, Functions },
   data: function() {
     return {
@@ -61,9 +64,9 @@ export default {
 .rule-section {
   padding: 7px;
   margin-bottom: 5px;
-  background: #eee;
+  background: #efefefb3;
   border-bottom: 1px dotted #ccc;
-  border: 1px solid #cdcdcd;
+  border: 2px solid #aaa;
   border-radius: 3px;
 }
 .tag-head {

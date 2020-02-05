@@ -75,7 +75,7 @@
 
 <script>
 export default {
-  name: "app",
+  name: "main",
   props: ["menu", "title"],
   data: function() {
     return {
@@ -94,11 +94,12 @@ export default {
   },
   async mounted() {
     let self = this;
-
     this.$root.$on("global-ok", function(data) {
       self.globalOk = data;
     });
-    this.serverConfig = await this.$http.get("config");
+    this.prototype.$serverConfig = this.serverConfig = await this.$http.get(
+      "config"
+    );
   },
   computed: {
     routeTitle: function() {

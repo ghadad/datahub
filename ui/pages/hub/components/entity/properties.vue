@@ -17,13 +17,15 @@
       <div class="column is-3">
         <label class="label">Type</label>
         <div class="control">
-          <input
-            class="input"
-            type="text"
-            placeholder="property type"
-            v-model="property.type"
-            pattern="/\w+/"
-          />
+          <div class="select is-fullwidth">
+            <select v-model="property.type">
+              <option
+                v-for="(datatype,index) in datatypes"
+                :key="index"
+                :value="datatype.type"
+              >{{datatype.type}}</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="column is-3">
@@ -101,7 +103,7 @@
 import draggable from "vuedraggable";
 export default {
   name: "properties",
-  props: ["list"],
+  props: ["list", "datatypes"],
   components: { draggable },
   data() {
     return {

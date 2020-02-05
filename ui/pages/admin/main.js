@@ -11,5 +11,8 @@ new Vue({
       title: "Admin"
     }
   }),
+  data: {
+    serverCofig: {}
+  },
   router,
 }).$mount('#app')
