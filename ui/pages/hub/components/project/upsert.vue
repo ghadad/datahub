@@ -55,8 +55,7 @@ export default {
     return {
       list: {},
       errors: [],
-      projectName: null,
-      project: null,
+      origProjectName:null,
       project: {
         projectName: null,
         description: null,
@@ -68,8 +67,11 @@ export default {
     };
   },
   async mounted() {
-    if (this.$route.query.id)
+    if (this.$route.query.id){
+
       this.project = await this.$http.get("projects/" + this.$route.query.id);
+      this.origProjectName = this.$route.query.id;
+    }
   },
   methods: {
     validate() {
@@ -94,12 +96,25 @@ export default {
       return hasError;
     },
     async update() {
+      let self = this;
       if (this.validate()) return;
-      await this.$saveProject(this.project);
+      
+        if (self.origProjectName != self.project.projectName) {
+          let origId = self.project._id;
+          let origRev = self.project._rev;
+          self.project._rev=null;
+          delete self.project._rev;
+          await self.create(false);
+          await self.$http.delete("projects", { id: self.origProjectName, rev: origRev });
+        } else {
+          await this.$saveProject(self.project);
+        }
+
     },
-    async create() {
+    async create(list=true) {
       if (this.validate()) return;
-      await this.$createProject(this.project, true, { name: "projects" });
+
+      await this.$createProject(this.project, this.project.generated, list ? { name: "projects" }:{});
     }
   },
   computed: {}

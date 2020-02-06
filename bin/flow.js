@@ -38,7 +38,7 @@ const main = require(upath.join(__dirname, "..", "lib/main"));
 main.init(argv).then(async () => {
   const Project = __app.require(__app.lib, "project");
   const Flow = __app.require(__app.lib, "flow");
-  let project = new Project({    name: argv.project  });
+  let project = new Project({name: argv.project});
   await project.get()
   let flowConfig = project.getFlow(argv.flow);
   __app.logger.info("flowConfig:", flowConfig)
