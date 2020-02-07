@@ -4,12 +4,12 @@
 
     <section>
       <b-steps v-model="activeStep" :animated="true" :has-navigation="false">
-        <b-step-item label="flowConfig" :clickable="true"></b-step-item>
-        <b-step-item label="Collector" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item label="Handler" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item label="Mapping" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item label="Handler" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item label="Discover" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item  icon="info"  label="flowConfig" :clickable="true"></b-step-item>
+        <b-step-item  icon="download" label="Collector" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item  icon="cog" label="Test station" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item  icon="adjust" label="Mapping" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item  icon="cog"  label="Test station" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item icon="check-square" label="Discover" :clickable="flowData.config.name? true:false"></b-step-item>
       </b-steps>
     </section>
     <router-view></router-view>
@@ -29,9 +29,9 @@ export default {
       stepRoute: [
         { name: "flowConfig" },
         { name: "collector" },
-        { name: "collector", query: { handler: true } },
+        { name: "tester", params: { tester: "collector" } },
         { name: "mapping" },
-        { name: "mapping", query: { handler: true } },
+        { name: "tester", params: { tester: "mapping" } },
         { name: "discover" }
       ],
       activeStep: null,

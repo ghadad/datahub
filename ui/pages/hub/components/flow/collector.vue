@@ -18,21 +18,7 @@
               </div>
             </div>
           </div>
-          <div class="column is-2">
-            <div class="field">
-              <label class="label">Target entity</label>
-              <div class="select">
-                <select v-model="flowData.collector.config.targetEntity">
-                  <option value>----</option>
-                  <option
-                    v-for="entityName in entitiesKeys"
-                    :key="entityName"
-                    :value="entityName"
-                  >{{entityName}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
+
 
           <div class="column is-2">
             <div class="field">

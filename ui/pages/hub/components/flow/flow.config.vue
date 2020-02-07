@@ -21,6 +21,21 @@
               </div>
             </div>
           </div>
+                    <div class="column is-2">
+            <div class="field">
+              <label class="label">Target entity</label>
+              <div class="select">
+                <select v-model="flowData.config.targetEntity">
+                  <option value>----</option>
+                  <option
+                    v-for="entityName in entitiesKeys"
+                    :key="entityName"
+                    :value="entityName"
+                  >{{entityName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
           <div class="column is-2">
             <div class="field">
               <div class="control">
@@ -48,6 +63,8 @@ export default {
   name: "flowConfig",
   data: function() {
     return {
+            entitiesKeys: [],
+
       deleteFlag: 0,
       errors: [],
       origFlowKeyName: null,
@@ -122,6 +139,7 @@ export default {
     this.flowData = this.$parent.$data.flowData;
     this.project = this.$parent.$data.project;
     this.flowData.config = this.flowData.config || {};
+     this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
   }
 };
 </script>

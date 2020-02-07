@@ -52,9 +52,9 @@ export default {
   methods: {},
   mounted() {
     //this.value.ruleHandler = this.handlerTemplate;
-    if (this.flowData.collector.config.targetEntity)
+    if (this.flowData.config.targetEntity)
       this.entityData = this.$parent.$data.project.entities[
-        this.flowData.collector.config.targetEntity
+        this.flowData.collector.targetEntity
       ];
     else this.entityData = {};
   }

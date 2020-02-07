@@ -17,7 +17,10 @@ let Http = class {
         
     }
     async post(service, params, options) {
-        let result = await axios.post(service, params, options);
+        let result = await axios.post(service, params, options).
+        catch((function(error) { 
+            throw Error(`Failed on POST request ${service} ${error.response.status}`)
+        }));
         if (result.data)
             return result.data;
         

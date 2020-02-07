@@ -1,5 +1,7 @@
 import Index from "./index.vue";
 import Collector from "./collector.vue";
+import Tester from "./tester.vue";
+
 import FlowConfig from "./flow.config.vue";
 
 import Mapping from "./mapping.vue";
@@ -19,6 +21,11 @@ export default {
         component: Collector,
         name: "collector",
         meta:{title:"Flow"}
+    },{
+        path: "tester/:tester",
+        component: Tester,
+        name: "tester",
+        meta:{title:"Tesetr"}
     }, {
         path: "mapping",
         component: Mapping,
