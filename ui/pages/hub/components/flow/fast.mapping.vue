@@ -69,7 +69,7 @@ import ruleForm from "./mappingRule/rule.form.vue";
 import { Drag, Drop } from "vue-drag-drop";
 
 export default {
-  name: "fastMapping",
+  name: "fast-mapping",
   props: ["rules", "entity", "collector"],
   components: {
     draggable,

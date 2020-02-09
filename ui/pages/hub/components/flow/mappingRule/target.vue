@@ -64,7 +64,6 @@ export default {
   props: ["value", "entity"],
   data() {
     return {
-      
       goToValue: this.value.goTo || ""
     };
   },

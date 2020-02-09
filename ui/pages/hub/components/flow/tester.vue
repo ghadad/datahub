@@ -1,9 +1,11 @@
 <template>
-  <div v-if="collectorConfig">
-    <button class="button is-link" @click="runTest">Test {{tester}}</button>
-    &nbsp;<button class="button is-link" @click="runTest2">Test {{tester}} post handler</button>
+  <div class="columns">
+    <div class="column is-12">
 
-    <div class="Table">
+    <button class="button is-link" @click="runTest(tester)">Test {{tester}}</button>
+    &nbsp;<button class="button is-link" @click="runTest(tester+'_handler')">Test {{tester}} post handler</button>
+     <b-notification v-show="error" :closable="false" type="is-danger"  class="error">{{error}}</b-notification>
+     <h3 class="title is-4">{{testerTitle}}  result </h3>
       <table class="table">
         <tr>
           <th v-for="h in headers" :key="h">{{h}}</th>
@@ -22,30 +24,35 @@
     name: "test",
     data: function () {
       return {
-
-        collectorConfig: {},
+        testerTitle:null,
+        error:null,
+        flow: {},
         result: []
       };
     },
 
     async mounted() {
       this.tester = this.$route.params.tester;
-      this.collectorConfig = this.$parent.$data.flowData.collector.config;
-      this.collector = this.$parent.$data.flowData.collector;
+      this.flow = this.$parent.$data.flowData;
 
     },
     methods: {
-      async runTest() {
-        this.$set(this, 'result', await this.$http.post("collector/test", this.collectorConfig));
+      async runTest(tester) {
+        this.testerTitle =  tester;
+        this.error=null;
+        try { 
+        let result = await this.$http.post(`flow/test/${tester}`, this.flow)
+        this.$set(this, 'result',result );  
+        } catch(error) { 
+          
+          this.error = error
+        }
+        
       },
-      async runTest2() {
-        this.$set(this, 'result', await this.$http.post("collector/test2", this.collector));
-      }
     },
     computed: {
       tester: function () {
         this.$set(this, 'result', []);
-
         return this.$route.params.tester;
       },
       headers: function () {
@@ -55,3 +62,6 @@
     },
   }
 </script>
+<style scoped>
+.notification { margin:10px }
+</style>

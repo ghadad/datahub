@@ -1,6 +1,7 @@
 <template>
   <div id="mapping-rules" v-if="$parent.$data.flowData.mapping">
-    <div v-if="!$route.query.handler">
+    <div v-if="!showHandler">
+    <h1 class="title">Collector settings <b-button class="button is-info is-pulled-right" icon-right="code"  @click="showHandler=true">Mapping post handler</b-button></h1>
       <mapping-rules
         ref="existsRules"
         :rules.sync="$parent.$data.flowData.mapping.config"
@@ -9,7 +10,9 @@
         :collector="$parent.$data.flowData.collector.config"
       ></mapping-rules>
     </div>
-    <div v-if="$route.query.handler">
+    <div v-if="showHandler">
+       <h1 class="title">Collector settings <b-button class="button is-info is-pulled-right" icon-right="code"  @click="showHandler=false">Mapping rules</b-button></h1>
+
       <div class="field">
         <label class="label">Post mapping Handler</label>
         <div class="control">
@@ -30,6 +33,7 @@ export default {
   },
   data: function() {
     return {
+      showHandler:false,
       functions: null,
       route: null,
       entity: {},
