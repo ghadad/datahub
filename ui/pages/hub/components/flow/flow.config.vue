@@ -4,11 +4,11 @@
       <div>
         <h1 class="title">FLOW settings</h1>
         <div class="columns">
-          <div class="column is-1">
-            <label class="label">Flow name</label>
-          </div>
+
           <div class="column is-2">
             <div class="field">
+                          <label class="label">Flow name</label>
+
               <div class="control">
                 <input
                   class="input"
@@ -21,7 +21,7 @@
               </div>
             </div>
           </div>
-                    <div class="column is-2">
+            <div class="column is-2">
             <div class="field">
               <label class="label">Target entity</label>
               <div class="select">

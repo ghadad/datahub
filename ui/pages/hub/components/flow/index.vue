@@ -29,9 +29,9 @@ export default {
       stepRoute: [
         { name: "flowConfig" },
         { name: "collector" },
-        { name: "tester", params: { tester: "collector" } },
+        { name: "tester_collector", params: { tester: "collector" } },
         { name: "mapping" },
-        { name: "tester", params: { tester: "mapping" } },
+        { name: "tester_mapping", params: { tester: "mapping" } },
         { name: "discover" }
       ],
       activeStep: null,
@@ -70,7 +70,7 @@ export default {
 
     if (self.$route.params.flow) {
       this.flowData = this.project.flows[this.$route.params.flow];
-      let targetEntity = this.flowData.collector.config.targetEntity.toLowerCase();
+      let targetEntity = this.flowData.config.targetEntity.toLowerCase();
       this.$set(this, "entityModel", this.project.entities[targetEntity] || {});
     } else {
       this.flowData = await this.$http.get(`projects/template/flow`);

@@ -1,6 +1,6 @@
 const axios = require("axios");
 axios.defaults.baseURL = location.protocol + '//' + location.host+"/api";
-
+import lodash from 'lodash';
 //axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 //axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -19,7 +19,8 @@ let Http = class {
     async post(service, params, options) {
         let result = await axios.post(service, params, options).
         catch((function(error) { 
-            throw Error(`Failed on POST request ${service} ${error.response.status}`)
+            let errorMEssage = lodash.get(error,"response.data.info","Cannot fetch error from server response")
+           throw Error(`Failed on POST request ${service} ${errorMEssage}`)
         }));
         if (result.data)
             return result.data;

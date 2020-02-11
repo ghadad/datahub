@@ -53,9 +53,9 @@
                 </span>
               </td>
               <td
-                @click="activeRule=rule;activeIndex=index;newActiveIndex=null"
-              >{{ rule.name||rule.goTo}}</td>
-              <td @click="activeRule=rule;activeIndex=index;newActiveIndex=null">{{ index+1 }}</td>
+                @click="setRule(rule);activeIndex=index;newActiveIndex=null"
+              >{{rule.name||rule.goTo}}</td>
+              <td @click="setRule(rule);activeIndex=index;newActiveIndex=null">{{ index+1 }}</td>
             </tr>
           </draggable>
         </table>
@@ -68,7 +68,7 @@
         v-if="newActiveIndex || activeIndex || activeIndex===0 || newActiveIndex===0"
       >
         <div class="columns">
-          <div v-if="0">newActiveIndex:{{newActiveIndex}} ,activeIndex:{{activeIndex}}</div>
+          <div v-if="1">newActiveIndex:{{newActiveIndex}} ,activeIndex:{{activeIndex}}</div>
           <div class="column is-2" v-if="activeIndex != null && activeIndex>=0">
             <h2 class="title is-3">Rule # {{activeIndex +1}}</h2>
           </div>
@@ -273,6 +273,9 @@ export default {
       this.newActiveIndex = index;
       this.activeIndex = null;
       this.$set(this, "activeRule", {});
+    },
+    setRule(rule) {
+      this.$set(this, "activeRule",rule);
     },
     addNewRule() {
       this.rules.splice(this.newActiveIndex, 0, this.activeRule);

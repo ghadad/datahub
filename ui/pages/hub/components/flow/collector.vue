@@ -1,8 +1,8 @@
 <template>
   <div v-if="flowData.collector">
-    <div v-if="!$route.query.handler">
+    <div v-if="!showHandler">
       <div>
-        <h1>FLOW</h1>
+        <h1 class="title">Collector settings <b-button class="button is-info is-pulled-right" icon-right="code"  @click="showHandler=true">Collector handler</b-button></h1>
         <div class="columns">
           <div class="column is-2">
             <div class="field">
@@ -66,11 +66,13 @@
         </div>
       </div>
     </div>
-    <div v-if="$route.query.handler">
+    <div v-if="showHandler">
+        <h1 class="title">Collector handler <b-button class="button is-info is-pulled-right" icon-right="code"  @click="showHandler=false">Collecotr setting</b-button></h1>
+
       <div class="field">
         <label class="label">Post collector handler</label>
         <div class="control">
-          <codemirror v-model="flowData.collector.handler"></codemirror>
+          <codemirror ref="editor" v-model="flowData.collector.handler"></codemirror>
         </div>
       </div>
     </div>
@@ -96,6 +98,7 @@ export default {
     return {
       entitiesKeys: [],
       errors: [],
+      showHandler:false,
       sources: $serverConfig.sources,
       flowData: {},
       project: {}
@@ -107,7 +110,11 @@ export default {
       await this.$saveProject(this.$parent.$data.project);
     }
   },
-
+computed:{
+  editor:function(){
+    return this.$refs.editor.editor;
+  }
+},
   async mounted() {
     this.flowData = this.$parent.$data.flowData;
 

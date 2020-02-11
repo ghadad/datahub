@@ -54,7 +54,7 @@ export default {
     //this.value.ruleHandler = this.handlerTemplate;
     if (this.flowData.config.targetEntity)
       this.entityData = this.$parent.$data.project.entities[
-        this.flowData.collector.targetEntity
+        this.flowData.config.targetEntity
       ];
     else this.entityData = {};
   }

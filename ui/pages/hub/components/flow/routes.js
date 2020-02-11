@@ -22,11 +22,16 @@ export default {
         name: "collector",
         meta:{title:"Flow"}
     },{
-        path: "tester/:tester",
+        path: "test/:tester",
         component: Tester,
-        name: "tester",
+        name: "tester_collector",
         meta:{title:"Tesetr"}
-    }, {
+    },{
+        path: "test/:tester",
+        component: Tester,
+        name: "tester_mapping",
+        meta:{title:"Tesetr"}
+    } ,{
         path: "mapping",
         component: Mapping,
         name: "mapping",
