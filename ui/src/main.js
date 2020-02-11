@@ -17,7 +17,7 @@ Vue.use(Buefy, {
 
 import VueCodeMirror from 'vue-codemirror-lite'
 
-Vue.component('codemirror', VueCodeMirror.codemirror)
+Vue.component('codemirror', VueCodeMirror.codemirror);
 
 import Http from "@/services/http";
 Vue.prototype.$http = Http;

@@ -22,6 +22,7 @@
     "vee-validate": "^3.2.1",
     "vue": "^2.6.10",
     "vue-2-crumbs": "^0.5.4",
+    "vue-bulma-brace": "^0.1.0",
     "vue-codemirror-lite": "^1.0.4",
     "vue-drag-drop": "^1.1.4",
     "vue-material": "^1.0.0-beta-11",
