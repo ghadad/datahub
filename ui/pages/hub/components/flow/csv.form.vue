@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="title is-5">CSV Source properties</div>
+    <div class="title is-5">CSV Source properties 
+    <button class="button is-dark" v-show="fetchStep==1" @click="fetchInfo()">Fetch properties from first header row</button>
+    <button class="button is-dark" v-show="fetchStep==2"  @click="fetchInfo()">Are you sure ?</button>
+    </div>
     <div class="columns">
       <div class="column is-1">
         <div class="field">
@@ -117,6 +120,7 @@ export default {
 
   data: function() {
     return {
+      fetchStep:1,
       handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
@@ -141,6 +145,23 @@ export default {
     this.dragableList = this.dragableList;
   },
   methods: {
+   async fetchInfo() {
+     let result ;
+      if(this.fetchStep==1 && this.dragableList.length==0) {
+         result  = await this.$http.post(`flow/fetch-info`, this.$parent.flowData);
+      }
+     if(this.fetchStep==1 && this.dragableList.length>0) {
+           this.fetchStep =2; 
+        setTimeout(()=>this.fetchStep=1,3000);
+        return ;
+      }
+      if(this.fetchStep==2 && this.dragableList.length>0) {
+         result  = await this.$http.post(`flow/fetch-info`, this.$parent.flowData);
+      }
+      if(result.length)
+      this.$set(this,'dragableList',result);
+
+    },
     add(name) {
       if (!name) return;
       this.dragableList.push(this.csvField);

@@ -44,7 +44,11 @@ main.init(argv).then(async () => {
   __app.logger.info("flowConfig:", flowConfig)
   let flow = new Flow(flowConfig);
   await flow.init();
+  let t1  =__app.ts();
+  __app.logger.info("flow start")
   await flow.exec();
+  let t2  =__app.ts();
+  __app.logger.info(`flow end and took ${t2-t1} MS`)
   process.exit(0)
 }).catch(err => {
   __app.logger.error("flow exec failed:", err.stack);
