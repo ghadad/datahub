@@ -6,6 +6,8 @@ const Mapper = require(upath.join(__app.lib, "mapper"));
 
 const flowExe = async function (flow, step) {
     let collector = new Collector(flow.collector.config);
+
+    console.log("flow.collector.handler:", flow.collector.handler)
     let collectorPostHandler = rfs('module.exports = ' + flow.collector.handler);
     let mappingPostHandler = rfs('module.exports = ' + flow.mapping.handler);
 

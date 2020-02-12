@@ -6,21 +6,33 @@ const menu = function (routes) {
         children = [{
                 title: "Project:" + routes.params.project,
                 icon: "move_to_inbox",
-                routerLink: uriPath,
+                routing: {
+                    name: "explore",
+                    params: routes.params
+                },
                 class: "header"
             },
             {
                 title: "Entities",
                 icon: "move_to_inbox",
-                routerLink: uriPath + "/entities"
+                routing: {
+                    name: "entities",
+                    params: routes.params
+                },
             }, {
                 title: "Flows",
                 icon: "move_to_inbox",
-                routerLink: uriPath + "/flows"
+                routing: {
+                    name: "flows",
+                    params: routes.params
+                },
             }, {
                 title: "Jobs",
                 icon: "move_to_inbox",
-                routerLink: uriPath + "/jobs"
+                routing: {
+                    name: "jobs",
+                    params: routes.params
+                },
             }
         ];
 
@@ -28,31 +40,31 @@ const menu = function (routes) {
         leftMenu: [{
                 title: "Projects",
                 icon: "storage",
-                routerLink: "/project",
+                routing: "/project",
                 children: children
             }, {
                 title: "Datasets",
                 icon: "move_to_inbox",
-                routerLink: "/dataset"
+                routing: "/dataset"
             }, {
                 title: "Configuration",
                 icon: "move_to_inbox",
-                routerLink: "/config"
+                routing: "/config"
             },
             {
                 title: "jobs",
                 icon: "move_to_inbox",
-                routerLink: "/job"
+                routing: "/job"
             },
             {
                 title: "API-s",
                 icon: "move_to_inbox",
-                routerLink: "/api"
+                routing: "/api"
             },
             {
                 title: "Docs",
                 icon: "import_contacts",
-                routerLink: "/projects"
+                routing: "/projects"
             }
         ]
     }

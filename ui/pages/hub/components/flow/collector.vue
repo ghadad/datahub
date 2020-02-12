@@ -1,8 +1,15 @@
 <template>
   <div v-if="flowData.collector">
-    <div v-if="!showHandler">
+    <div v-show="!showHandler">
       <div>
-        <h1 class="title">Collector settings <b-button class="button is-info is-pulled-right" icon-right="code"  @click="showHandler=true">Collector handler</b-button></h1>
+        <h1 class="title">
+          Collector settings
+          <b-button
+            class="button is-info is-pulled-right"
+            icon-right="code"
+            @click="showHandler=true"
+          >Collector handler</b-button>
+        </h1>
         <div class="columns">
           <div class="column is-2">
             <div class="field">
@@ -18,7 +25,6 @@
               </div>
             </div>
           </div>
-
 
           <div class="column is-2">
             <div class="field">
@@ -66,13 +72,20 @@
         </div>
       </div>
     </div>
-    <div v-if="showHandler">
-        <h1 class="title">Collector handler <b-button class="button is-info is-pulled-right" icon-right="code"  @click="showHandler=false">Collecotr setting</b-button></h1>
+    <div v-show="showHandler">
+      <h1 class="title">
+        Collector handler
+        <b-button
+          class="button is-info is-pulled-right"
+          icon-right="code"
+          @click="showHandler=false"
+        >Collecotr setting</b-button>
+      </h1>
 
       <div class="field">
         <label class="label">Post collector handler</label>
         <div class="control">
-          <codemirror ref="editor" v-model="flowData.collector.handler"></codemirror>
+          <codemirror ref="handler" :cmOptions="cmOptions" v-model="flowData.collector.handler"></codemirror>
         </div>
       </div>
     </div>
@@ -96,25 +109,43 @@ export default {
   },
   data: function() {
     return {
+      defaultHandler: "async function(rawData){ \n return newData;\n}",
+      cmOptions: {
+        mode: "javascript",
+        lineNumbers: true,
+        lineWrapping: true,
+        extraKeys: {
+          "Ctrl-Q": function(cm) {
+            cm.foldCode(cm.getCursor());
+          }
+        },
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+      },
+      editor: null,
       entitiesKeys: [],
       errors: [],
-      showHandler:false,
+      showHandler: false,
       sources: $serverConfig.sources,
       flowData: {},
       project: {}
     };
   },
+  watch: {
+    showHandler: function(val) {
+      //this.editor.setSize(500, 300);
+      console.log("this.$refs", this.$refs.handler.editor);
 
+      setTimeout(() => {
+        this.editor.refresh();
+      }, 1);
+    }
+  },
   methods: {
     async update() {
       await this.$saveProject(this.$parent.$data.project);
     }
   },
-computed:{
-  editor:function(){
-    return this.$refs.editor.editor;
-  }
-},
   async mounted() {
     this.flowData = this.$parent.$data.flowData;
 
@@ -130,6 +161,17 @@ computed:{
     );
 
     this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
+
+    if (!this.flowData.collector.handler)
+      this.flowData.collector.handler = this.defaultHandler;
+    setTimeout(() => {
+      this.editor = this.$refs.handler.editor;
+      this.editor.on("beforeChange", function(cm, change) {
+        if (~[0].indexOf(change.from.line)) {
+          //change.cancel();
+        }
+      });
+    }, 100);
   }
 };
 </script>

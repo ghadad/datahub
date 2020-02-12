@@ -19,10 +19,10 @@
           </div>
           <ul class="menu-list">
             <li v-for="(mItem,index) in menu.leftMenu" :key="index">
-              <router-link :to="mItem.routerLink">{{mItem.title}}</router-link>
+              <router-link :to="mItem.routing">{{mItem.title}}</router-link>
               <ul v-if="mItem.children && mItem.children.length" class="menu-list">
                 <li v-for="(sm,index) in mItem.children" :key="index">
-                  <router-link :to="sm.routerLink">{{sm.title}}</router-link>
+                  <router-link :to="sm.routing">{{sm.title}}</router-link>
                 </li>
               </ul>
             </li>
@@ -86,9 +86,9 @@ export default {
     };
   },
   errorCaptured(err, vm, info) {
-    console.log("vm.$options:",vm.$options)
-    console.log("err:",err)
-    console.log("info:",info)
+    console.log("vm.$options:", vm.$options);
+    console.log("err:", err);
+    console.log("info:", info);
     this.$set(this, "globalError", {
       err: err.toString(),
       component: vm.$options.name,

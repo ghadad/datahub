@@ -2,12 +2,11 @@
   <div v-if="flowData.config">
     <div v-if="!$route.query.handler">
       <div>
-        <h1 class="title">FLOW settings</h1>
+        <h1 class="title is-4">FLOW settings</h1>
         <div class="columns">
-
           <div class="column is-2">
             <div class="field">
-                          <label class="label">Flow name</label>
+              <label class="label">Flow name</label>
 
               <div class="control">
                 <input
@@ -21,7 +20,7 @@
               </div>
             </div>
           </div>
-            <div class="column is-2">
+          <div class="column is-2">
             <div class="field">
               <label class="label">Target entity</label>
               <div class="select">
@@ -44,6 +43,18 @@
             </div>
           </div>
         </div>
+        <div class="columns">
+          <div class="column is-6">
+            <b-field label="Description">
+              <b-input
+                rows="6"
+                maxlength="300"
+                type="textarea"
+                v-model="flowData.config.description"
+              ></b-input>
+            </b-field>
+          </div>
+        </div>
         <div class="column buttons-group">
           <button class="button is-primary" v-show="!$route.params.flow" @click="create">Create</button>
           <button class="button is-link" v-show="$route.params.flow" @click="update">Update</button>
@@ -63,13 +74,13 @@ export default {
   name: "flowConfig",
   data: function() {
     return {
-            entitiesKeys: [],
+      entitiesKeys: [],
 
       deleteFlag: 0,
       errors: [],
       origFlowKeyName: null,
       flowData: {
-        config: {}
+        config: { description: "" }
       },
       project: {}
     };
@@ -139,7 +150,7 @@ export default {
     this.flowData = this.$parent.$data.flowData;
     this.project = this.$parent.$data.project;
     this.flowData.config = this.flowData.config || {};
-     this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
+    this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
   }
 };
 </script>
