@@ -84,6 +84,9 @@
 
       <div class="field">
         <label class="label">Post collector handler</label>
+         <cite>Arguments: <br />
+           raw - collector data row
+         </cite>
         <div class="control">
           <codemirror ref="handler" :cmOptions="cmOptions" v-model="flowData.collector.handler"></codemirror>
         </div>
@@ -168,10 +171,13 @@ export default {
       this.editor = this.$refs.handler.editor;
       this.editor.on("beforeChange", function(cm, change) {
         if (~[0].indexOf(change.from.line)) {
-          //change.cancel();
+         change.cancel();
         }
       });
     }, 100);
   }
 };
 </script>
+<style scoped>
+cite {font-weight:800}
+</style>

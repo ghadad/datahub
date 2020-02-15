@@ -10,7 +10,7 @@
 
       </h2>
      <router-link :to='{name:"projects"}' class="button is-rounded">Explores hub projects</router-link>
-                    </p>
+                   
     </div></div>
   <div class="hero-body">
 

@@ -1,5 +1,6 @@
 const upath = require("upath");
 const rfs = require("require-from-string");
+const Flow = require(upath.join(__app.lib, "flow"));
 
 const Collector = require(upath.join(__app.lib, "collector"));
 const Mapper = require(upath.join(__app.lib, "mapper"));
@@ -16,7 +17,8 @@ const flowExe = async function (flow, step) {
     let collectorPostHandler = rfs('module.exports = ' + flow.collector.handler);
     let mappingPostHandler = rfs('module.exports = ' + flow.mapping.handler);
 
-    let result = await collector.test(5)
+    let result = await collector.test(5);
+    
     if (step == "collector")
         return result;
 
@@ -54,5 +56,7 @@ module.exports = function (fastify, opts, next) {
         let result = await fetchInfo(req.body);
         return result;
     });
+
+    
     next()
 }

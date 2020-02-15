@@ -3,9 +3,14 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+export default  new Vuex.Store({
   state: {
-    // put variables and collections here
+    databases:[],
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done)
+    }
   },
   mutations: {
     // put sychronous functions for changing state e.g. add, edit, delete
@@ -14,3 +19,4 @@ export default new Vuex.Store({
     // put asynchronous functions that can call one or more mutation functions
   }
 })
+

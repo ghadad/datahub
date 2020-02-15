@@ -74,6 +74,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: "main",
   props: ["menu", "title"],
@@ -86,9 +88,7 @@ export default {
     };
   },
   errorCaptured(err, vm, info) {
-    console.log("vm.$options:", vm.$options);
-    console.log("err:", err);
-    console.log("info:", info);
+    
     this.$set(this, "globalError", {
       err: err.toString(),
       component: vm.$options.name,

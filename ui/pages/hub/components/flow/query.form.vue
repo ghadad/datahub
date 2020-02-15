@@ -18,7 +18,7 @@
       </div>
       <div class="column is-2">
         <div class="field">
-          <label class="label">DB alias</label>
+          <label class="label">DB alias:{{collector.dbAlias}}</label>
         </div>
       </div>
     </div>
@@ -76,6 +76,8 @@ export default {
         this.collector.pkHandler = this.handlerTemplate;
     }
   },
-  async mounted() {}
+  async mounted() {
+    this.collector.dbAlias="maria1";
+  }
 };
 </script>

@@ -188,6 +188,7 @@ export default {
   margin-left: 5px;
   font-size: 14px;
   border: 1px solid #ccc;
+  margin:3px;
 }
 
 .property-tag.tag .icon {

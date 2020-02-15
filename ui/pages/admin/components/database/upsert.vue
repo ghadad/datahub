@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 class="title" v-show="!_id">Set new database</h2>
-    <h2 class="title" v-show="dbAlias">Update database</h2>
+    <h2 class="title" v-show="!$route.query.id">Set new database</h2>
+    <h2 class="title" v-show="$route.query.id">Update database :{{$route.query.id}}</h2>
 
     <div class="columns">
       <div class="column is-2">
@@ -14,7 +14,7 @@
               placeholder="DB alias"
               v-model="formData._id"
               pattern="/\w+/"
-              :disabled="_id"
+              :disabled="$route.query.id"
             />
           </div>
           <p class="help">unique name . use only alphanumeric letters</p>
@@ -66,7 +66,7 @@
         <div class="field">
           <label class="label">Port</label>
           <div class="control">
-            <input class="input" type="text" placeholder="Port" />
+            <input class="input" type="text" placeholder="Port"   v-model="formData.db.connection.port"/>
           </div>
         </div>
       </div>
@@ -99,8 +99,11 @@
     </div>
     <div>
       <div class="buttons">
-        <button class="button is-primary" v-show="!_id" @click="update">Create</button>
-        <button class="button is-link" v-show="_id" @click="create">Update</button>
+        <button class="button is-primary" v-show="!$route.query.id" @click="update">Create</button>
+        <button class="button is-link" v-show="$route.query.id" @click="create">Update</button>
+         <button class="button is-dark" v-show="formData.db.connection.database && formData.db.client" @click="test">Test connection</button>
+         <button class="button is-success" v-show="testSuccess" @click="test">Connect success</button>
+
       </div>
     </div>
   </div>
@@ -110,13 +113,12 @@ export default {
   name: "upsert",
   data() {
     return {
-      list: {},
+      testSuccess:false,
       dbClients: [
         { val: "mysql", desc: "Mysql" },
         { val: "oracle", desc: "Oracle" },
         { val: "sqlite", desc: "Sqlite" }
       ],
-      _id: null,
       formData: {
         _id: null,
         db: {
@@ -132,18 +134,22 @@ export default {
     };
   },
   async mounted() {
-    this.list = await this.$parent.fetch();
-    if (this.$route.query.dbAlias) {
-      this.formData._id = this._id = this.$route.query.dbAlias;
-      this.$set(this.formData, "db", this.list[this._id]);
+    if (this.$route.query.id) {
+      this.formData._id = this.$route.query.id;
+      this.$set(this,'formData', await this.$http.get("databases/"+this.$route.query.id));
     }
   },
   methods: {
+    async test() {
+      await this.$http.post("databases/test",this.formData);
+      this.testSuccess = true ;
+      setTimeout(()=>this.testSuccess=false,3000)
+    },
     async update() {
-      await this.$http.put("databases", this.formData);
+      await this.$saveModel("databases", this.formData);
     },
     async create() {
-      await this.$http.post("databases", this.formData);
+      await this.$saveModel("databases", this.formData);
     }
   },
   computed: {}

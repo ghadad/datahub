@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(d,index) in list" :key="d._id">
+        <tr v-for="d in list" :key="d._id">
           <td>{{d._id}}</td>
           <td>{{d.db.client}}</td>
           <td>{{d.db.connection.host}}</td>
@@ -22,7 +22,7 @@
           <td>{{d.db.connection.port}}</td>
           <td>
             <div class="buttons">
-              <button class="button is-info" @click="update(d.db._id)">Update</button>
+              <router-link class="button is-info" :to="{name:'UpsertDatabse',query:{id:d._id}}">Update</router-link>
               <button class="button is-danger" @click="deleteDb(d)">Delete</button>
             </div>
           </td>

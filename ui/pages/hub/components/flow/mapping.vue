@@ -29,14 +29,19 @@
 
       <div class="field">
         <label class="label">Post mapping Handler</label>
-        <div class="control">
+        <cite>Arguments:
+         newData - the new mapped data <br />
+         oldData - the old  data if exists <br />
+         rawData - collector data 
+         </cite>
+        <div class="editor control">
           <codemirror
             ref="mapHandler"
             :options="cmOptions"
             v-model="$parent.$data.flowData.mapping.handler"
           ></codemirror>
-          <button class="button is-link" @click="update">Update</button>
-        </div>
+        </div>          <button class="button is-link" @click="update">Update</button>
+
       </div>
     </div>
   </div>
@@ -105,3 +110,7 @@ export default {
   }
 };
 </script>
+<style scope>
+div.editor.control {padding:20px}
+.vue-codemirror-wrap {border:1px solid #CCC;border-round:3px;}
+</style>

@@ -1,5 +1,5 @@
 const menu = function (routes) {
-    console.log(routes)
+    
     let children = []
     let uriPath = routes.path
     if (routes.params.project)
