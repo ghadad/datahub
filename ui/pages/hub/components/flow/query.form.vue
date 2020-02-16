@@ -1,21 +1,53 @@
 <template>
   <div>
     <h1 class="title is-4">
-      DB query properties
+      Collector  properties
       <button
         class="button is-dark"
         v-show="fetchStep==1"
         @click="fetchInfo()"
-      >Fetch properties from first header row</button>
+      >Fetch properties from query result </button>
       <button class="button is-dark" v-show="fetchStep==2" @click="fetchInfo()">Are you sure ?</button>
     </h1>
-    <hr />
+        <div class="columns">
+      <div class="column is-4">
+        <div class="field is-horizontal">
+          <div class="field-label has-text-left">
+            <label class="label">Field name</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input" type="text" placeholder="Field name" v-model="csvField" />
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-1">
+        <button class="button is-info" @click="add">Add</button>
+      </div>
+    </div>
     <div class="columns">
-      <div class="column is-6">
+      <div class="column is-12">
+        <div>
+          <draggable v-model="dragableList">
+            <div v-for="(t,index) in dragableList" :key="index" class="property-tag tag is-default">
+              {{index}} : {{t}}
+              <span class="clickable" @click="del(index)">
+                <b-icon class="is-pulled-right clickable" icon="trash" size="is-small" type></b-icon>
+              </span>
+            </div>
+          </draggable>
+        </div>
+        <hr />
+      </div>
+    </div>    <div class="columns">
+      <div class="column is-9">
         <div class="field">
           <label class="label">Source query</label>
           <div class="control">
-            <codemirror :options="cmOptions" v-model="collector.query"></codemirror>
+            <codemirror style="min-height:300px"  :options="cmOptions" v-model="collector.query"></codemirror>
           </div>
         </div>
       </div>
@@ -58,8 +90,8 @@
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-            <textarea rows="15" class="textarea" v-model="collector.pkHandler"></textarea>
-          </div>
+           <codemirror style="min-height:200px"  :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+         </div>
         </div>
       </div>
     </div>
@@ -98,7 +130,7 @@ export default {
     };
   },
   watch: {
-    keyType: function(newVal, oldVal) {
+    keyType: function(newVal) {
       if (newVal == "pkHandler")
         this.collector.pkHandler = this.handlerTemplate;
     }
@@ -124,6 +156,13 @@ export default {
         );
       }
       if (result.length) this.$set(this, "dragableList", result);
+    },    add(name) {
+      if (!name) return;
+      this.dragableList.push(this.csvField);
+      this.csvField = null;
+    },
+    del(index) {
+      this.dragableList.splice(index, 1);
     }
   },
   async mounted() {
@@ -139,6 +178,22 @@ export default {
       })
     );
   },
-  comouted: {}
+computed: {
+    dragableList: {
+      get() {
+        return this.properties || [];
+      },
+      set(newValue) {
+        this.$emit("update:properties", newValue);
+      }
+    }
+  }
 };
 </script>
+<style scoped>
+.vue-codemirror-wrap {
+  border: 1px solid #ccc;
+  padding:2px; 
+}
+
+</style>

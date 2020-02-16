@@ -80,7 +80,7 @@ export default {
     };
   },
   watch: {
-    showHandler: function(val) {
+    showHandler: function() {
       //this.editor.setSize(500, 300);
       setTimeout(() => {
         this.editor.refresh();

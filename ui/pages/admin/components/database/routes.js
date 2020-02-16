@@ -1,7 +1,6 @@
 import Databases from './index.vue';
 import New from "./upsert.vue";
 import List from "./list.vue";
-import Edit from "./edit.vue";
 import Help from "./help.vue";
 
 
@@ -13,6 +12,7 @@ export default {
     children: [{
         path: 'list',
         component: List,
+        name:"databases", 
         meta:{title:"Databases"}
     }, {
         path: 'upsert',

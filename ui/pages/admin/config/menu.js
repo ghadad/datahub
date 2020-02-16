@@ -3,8 +3,8 @@ export default {
             title: "Databases",
             icon: "storage",
             routing: {
-                name: "databases",
-                       },
+                name: "databases"
+              },
         }
       
     ]
