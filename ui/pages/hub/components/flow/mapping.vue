@@ -29,19 +29,20 @@
 
       <div class="field">
         <label class="label">Post mapping Handler</label>
-        <cite>Arguments:
-         newData - the new mapped data <br />
-         oldData - the old  data if exists <br />
-         rawData - collector data 
-         </cite>
+        <cite>
+          Arguments:
+          newData - the new mapped data
+          <br />oldData - the old data if exists
+          <br />rawData - collector data
+        </cite>
         <div class="editor control">
           <codemirror
             ref="mapHandler"
             :options="cmOptions"
             v-model="$parent.$data.flowData.mapping.handler"
           ></codemirror>
-        </div>          <button class="button is-link" @click="update">Update</button>
-
+        </div>
+        <button class="button is-link" @click="update">Update</button>
       </div>
     </div>
   </div>
@@ -98,8 +99,8 @@ export default {
     this.route = this.$route;
     this.entity = this.$parent.$data.entityModel;
 
-    if (self.$_.get(self, "$parent.$data.flowData.mapping"))
-      self.$parent.$data.flowData.mapping.handler = self.defaultHandler;
+    // if (self.$_.get(self, "$parent.$data.flowData.mapping"))
+    self.$parent.$data.flowData.mapping.handler = self.defaultHandler;
     this.editor = self.$refs.mapHandler.editor;
     this.editor.refresh();
     this.editor.on("beforeChange", function(cm, change) {
@@ -111,6 +112,11 @@ export default {
 };
 </script>
 <style scope>
-div.editor.control {padding:20px}
-.vue-codemirror-wrap {border:1px solid #CCC;border-round:3px;}
+div.editor.control {
+  padding: 20px;
+}
+.vue-codemirror-wrap {
+  border: 1px solid #ccc;
+  border-round: 3px;
+}
 </style>

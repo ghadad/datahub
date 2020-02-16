@@ -1,24 +1,37 @@
 <template>
   <div>
-    <h1>DB query properties</h1>
+    <h1 class="title is-4">
+      DB query properties
+      <button
+        class="button is-dark"
+        v-show="fetchStep==1"
+        @click="fetchInfo()"
+      >Fetch properties from first header row</button>
+      <button class="button is-dark" v-show="fetchStep==2" @click="fetchInfo()">Are you sure ?</button>
+    </h1>
+    <hr />
     <div class="columns">
       <div class="column is-6">
         <div class="field">
           <label class="label">Source query</label>
           <div class="control">
-            <textarea
-              size="1"
-              class="textarea"
-              rows="40"
-              v-model="collector.query"
-              pattern="/\w+/"
-            />
+            <codemirror :options="cmOptions" v-model="collector.query"></codemirror>
           </div>
         </div>
       </div>
       <div class="column is-2">
         <div class="field">
-          <label class="label">DB alias:{{collector.dbAlias}}</label>
+          <label class="label">DB alias</label>
+
+          <div class="select">
+            <select v-model="collector.dbAlias">
+              <option
+                v-for="db in dbAliases"
+                :key="db.dbAlias"
+                :value="db.dbAlias"
+              >{{db.client}}:{{db.dbAlias}}</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -27,13 +40,13 @@
         <div class="field">
           <label class="label">Define the entity key method</label>
           <div class="select">
-            <select v-model="keyType">
+            <select v-model="collector.keyType">
               <option v-for="(desc,kt) in keyTypes" :key="kt" :value="kt">{{desc}}</option>
             </select>
           </div>
         </div>
       </div>
-      <div class="column is-4" v-if="keyType=='pkField'">
+      <div class="column is-4" v-if="collector.keyType=='pkField'">
         <div class="field">
           <label class="label">Field Name (must existgs in Query result)</label>
           <div class="control">
@@ -41,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="column is-10" v-if="keyType=='pkHandler'">
+      <div class="column is-10" v-if="collector.keyType=='pkHandler'">
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
@@ -58,6 +71,20 @@ export default {
   props: ["collector", "properties"],
   data: function() {
     return {
+      fetchStep: 1,
+      cmOptions: {
+        mode: "sql",
+        lineNumbers: true,
+        lineWrapping: true,
+        extraKeys: {
+          "Ctrl-Q": function(cm) {
+            cm.foldCode(cm.getCursor());
+          }
+        },
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+      },
+      dbAliases: [],
       handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
@@ -76,8 +103,42 @@ export default {
         this.collector.pkHandler = this.handlerTemplate;
     }
   },
+  methods: {
+    async fetchInfo() {
+      let result;
+      if (this.fetchStep == 1 && this.dragableList.length == 0) {
+        result = await this.$http.post(
+          `flow/fetch-info`,
+          this.$parent.flowData
+        );
+      }
+      if (this.fetchStep == 1 && this.dragableList.length > 0) {
+        this.fetchStep = 2;
+        setTimeout(() => (this.fetchStep = 1), 3000);
+        return;
+      }
+      if (this.fetchStep == 2 && this.dragableList.length > 0) {
+        result = await this.$http.post(
+          `flow/fetch-info`,
+          this.$parent.flowData
+        );
+      }
+      if (result.length) this.$set(this, "dragableList", result);
+    }
+  },
   async mounted() {
-    this.collector.dbAlias="maria1";
-  }
+    let dbs = await this.$http.get("databases");
+    this.$set(
+      this,
+      "dbAliases",
+      dbs.map(d => {
+        return {
+          dbAlias: d._id,
+          client: d.db.client
+        };
+      })
+    );
+  },
+  comouted: {}
 };
 </script>
