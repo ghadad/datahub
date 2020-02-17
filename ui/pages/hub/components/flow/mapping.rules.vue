@@ -68,7 +68,7 @@
         v-if="newActiveIndex || activeIndex || activeIndex===0 || newActiveIndex===0"
       >
         <div class="columns">
-          <div v-if="1">newActiveIndex:{{newActiveIndex}} ,activeIndex:{{activeIndex}}</div>
+          <div v-if="0">newActiveIndex:{{newActiveIndex}} ,activeIndex:{{activeIndex}}</div>
           <div class="column is-2" v-if="activeIndex != null && activeIndex>=0">
             <h2 class="title is-3">Rule # {{activeIndex +1}}</h2>
           </div>

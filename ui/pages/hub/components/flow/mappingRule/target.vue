@@ -1,5 +1,5 @@
 <template>
-  <section v-if="value">
+  <section v-if="value" id="target-section">
     <div class="tag-head">
       <strong class="tag title is-7 is-dark">Targeting</strong>
       <span v-show="!entity.name">
@@ -38,7 +38,7 @@
       </div>
       <div class="column is-3">
         <b-autocomplete
-          v-model="goToValue"
+          v-model="value.goTo"
           :data="filteredDataArray"
           placeholder="type for lookup "
           icon="magnify"
@@ -53,7 +53,7 @@
         <strong class="label">case sensitive variabe name</strong>
       </div>
       <div class="column is-3">
-        <input type="text" class="control" v-model="value.$var" />
+        <input type="text" class="control" v-model="value.goToVar" />
       </div>
     </div>
   </section>
@@ -79,7 +79,7 @@ export default {
             option.name
               .toString()
               .toLowerCase()
-              .indexOf((self.goToValue || "").toLowerCase()) >= 0
+              .indexOf((self.value.goTo || "").toLowerCase()) >= 0
           );
         })
         .map(e => e.name);
@@ -87,6 +87,7 @@ export default {
   }
 };
 </script>
-<style scope>
+<style scoped>
 label.b-radio.radio {margin-right :30px}
+#target-section .column {padding-top:4px;padding-bottom: 10px}
 </style>

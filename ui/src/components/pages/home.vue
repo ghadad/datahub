@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-info is-medium">
+  <section class="hero full-height is-info is-medium is-fullheight">
     <div class="hero-body">
       <div class="container">
         <h1 class="title is-1">DATAHUB5</h1>

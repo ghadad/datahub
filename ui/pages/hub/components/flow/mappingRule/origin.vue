@@ -23,8 +23,8 @@
               <div class="block">
                 <b-radio v-model="value.originType" native-value="collector">Collector property</b-radio>
                 <b-radio v-model="value.originType" native-value="value">Simple value</b-radio>
-                <b-radio v-model="value.originType" native-value="query">select Query</b-radio>
-                <b-radio v-model="value.originType" native-value="dataset">Dataset</b-radio>
+                <b-radio v-model="value.originType" native-value="query">Select Query</b-radio>
+                <b-radio v-model="value.originType" native-value="dataset">Predefine dataset</b-radio>
                 <b-radio v-model="value.originType" native-value="handler">Evaluate</b-radio>
               </div>
             </section>
@@ -33,15 +33,34 @@
       </div>
     </div>
     <div class="columns" v-show="isOpen">
-      <div class="column is-1">
+      <div class="column is-1"> 
         <strong class="label">{{originLabel[value.originType]}}</strong>
       </div>
-      <div class="column is-9" v-if="value.originType=='query'">
-        <textarea rows="5" class="textarea" v-model="value.origin"></textarea>
+      <div class="column is-11" v-if="value.originType=='query'">
+        <textarea rows="5" class="textarea" v-model="value.originQuery"></textarea>
       </div>
-      <div class="column is-9" v-if="value.originType!='query'">
-        <input type="text" class="input text" v-model="value.origin" />
+      <div class="column is-3" v-if="value.originType=='value'">
+        <input type="text" class="input text" v-model="value.originValue" />
       </div>
+      <div class="column is-11" v-if="value.originType=='dataset'">
+      <div class="columns">
+        <input type="text" class="input text column is-3" v-model="value.originDataset" />
+        <input v-for="(p,index) in value.originDatasetParams" :key="index" value="index" type="text" class="input text  column is-2" v-model="value.originDatasetParams[index].value" />
+        
+      </div>
+      </div>
+      <div class="column is-3" v-if="value.originType=='collector'">
+     
+        <b-autocomplete
+          v-model="value.originCollector"
+          :data="filteredDataArray"
+          placeholder="type for lookup "
+          icon="magnify"
+          @select="option => value.origin = option"
+        >
+          <template slot="empty">No results found</template>
+        </b-autocomplete>
+    </div>
     </div>
     <!--pre>{{value}}</pre-->
     <!--div class="panel-block" v-show="targeting=='property'">
@@ -71,13 +90,18 @@ export default {
   watch: {
     "$props.collapse": function() {
       this.isOpen = this.$props.collapse;
+ 
     },
+    'value.originDataset':function(){
+        if(this.value.originDataset) 
+          this.$set(this.value,'originDatasetParams',[{type:"int"},{type:"string"}])
+     },
     "value.originType": function() {
-      this.isOpen = this.value.originType == "query" ? false : true;
+      this.isOpen = true ;// this.value.originType == "query" ? false : true;
     }
   },
   mounted: function() {
-    this.isOpen = this.value.originType == "query" ? false : true;
+    this.isOpen = true ;// this.value.originType == "query" ? false : true;
   },
   methods: {
     toggle: function() {
@@ -85,6 +109,19 @@ export default {
     },
     getOriginLabel: function() {}
   },
-  computed: {}
+  computed: {
+        filteredDataArray() {
+      return this.$parent.flowData.collector.config.properties
+        .filter(option => {
+          return (
+            option
+              .toString()
+              .toLowerCase()
+              .indexOf((this.value.origin || "").toLowerCase()) >= 0
+          );
+        })
+        
+    }
+  }
 };
 </script>
