@@ -187,7 +187,7 @@
         </div>
 
         <div v-if="displayState=='code'">
-          <codemirror v-model="ruleCode"></codemirror>
+          <codemirror ref="editor" v-model="ruleCode"></codemirror>
         </div>
 
         <div class="list-view" v-if="displayState=='list'">
@@ -267,6 +267,11 @@ export default {
     },
     display(state) {
       this.displayState = state;
+      if (state == "code") {
+        setTimeout(() => {
+          this.$refs.editor.editor.refresh();
+        }, 1);
+      }
     },
     setNewRule(index) {
       this.fastAssignment = false;
@@ -275,7 +280,7 @@ export default {
       this.$set(this, "activeRule", {});
     },
     setRule(rule) {
-      this.$set(this, "activeRule",rule);
+      this.$set(this, "activeRule", rule);
     },
     addNewRule() {
       this.rules.splice(this.newActiveIndex, 0, this.activeRule);
