@@ -17,11 +17,41 @@
         </div>
       </div>
     </div>
-    <h5  class="title is-5"> Custom request headers <button class="button is-small is-dark" @click="addHeader">Add new header entry</button></h5>
-      <div v-for="(h,index) in this.collector.headers" :key="index" class="columns">
+    <div class="columns">
+      <div class="column is-10">
+        <div class="field">
+          <label class="label">Json path to data set</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Json path to data set"
+              v-model="collector.dataPath"
+              pattern="/\w+/"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <h5 class="title is-5">
+      Custom request headers
+      <button
+        class="button is-small is-dark"
+        @click="addHeader()"
+      >Add new header entry</button>
+    </h5>
+    <div class="columns">
+      <div class="column is-3">
+        <div class="label">Name</div>
+      </div>
+      <div class="column is-8">
+        <div class="label">Value</div>
+      </div>
+      <div class="column is-1"></div>
+    </div>
+    <div v-for="(h,index) in collector.headers" :key="index" class="columns">
       <div class="column is-3">
         <div class="field">
-          <label class="label">Name</label>
           <div class="control">
             <input
               class="input"
@@ -33,9 +63,8 @@
           </div>
         </div>
       </div>
-       <div class="column is-8">
+      <div class="column is-8">
         <div class="field">
-          <label class="label">Value</label>
           <div class="control">
             <input
               class="input"
@@ -45,6 +74,11 @@
               pattern="/\w+/"
             />
           </div>
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="field">
+          <button class="button is-danger is-small" @click="delHeader(index)">Remove</button>
         </div>
       </div>
     </div>
@@ -96,9 +130,13 @@ export default {
       }
     };
   },
-  methods:{
+  methods: {
+    delHeader(index) {
+      this.collector.headers.splice(index, 1);
+    },
     addHeader() {
-      this.collector.headers.push({name:"",value:""})
+      this.collector.headers.push({ name: "", value: "" });
+      this.$nextTick();
     }
   },
   watch: {
