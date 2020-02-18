@@ -1,7 +1,6 @@
 const menu = function (routes) {
     
     let children = []
-    let uriPath = routes.path
     if (routes.params.project)
         children = [{
                 title: "Project:" + routes.params.project,
@@ -40,31 +39,44 @@ const menu = function (routes) {
         leftMenu: [{
                 title: "Projects",
                 icon: "storage",
-                routing: "/project",
+                routing: {name:"projects"},
                 children: children
             }, {
                 title: "Datasets",
                 icon: "move_to_inbox",
-                routing: "/dataset"
+                routing: {
+                    name: "datasetsIndex"
+                },
             }, {
                 title: "Configuration",
                 icon: "move_to_inbox",
-                routing: "/config"
+                routing: {
+                    name: "datasetsIndex"
+                },
             },
             {
                 title: "jobs",
                 icon: "move_to_inbox",
-                routing: "/job"
+                routing:{
+                    name: "datasetsIndex",
+                    params: routes.params
+                },
             },
             {
                 title: "API-s",
                 icon: "move_to_inbox",
-                routing: "/api"
+                routing: {
+                    name: "datasetsIndex",
+                    params: routes.params
+                },
             },
             {
                 title: "Docs",
                 icon: "import_contacts",
-                routing: "/projects"
+                routing:{
+                    name: "datasetsIndex",
+                    params: routes.params
+                },
             }
         ]
     }

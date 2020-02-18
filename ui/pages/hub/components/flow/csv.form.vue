@@ -55,6 +55,7 @@
         <button class="button is-info" @click="add">Add</button>
       </div>
     </div>
+    
     <div class="columns">
       <div class="column is-12">
         <div>
@@ -136,7 +137,7 @@ export default {
     };
   },
   watch: {
-    "collector.keyType": function(newVal, oldVal) {
+    "collector.keyType": function(newVal) {
       if (newVal == "pkHandler")
         this.collector.pkHandler = this.handlerTemplate;
     }

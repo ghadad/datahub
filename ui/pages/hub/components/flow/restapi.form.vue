@@ -1,18 +1,16 @@
 <template>
   <div>
-    <h5 class="title is-5">Rest API source properties</h5>
+    <h5 class="title is-5">Rest API source properties
+      <button class="button is-dark" v-show="fetchStep==1" @click="fetchInfo()">Fetch properties from first header
+        row</button>
+      <button class="button is-dark" v-show="fetchStep==2" @click="fetchInfo()">Are you sure ?</button>
+    </h5>
     <div class="columns">
       <div class="column is-10">
         <div class="field">
           <label class="label">URL</label>
           <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Entity name"
-              v-model="collector.sourcePath"
-              pattern="/\w+/"
-            />
+            <input class="input" type="text" placeholder="Entity name" v-model="collector.sourcePath" pattern="/\w+/" />
           </div>
         </div>
       </div>
@@ -22,23 +20,15 @@
         <div class="field">
           <label class="label">Json path to data set</label>
           <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Json path to data set"
-              v-model="collector.dataPath"
-              pattern="/\w+/"
-            />
+            <input class="input" type="text" placeholder="Json path to data set" v-model="collector.dataPath"
+              pattern="/\w+/" />
           </div>
         </div>
       </div>
     </div>
     <h5 class="title is-5">
       Custom request headers
-      <button
-        class="button is-small is-dark"
-        @click="addHeader()"
-      >Add new header entry</button>
+      <button class="button is-small is-dark" @click="addHeader()">Add new header entry</button>
     </h5>
     <div class="columns">
       <div class="column is-3">
@@ -53,26 +43,14 @@
       <div class="column is-3">
         <div class="field">
           <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Entity name"
-              v-model="h.name"
-              pattern="/\w+/"
-            />
+            <input class="input" type="text" placeholder="Entity name" v-model="h.name" pattern="/\w+/" />
           </div>
         </div>
       </div>
       <div class="column is-8">
         <div class="field">
           <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Entity name"
-              v-model="h.value"
-              pattern="/\w+/"
-            />
+            <input class="input" type="text" placeholder="Entity name" v-model="h.value" pattern="/\w+/" />
           </div>
         </div>
       </div>
@@ -80,6 +58,22 @@
         <div class="field">
           <button class="button is-danger is-small" @click="delHeader(index)">Remove</button>
         </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-12">
+        <div>
+          <draggable v-model="dragableList">
+            <div v-for="(t,index) in dragableList" :key="index" class="dragable property-tag tag is-default">
+              {{index}} : {{t}}
+              <span class="clickable" @click="del(index)">
+                <b-icon class="is-pulled-right clickable" icon="trash" size="is-small" type></b-icon>
+              </span>
+            </div>
+          </draggable>
+        </div>
+
+        <hr />
       </div>
     </div>
     <div class="columns">
@@ -113,40 +107,88 @@
   </div>
 </template>
 <script>
-export default {
-  name: "restapi-collector",
-  props: ["collector", "properties"],
-  data: function() {
-    return {
-      handlerTemplate: `function(data){
+  import draggable from "vuedraggable";
+
+  export default {
+    name: "restapi-collector",
+    props: ["collector", "properties"],
+    components: {
+      draggable
+    },
+
+    data: function () {
+      return {
+        fetchStep: 1,
+        handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
         // return __app.$_.get(data,'customerInfo.customerId',999999)
       }`,
-      keyType: null,
-      keyTypes: {
-        pkHandler: "function/handler",
-        pkPath: "Path to key"
-      }
-    };
-  },
-  methods: {
-    delHeader(index) {
-      this.collector.headers.splice(index, 1);
+        keyType: null,
+        keyTypes: {
+          pkHandler: "function/handler",
+          pkPath: "Path to key"
+        }
+      };
     },
-    addHeader() {
-      this.collector.headers.push({ name: "", value: "" });
-      this.$nextTick();
+    methods: {
+      delHeader(index) {
+        this.collector.headers.splice(index, 1);
+      },
+      addHeader() {
+        this.collector.headers.push({
+          name: "",
+          value: ""
+        });
+      },
+      async fetchInfo() {
+        let result;
+        if (this.fetchStep == 1 && this.dragableList.length == 0) {
+          result = await this.$http.post(`flow/fetch-info`, this.$parent.flowData);
+        }
+        if (this.fetchStep == 1 && this.dragableList.length > 0) {
+          this.fetchStep = 2;
+          setTimeout(() => this.fetchStep = 1, 3000);
+          return;
+        }
+        if (this.fetchStep == 2 && this.dragableList.length > 0) {
+          result = await this.$http.post(`flow/fetch-info`, this.$parent.flowData);
+        }
+        if (result.length)
+          this.$set(this, 'dragableList', result);
+
+      },
+      add(name) {
+        if (!name) return;
+        this.dragableList.push(this.csvField);
+        this.csvField = null;
+      },
+      del(index) {
+        this.dragableList.splice(index, 1);
+      }
+    },
+    watch: {
+      keyType: function (newVal) {
+        if (newVal == "pkHandler")
+          this.collector.pkHandler = this.handlerTemplate;
+      }
+    },
+    async mounted() {
+      if (!this.collector.headers)
+        this.$set(this.collector, 'headers', []);
+    },
+    computed: {
+      dragableList: {
+        get() {
+          return this.properties || [];
+        },
+        set(newValue) {
+          this.$emit("update:properties", newValue);
+        }
+      }
     }
-  },
-  watch: {
-    keyType: function(newVal) {
-      if (newVal == "pkHandler")
-        this.collector.pkHandler = this.handlerTemplate;
-    }
-  },
-  async mounted() {
-    this.collector.headers = this.collector.headers || [];
-  }
-};
+  };
 </script>
+<style scoped>
+.dragable {cursor:grab}
+</style>

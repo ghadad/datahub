@@ -7,11 +7,13 @@ import Home from "../components/pages/home.vue";
 import NotFound from "@/components/pages/notFound.vue";
 
 import Projects from "../components/project/routes.js";
+import Datasets from "../components/dataset/routes.js";
+
 import Entities from "../components/entity/routes.js";
 import Flows from "../components/flow/routes.js";
 import Jobs from "../components/job/routes.js";
 let rs = new RouterService();
-rs.add([Projects, Entities, Flows, Jobs, {
+rs.add([Projects, Datasets,Entities, Flows, Jobs, {
 		name: "home",
 		path: "/",
 		component: Home
