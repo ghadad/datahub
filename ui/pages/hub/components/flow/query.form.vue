@@ -18,7 +18,7 @@
           <div class="field-body">
             <div class="field">
               <p class="control">
-                <input class="input" type="text" placeholder="Field name" v-model="csvField" />
+                <input class="input" type="text" placeholder="Field name" v-model="column" />
               </p>
             </div>
           </div>
@@ -32,7 +32,7 @@
       <div class="column is-12">
         <div>
           <draggable v-model="dragableList">
-            <div v-for="(t,index) in dragableList" :key="index" class="property-tag tag is-default">
+            <div v-for="(t,index) in dragableList" :key="index" class="dragable property-tag tag is-default">
               {{index}} : {{t}}
               <span class="clickable" @click="del(index)">
                 <b-icon class="is-pulled-right clickable" icon="trash" size="is-small" type></b-icon>
@@ -98,11 +98,15 @@
   </div>
 </template>
 <script>
+import draggable from "vuedraggable";
+
 export default {
-  name: "csv-collector",
+  name: "query-collector",
   props: ["collector", "properties"],
+  components:{draggable},
   data: function() {
     return {
+      column:null,
       fetchStep: 1,
       cmOptions: {
         mode: "sql",
@@ -158,8 +162,8 @@ export default {
       if (result.length) this.$set(this, "dragableList", result);
     },    add(name) {
       if (!name) return;
-      this.dragableList.push(this.csvField);
-      this.csvField = null;
+      this.dragableList.push(this.column);
+      this.column = null;
     },
     del(index) {
       this.dragableList.splice(index, 1);
@@ -195,5 +199,5 @@ computed: {
   border: 1px solid #ccc;
   padding:2px; 
 }
-
+.dragable {cursor:grab}
 </style>

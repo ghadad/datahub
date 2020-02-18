@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Rest API source properties</h1>
+    <h5 class="title is-5">Rest API source properties</h5>
     <div class="columns">
       <div class="column is-10">
         <div class="field">
@@ -11,6 +11,37 @@
               type="text"
               placeholder="Entity name"
               v-model="collector.sourcePath"
+              pattern="/\w+/"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <h5  class="title is-5"> Custom request headers <button class="button is-small is-dark" @click="addHeader">Add new header entry</button></h5>
+      <div v-for="(h,index) in this.collector.headers" :key="index" class="columns">
+      <div class="column is-3">
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Entity name"
+              v-model="h.name"
+              pattern="/\w+/"
+            />
+          </div>
+        </div>
+      </div>
+       <div class="column is-8">
+        <div class="field">
+          <label class="label">Value</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Entity name"
+              v-model="h.value"
               pattern="/\w+/"
             />
           </div>
@@ -65,12 +96,19 @@ export default {
       }
     };
   },
+  methods:{
+    addHeader() {
+      this.collector.headers.push({name:"",value:""})
+    }
+  },
   watch: {
-    keyType: function(newVal, oldVal) {
+    keyType: function(newVal) {
       if (newVal == "pkHandler")
         this.collector.pkHandler = this.handlerTemplate;
     }
   },
-  async mounted() {}
+  async mounted() {
+    this.collector.headers = this.collector.headers || [];
+  }
 };
 </script>
