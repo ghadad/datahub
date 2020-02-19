@@ -1,8 +1,14 @@
 <template>
   <div>
+      <div class="columns">
+      <div class="column is-2">
+        <router-link class="button is-link" :to="{name:'projectUpsert'}">New project</router-link>
+      </div>
+    </div>
     <table class="table">
       <thead>
         <tr>
+        <th>#</th>
           <th>Project name</th>
           <th>Description</th>
           <th>version</th>
@@ -10,7 +16,7 @@
         </tr>
       </thead>
       <tbody v-if="Object.values(list).length==0">
-        <th colspan="4" class="has-border-dark">
+        <th colspan="5" class="has-border-dark">
           No projects found !
           <router-link
             :to="{name:'projectUpsert'}"
@@ -21,6 +27,7 @@
       </tbody>
       <tbody>
         <tr v-for="(p,index) in list" :key="p._id">
+          <td>{{index+1}}</td>
           <td>{{p._id}}</td>
           <td>{{p.description}}</td>
           <td>{{p.version}}</td>

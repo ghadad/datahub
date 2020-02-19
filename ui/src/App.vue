@@ -51,6 +51,8 @@
         <h1 class="main-title title" v-if="$route.name!='home'">
           {{$route.meta.title|| $route.name||$route.path}}
           <b-tag type="is-info" size="is-medium" v-for="(v,p) in routeParams" :key="p">{{p}}:{{v}}</b-tag>
+           <b-tag type="is-default" size="is-medium" v-for="(v,p) in routeQuery" :key="p">{{p}}:{{v}}</b-tag>
+
         </h1>
         <div v-if="globalError">
           <b-notification
@@ -110,7 +112,9 @@ export default {
       if (this.$route.params.pathMatch) return {};
       return this.$route.params;
     },
-
+    routeQuery: function() {
+      return this.$route.query;
+    },
     routes: function() {
       return this.$route;
     }
@@ -176,5 +180,6 @@ body {
 .CodeMirror {
   height: 100%;
 }
+.breadcrumb {margin-bottom: 10px}
 </style>
 

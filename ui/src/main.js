@@ -51,11 +51,7 @@ Vue.prototype.$saveModel = async function (model, data, routeParams = {}) {
 
 
 Vue.prototype.$normalizeName = function (str = "") {
-    return str
-        .trim()
-        .replace(/-/g, "_")
-        .replace(/\s+/g, "_")
-        .toLowerCase();
+    return Lodash.kebabCase(str.trim()).replace(/-/g, "_").replace(/__+/g, "_");        
 }
 Vue.prototype.$saveInterface = async function () {
     await 1;

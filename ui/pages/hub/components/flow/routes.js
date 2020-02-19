@@ -15,12 +15,12 @@ export default {
         path: "flow-config",
         component: FlowConfig,
         name: "flowConfig",
-        meta:{title:"flowConfig"}
+        meta:{title:"Flow setting"}
     },{
         path: "collector",
         component: Collector,
         name: "collector",
-        meta:{title:"Flow"}
+        meta:{title:"Collector setting "}
     },{
         path: "test/:tester",
         component: Tester,

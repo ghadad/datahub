@@ -59,22 +59,7 @@ const menu = function (routes) {
                     name: "datasetsIndex"
                 },
             },
-            {
-                title: "jobs",
-                icon: "move_to_inbox",
-                routing: {
-                    name: "datasetsIndex",
-                    params: routes.params
-                },
-            },
-            {
-                title: "API-s",
-                icon: "move_to_inbox",
-                routing: {
-                    name: "datasetsIndex",
-                    params: routes.params
-                },
-            },
+           
             {
                 title: "Docs",
                 icon: "import_contacts",

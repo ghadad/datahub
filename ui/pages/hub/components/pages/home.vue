@@ -10,7 +10,8 @@
 
       </h2>
      <router-link :to='{name:"projects"}' class="button is-rounded">Explores hub projects</router-link>
-                   
+     <router-link :to='{name:"datasetsIndex"}' class="button is-rounded">Smart dynamic dataset </router-link>
+        
     </div></div>
   <div class="hero-body">
 

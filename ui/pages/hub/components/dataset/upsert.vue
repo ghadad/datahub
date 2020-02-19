@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h2 class="title" v-show="!$route.query.id">Create new dataset</h2>
-    <h2 class="title" v-show="$route.query.id">Update dataset :{{$route.query.id}}</h2>
+  
 
     <div class="columns">
       <div class="column is-2">
@@ -103,6 +102,11 @@ export default {
       }
     };
   },
+  watch:{
+    'parameters':function() { 
+       this.$set(this.formData,'parameters',this.parameters);
+    }
+  },
   async mounted() {
     if (this.$route.query.id) {
       this.formData._id = this.$route.query.id;
@@ -129,11 +133,8 @@ export default {
     }
   },
   computed: {
-    parameters: {
-      get() {
-        return this.formData.query.match(/:\w+/g);
-      }
-    }
+    parameters(){ return  this.$_.uniq(this.formData.query.match(/:\w+/g));}     
+    
   }
 };
 </script>
