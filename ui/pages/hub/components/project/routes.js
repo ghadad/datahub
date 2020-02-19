@@ -11,6 +11,9 @@ export default [{
     name: "projects",
     path: "/project",
     component: Projects,
+    meta: {
+        title: "HUB projects "
+    },
     children: [{
         path: 'explore/:project',
         component: Explore,
@@ -19,11 +22,17 @@ export default [{
     }, {
         path: 'list',
         name: "projects",
-        component: List
+        component: List,
+        meta: {
+            title: "HUB projects "
+        },
     }, {
         path: 'upsert',
         name: "projectUpsert",
-        component: New
+        component: New,
+        meta: {
+            title: "Upsert project "
+        },
     }, {
         path: "help",
         component: Help

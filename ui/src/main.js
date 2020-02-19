@@ -21,7 +21,7 @@ Vue.component('codemirror', VueCodeMirror.codemirror);
 
 import Http from "@/services/http";
 Vue.prototype.$http = Http;
-Vue.prototype.$createProject = async function (project,  routeParams = {}) {
+Vue.prototype.$createProject = async function (project, routeParams = {}) {
     let self = this;
 
     let res = await self.$http.post("projects", project);
@@ -39,13 +39,14 @@ Vue.prototype.$saveProject = async function (project, routeParams = {}) {
         self.$router.push(routeParams);
 };
 
-Vue.prototype.$saveModel = async function (model,data, routeParams = {}) {
+Vue.prototype.$saveModel = async function (model, data, routeParams = {}) {
     let self = this;
     let res = await self.$http.put(model, data);
     self.$set(data, '_rev', res.rev);
     self.$root.$emit("global-ok", res.ok || false);
     if (routeParams.name)
         self.$router.push(routeParams);
+    return;
 };
 
 

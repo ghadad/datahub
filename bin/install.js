@@ -1,4 +1,4 @@
-#!/bin/env node 
+#!/bin/env node
 
 const path = require("path");
 const yargs = require("yargs");
@@ -18,11 +18,12 @@ var argv = yargs
 const main = require(path.resolve(__dirname, "..", "lib/main"));
 
 
-main.init(argv).then(async function() {
- await __app.couchDb.createDb("databases");
- await  __app.couchDb.createDb("projects");
- await  __app.couchDb.createDb("config");
-}).catch(function(err) {
+main.init(argv).then(async function () {
+  await __app.couchDb.createDbIfNotExists("databases");
+  await __app.couchDb.createDbIfNotExists("projects");
+  await __app.couchDb.createDbIfNotExists("datasets");
+  await __app.couchDb.createDbIfNotExists("config");
+}).catch(function (err) {
   __app.logger.error("flow exec failed:", err.stack);
   process.exit(-1)
 });

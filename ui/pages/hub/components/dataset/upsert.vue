@@ -1,157 +1,139 @@
 <template>
   <div>
-    <h2 class="title" v-show="!$route.query.id">Set new database</h2>
-    <h2 class="title" v-show="$route.query.id">Update database :{{$route.query.id}}</h2>
+    <h2 class="title" v-show="!$route.query.id">Create new dataset</h2>
+    <h2 class="title" v-show="$route.query.id">Update dataset :{{$route.query.id}}</h2>
 
     <div class="columns">
       <div class="column is-2">
         <div class="field">
-          <label class="label">DB Alias</label>
+          <label class="label">Dataset id</label>
           <div class="control">
             <input
               class="input"
               type="text"
-              placeholder="DB alias"
+              placeholder="Dataset id"
               v-model="formData._id"
               pattern="/\w+/"
               :disabled="$route.query.id"
+              @change="formData._id=$normalizeName(formData._id)"
             />
           </div>
           <p class="help">unique name . use only alphanumeric letters</p>
         </div>
       </div>
-      <div class="column is-2">
-        <div class="field">
-          <label class="label">Client</label>
-          <div class="select">
-            <select v-model="formData.db.client">
-              <option
-                v-for="client in dbClients"
-                :key="client.val"
-                :value="client.val"
-              >{{client.desc}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="column is-2">
-        <div class="field">
-          <label class="label">Database name</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Database name"
-              v-model="formData.db.connection.database"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column is-2">
-        <div class="field">
-          <label class="label">Hostname</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Hostname"
-              v-model="formData.db.connection.host"
-            />
-          </div>
-        </div>
-      </div>
       <div class="column is-1">
         <div class="field">
-          <label class="label">Port</label>
+          <label class="label">Prefetch ?</label>
           <div class="control">
-            <input class="input" type="text" placeholder="Port"   v-model="formData.db.connection.port"/>
+            <b-checkbox v-model="formData.prefetch"></b-checkbox>
           </div>
         </div>
       </div>
-      <div class="column is-2">
+      <div class="column is-5">
         <div class="field">
-          <label class="label">Username</label>
+          <label class="label">Short description</label>
           <div class="control">
             <input
               class="input"
               type="text"
-              placeholder="Username"
-              v-model="formData.db.connection.user"
+              placeholder="Short description"
+              v-model="formData.description"
             />
           </div>
         </div>
       </div>
-      <div class="column is-2">
+      <div class="column is-2"></div>
+    </div>
+    <div class="columns">
+      <div class="column is-7">
         <div class="field">
-          <label class="label">Password</label>
+          <label class="label">SQL query</label>
           <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Password"
-              v-model="formData.db.connection.password"
-            />
+            <codemirror ref="handler" :cmOptions="cmOptions" v-model="formData.query"></codemirror>
+          </div>
+        </div>
+      </div>
+      <div class="column is-5">
+        <label class="label">Parameters</label>
+        <div class>
+          <div v-for="(p,index) in parameters" :key="p" class="field has-addons">
+            <p class="control">
+              <a class="button is-static">{{index+1}}</a>
+            </p>
+            <div class="control">
+              <input class="input" type="text" placeholder="Parameter name" :value="p" />
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div>
       <div class="buttons">
-        <button class="button is-primary" v-show="!$route.query.id" @click="update">Create</button>
-        <button class="button is-link" v-show="$route.query.id" @click="create">Update</button>
-         <button class="button is-dark" v-show="formData.db.connection.database && formData.db.client" @click="test">Test connection</button>
-         <button class="button is-success" v-show="testSuccess" @click="test">Connect success</button>
-
+        <button class="button is-primary" v-show="!$route.query.id" @click="create">Create</button>
+        <button class="button is-link" v-show="$route.query.id" @click="update">Update</button>
+        <button class="button is-dark" @click="test">Test query</button>
+        <button class="button is-success" v-show="testSuccess" @click="test">Connect success</button>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: "upsert",
+  name: "datasetUpert",
   data() {
     return {
-      testSuccess:false,
-      dbClients: [
-        { val: "mysql", desc: "Mysql" },
-        { val: "oracle", desc: "Oracle" },
-        { val: "sqlite", desc: "Sqlite" }
-      ],
+      testSuccess: false,
+      cmOptions: {
+        mode: "sql",
+        lineNumbers: true,
+        lineWrapping: true,
+        extraKeys: {
+          "Ctrl-Q": function(cm) {
+            cm.foldCode(cm.getCursor());
+          }
+        },
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+      },
       formData: {
         _id: null,
-        db: {
-          client: null,
-          connection: {
-            host: null,
-            port: null,
-            user: null,
-            password: null
-          }
-        }
+        description: null,
+        query: "",
+        params: []
       }
     };
   },
   async mounted() {
     if (this.$route.query.id) {
       this.formData._id = this.$route.query.id;
-      this.$set(this,'formData', await this.$http.get("databases/"+this.$route.query.id));
+      this.$set(
+        this,
+        "formData",
+        await this.$http.get("datasets/" + this.$route.query.id)
+      );
     }
   },
   methods: {
     async test() {
-      await this.$http.post("databases/test",this.formData);
-      this.testSuccess = true ;
-      setTimeout(()=>this.testSuccess=false,3000)
+      await this.$http.post("datasets/test", this.formData);
+      this.testSuccess = true;
+      setTimeout(() => (this.testSuccess = false), 3000);
     },
     async update() {
-      await this.$saveModel("databases", this.formData);
+      await this.$saveModel("datasets", this.formData);
     },
     async create() {
-      await this.$saveModel("databases", this.formData);
+      await this.$saveModel("datasets", this.formData, {
+        name: "datasetsIndex"
+      });
     }
   },
-  computed: {}
+  computed: {
+    parameters: {
+      get() {
+        return this.formData.query.match(/:\w+/g);
+      }
+    }
+  }
 };
 </script>

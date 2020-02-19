@@ -1,5 +1,5 @@
 const menu = function (routes) {
-    
+
     let children = []
     if (routes.params.project)
         children = [{
@@ -39,13 +39,18 @@ const menu = function (routes) {
         leftMenu: [{
                 title: "Projects",
                 icon: "storage",
-                routing: {name:"projects"},
+                routing: {
+                    name: "projects"
+                },
                 children: children
             }, {
                 title: "Datasets",
                 icon: "move_to_inbox",
                 routing: {
-                    name: "datasetsIndex"
+                    name: "datasetsIndex",
+                    meta: {
+                        title: "Data sets"
+                    }
                 },
             }, {
                 title: "Configuration",
@@ -57,7 +62,7 @@ const menu = function (routes) {
             {
                 title: "jobs",
                 icon: "move_to_inbox",
-                routing:{
+                routing: {
                     name: "datasetsIndex",
                     params: routes.params
                 },
@@ -73,7 +78,7 @@ const menu = function (routes) {
             {
                 title: "Docs",
                 icon: "import_contacts",
-                routing:{
+                routing: {
                     name: "datasetsIndex",
                     params: routes.params
                 },

@@ -174,9 +174,7 @@ export default {
       if (this.config.dataTypes && this.entityData.dbEngine)
         return [
           { type: "" },
-          ...Object.values(
-            this.config.dataTypes[this.entityData.dbEngine]
-          )
+          ...Object.values(this.config.dataTypes[this.entityData.dbEngine])
         ];
       return [];
     },
