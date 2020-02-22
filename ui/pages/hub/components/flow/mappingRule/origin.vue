@@ -42,16 +42,19 @@
       <div class="column is-3" v-if="value.originType=='value'">
         <input type="text" class="input text" v-model="value.originValue" />
       </div>
+      
       <div class="column is-11" v-if="value.originType=='dataset'">
       <div class="columns">
-        <input type="text" class="input text column is-3" v-model="value.originDataset" />
-        <input v-for="(p,index) in value.originDatasetParams" :key="index" value="index" type="text" class="input text  column is-2" v-model="value.originDatasetParams[index].value" />
+        <suggestions v-model="value.originDataset" :entity="entity" :collector="$parent.flowData.collector.config"></suggestions>
+
+        <suggestions v-for="(p,index) in value.originDatasetParams" :key="index" :entity="entity" :collector="$parent.flowData.collector.config"  v-model="value.originDatasetParams[index].value">
+        </suggestions>
+        <!--input v-for="(p,index) in value.originDatasetParams" :key="index" value="index" type="text" class="input text  column is-2" v-model="value.originDatasetParams[index].value" /-->
         
       </div>
       </div>
       <div class="column is-3" v-if="value.originType=='collector'">
-     
-        <b-autocomplete
+             <b-autocomplete
           v-model="value.originCollector"
           :data="filteredDataArray"
           placeholder="type for lookup "
@@ -71,9 +74,11 @@
 </template>
 
 <script>
+import Suggestions from "./suggestions.vue";
 export default {
   name: "origin",
   props: ["value", "entity", "collapse"],
+  components:{Suggestions},
   data() {
     return {
       isOpen: false,
