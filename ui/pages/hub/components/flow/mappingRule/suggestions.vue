@@ -3,10 +3,9 @@
   <section>
         <b-autocomplete
           :data="filteredDataArray"
-          placeholder="type for lookup "
+          :placeholder="placeholder || 'type for lookup'"
           v-model="computedGoTo"
-          icon="magnify"
-          @select="option => computedGoTo = option"
+          @select="option => computedGoTo = option.key"
         >  <template slot="empty">No results found</template>
         </b-autocomplete>
 
@@ -17,7 +16,7 @@
 <script>
 export default {
   name:"suggestions",
-  props: ["rules", "entity","collector","value"],
+  props: ["value","suggestions","placeholder"],
   data() {
     return {
         allGrab :[],
@@ -25,14 +24,7 @@ export default {
     };
   },
   mounted: function() {
-    
-    (this.collector.properties ||[]).forEach(p=>{
-      this.allGrab.push("collector:"+p)
-    });
-
-    (this.entity.properties ||[]).forEach(p=>{
-      this.allGrab.push("Entity:"+p.name)
-    });
+   
     
    // (this.rules.vars || []).forEach(p=>{
     //  this.allGrab.push("Entity:"+p.name)
@@ -42,10 +34,10 @@ export default {
   computed: {    
     filteredDataArray() {
       let self = this;
-      return this.allGrab
+      return this.suggestions
         .filter(option => {
           return (
-            option
+            option.key
               .toString()
               .toLowerCase()
               .indexOf((self.datasetValue || "").toLowerCase()) >= 0

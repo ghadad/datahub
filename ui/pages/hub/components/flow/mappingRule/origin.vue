@@ -45,16 +45,17 @@
       
       <div class="column is-11" v-if="value.originType=='dataset'">
       <div class="columns">
-        <suggestions v-model="value.originDataset" :entity="entity" :collector="$parent.flowData.collector.config"></suggestions>
+        <suggestions v-model="value.originDataset" :suggestions="suggestDatasets" :entity="entity" :collector="$parent.flowData.collector.config"></suggestions>
 
-        <suggestions v-for="(p,index) in value.originDatasetParams" :key="index" :entity="entity" :collector="$parent.flowData.collector.config"  v-model="value.originDatasetParams[index].value">
+        <suggestions v-for="(p,index) in value.originDatasetParams" :key="index"  :placeholder="p.placeholder" :suggestions="[]"  :entity="entity" :collector="$parent.flowData.collector.config"  v-model="value.originDatasetParams[index].value">
         </suggestions>
         <!--input v-for="(p,index) in value.originDatasetParams" :key="index" value="index" type="text" class="input text  column is-2" v-model="value.originDatasetParams[index].value" /-->
         
+      </div><div v-if="selectedDataset">{{selectedDataset}}</div> 
       </div>
-      </div>
+     
       <div class="column is-3" v-if="value.originType=='collector'">
-             <b-autocomplete
+         <b-autocomplete
           v-model="value.originCollector"
           :data="filteredDataArray"
           placeholder="type for lookup "
@@ -82,6 +83,9 @@ export default {
   data() {
     return {
       isOpen: false,
+      selectedDataset:null,
+      availableDatasets :[],
+      suggestDatasets:[],
       originLabel: {
         value: "Simple value",
         query: "select one value query",
@@ -98,14 +102,29 @@ export default {
  
     },
     'value.originDataset':function(){
-        if(this.value.originDataset) 
-          this.$set(this.value,'originDatasetParams',[{type:"int"},{type:"string"}])
+       if(this.value.originDataset) { 
+         this.selectedDataset = this.$_.find(this.availableDatasets,(e)=>e._id==this.value.originDataset);
+         if(this.selectedDataset)
+            this.$set(this.value,'originDatasetParams',this.selectedDataset.parameters.map(e=>{
+              return {placeholder:e,type:"string"}
+            }))
+         else 
+             this.$set(this.value,'originDatasetParams',[])
+       }
      },
     "value.originType": function() {
       this.isOpen = true ;// this.value.originType == "query" ? false : true;
     }
   },
-  mounted: function() {
+  mounted: async  function() {
+    
+    this.availableDatasets  = await this.$http.get("datasets");
+    this.suggestDatasets  = this.availableDatasets.map(e=> {
+      return {
+        key:e._id,
+        value:e._id,
+      }
+    })
     this.isOpen = true ;// this.value.originType == "query" ? false : true;
   },
   methods: {
