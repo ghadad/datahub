@@ -35,7 +35,7 @@ import Functions from "./functions.vue";
 
 export default {
   name: "rule-form",
-  props: ["value", "functions", "entity", "collapse"],
+  props: ["value", "functions", "entity", "collapse", "rules", "ruleIndex"],
   components: { Target, Origin, Functions },
   data: function() {
     return {

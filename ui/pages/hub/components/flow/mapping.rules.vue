@@ -183,6 +183,8 @@
             :functions="functions"
             :entity="entity"
             :collapse="allCollapse"
+            :rules="rules"
+            :ruleIndex="newActiveIndex || activeIndex"
           ></rule-form>
         </div>
 
