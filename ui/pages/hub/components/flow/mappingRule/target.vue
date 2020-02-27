@@ -33,8 +33,8 @@
     </div>
 
     <div class="columns" v-if="value.targetType=='property' && entity.name">
-      <div class="column is-3">
-        <strong class="label">Pick propery from {{entity.name}} entity</strong>
+      <div class="column is-2">
+        <strong class="label">{{entity.name}}'s property</strong>
       </div>
       <div class="column is-3">
         <b-autocomplete

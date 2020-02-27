@@ -16,7 +16,7 @@
 <script>
 export default {
   name: "suggestions",
-  props: ["value", "suggestions", "placeholder"],
+  props: ["value", "suggestions", "placeholder", "type"],
   data() {
     return {
       allGrab: [],
@@ -42,10 +42,24 @@ export default {
     },
     computedGoTo: {
       get() {
-        return this.value;
+        if (this.type == "string") return this.value;
+        let originType = this.$_.get(this.value, "originType", "");
+        originType = originType ? originType + ":" : "";
+        return originType + this.$_.get(this.value, "originValue", "");
       },
       set(newValue) {
-        this.$emit("input", newValue);
+        if (this.type == "string") return this.$emit("input", newValue);
+
+        let updateValue = {};
+        let arr = (newValue || "").split(":");
+        if (arr[1]) {
+          updateValue.originValue = arr[1];
+          updateValue.originType = arr[0];
+        } else {
+          updateValue.originValue = arr[0];
+          //  updateValue.originType = "value";
+        }
+        this.$emit("input", updateValue);
       }
     }
   }

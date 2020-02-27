@@ -8,7 +8,7 @@
           </thead>
           <tbody>
             <tr v-for="(p,index) in fastRules" :key="index" class="clickable">
-              <td class="dropzone">{{p.origin}}</td>
+              <td class="dropzone">{{p.originCollector}}</td>
               <td class="dropzone">
                 <b-icon icon="arrow-right"></b-icon>
               </td>
@@ -88,7 +88,7 @@ export default {
   mounted() {
     this.fastRules = this.$_.cloneDeep(
       (this.collector.properties || []).map(function(e) {
-        return { name: "map " + e, origin: e, originType: "property" };
+        return { name: "map " + e, originCollector: e, originType: "property" };
       })
     );
     //this.fastMappingIndex = this.$_.range(this.collectorProperties.length)
@@ -96,7 +96,11 @@ export default {
   },
   methods: {
     generate() {
-      this.$set(this, "cRules", this.fastRules.filter(e=>e.goTo));
+      this.$set(
+        this,
+        "cRules",
+        this.fastRules.filter(e => e.goTo)
+      );
     },
     handleReturnDrop(data) {
       let self = this;

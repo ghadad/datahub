@@ -25,7 +25,7 @@
                 <b-radio v-model="value.originType" native-value="value">Simple value</b-radio>
                 <b-radio v-model="value.originType" native-value="query">Select Query</b-radio>
                 <b-radio v-model="value.originType" native-value="dataset">Predefine dataset</b-radio>
-                <b-radio v-model="value.originType" native-value="handler">Evaluate</b-radio>
+                <b-radio v-model="value.originType" native-value="eval">Evaluate</b-radio>
               </div>
             </section>
           </div>
@@ -33,25 +33,41 @@
       </div>
     </div>
     <div class="columns" v-show="isOpen">
-      <div class="column is-1">
-        <strong class="label">{{originLabel[value.originType]}}</strong>
+      <div class="column is-12" v-if="value.originType=='query'">
+        <div class="columns">
+          <div class="column is-10">
+            <div class="field">
+              <label class="label">Query</label>
+              <codemirror class="control" :cmOptions="cmOptions" v-model="value.originQuery"></codemirror>
+            </div>
+          </div>
+          <div class="column is-2">
+            <div class="field">
+              <label class="label">DB alias</label>
+
+              <div class="select">
+                <select v-model="value.originQueryDbAlias">
+                  <option
+                    v-for="db in dbAliases"
+                    :key="db.dbAlias"
+                    :value="db.dbAlias"
+                  >{{db.client}}:{{db.dbAlias}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="column is-11" v-if="value.originType=='query'">
-        <textarea rows="5" class="textarea" v-model="value.originQuery"></textarea>
+
+      <div class="column is-11" v-if="value.originType=='eval'">
+        <codemirror :cmOptions="cmOptions" v-model="value.originEval"></codemirror>
       </div>
       <div class="column is-3" v-if="value.originType=='value'">
         <input type="text" class="input text" v-model="value.originValue" />
       </div>
-
       <div class="column is-11" v-if="value.originType=='dataset'">
         <div class="columns">
-          <suggestions
-            v-model="value.originDataset"
-            :suggestions="suggestDatasets"
-            :entity="entity"
-            :collector="$parent.flowData.collector.config"
-          ></suggestions>
-
+          <suggestions v-model="value.originDataset" type="string" :suggestions="suggestDatasets"></suggestions>
           <suggestions
             v-for="(p,index) in value.originDatasetParams"
             :key="index"
@@ -61,26 +77,18 @@
           ></suggestions>
           <!--input v-for="(p,index) in value.originDatasetParams" :key="index" value="index" type="text" class="input text  column is-2" v-model="value.originDatasetParams[index].value" /-->
         </div>
-        <div v-if="selectedDataset">{{selectedDataset}}</div>
       </div>
 
       <div class="column is-3" v-if="value.originType=='collector'">
-        <b-autocomplete
+        <suggestions
           v-model="value.originCollector"
-          :data="filteredDataArray"
-          placeholder="type for lookup "
-          icon="magnify"
-          @select="option => value.origin = option"
-        >
-          <template slot="empty">No results found</template>
-        </b-autocomplete>
+          type="string"
+          :suggestions="collectorSuggestions"
+        ></suggestions>
       </div>
     </div>
     <!--pre>{{value}}</pre-->
-    <!--div class="panel-block" v-show="targeting=='property'">
-      {{entity.properties}}
-     
-    </div-->
+    <!--div>{{entity.properties}}</div-->
   </section>
 </template>
 
@@ -92,10 +100,24 @@ export default {
   components: { Suggestions },
   data() {
     return {
+      dbAliases: [],
+      cmOptions: {
+        mode: "javascript",
+        lineNumbers: true,
+        lineWrapping: true,
+        extraKeys: {
+          "Ctrl-Q": function(cm) {
+            cm.foldCode(cm.getCursor());
+          }
+        },
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+      },
       isOpen: false,
       selectedDataset: null,
       availableDatasets: [],
       suggestDatasets: [],
+      collectorSuggestions: [],
       originLabel: {
         value: "Simple value",
         query: "select one value query",
@@ -132,6 +154,27 @@ export default {
     }
   },
   mounted: async function() {
+    let dbs = await this.$http.get("databases");
+    this.$set(
+      this,
+      "dbAliases",
+      dbs.map(d => {
+        return {
+          dbAlias: d._id,
+          client: d.db.client
+        };
+      })
+    );
+
+    this.collectorSuggestions = this.$parent.flowData.collector.config.properties.map(
+      e => {
+        return {
+          key: e,
+          value: "Collector:" + e
+        };
+      }
+    );
+
     this.availableDatasets = await this.$http.get("datasets");
     this.suggestDatasets = this.availableDatasets.map(e => {
       return {
@@ -151,13 +194,8 @@ export default {
     paramsSuggestions() {
       return (
         this.$_.concat(
-          this.$parent.flowData.collector.config.properties.map(e => {
-            return {
-              key: e,
-              value: "Collector:" + e
-            };
-          }),
-          this.entity.properties.map(e => {
+          this.collectorSuggestions,
+          (this.entity.properties || []).map(e => {
             return {
               key: e.name,
               value: "Entity:" + e.name
@@ -197,3 +235,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+label.b-radio.radio {
+  margin-right: 30px;
+}
+</style>
