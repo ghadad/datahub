@@ -13,17 +13,22 @@ const fetchInfo = async function (flow) {
 
 const flowExe = async function (flow, step) {
     console.log("flow.collector.handler:", flow.collector.handler)
+    
+    let FlowObject = new Flow(flow);
+    await FlowObject.init();
 
     let collector = new Collector(flow.collector.config);
 
     console.log("flow.collector.handler:", flow.collector.handler)
     let collectorPostHandler = rfs('module.exports = ' + flow.collector.handler);
     let mappingPostHandler = rfs('module.exports = ' + flow.mapping.handler);
+let resultSet = {};
 
     let result = await collector.test(5);
 
     if (step == "collector")
         return result;
+
 
     for (let row of result) {
         row = await collectorPostHandler(row)
@@ -35,18 +40,18 @@ const flowExe = async function (flow, step) {
 
     let mappedData = [];
     for (let row of result) {
-        mappedData.push(await mapper.map(row))
+        mappedData.push({rawData:row,newData:await mapper.map(row)})
     }
 
 
     if (step == "mapping")
-        return mappedData;
-
+        return mappedData.map(e=>e.newData);
+    let finalReult = [];
     for (let row of mappedData) {
-        row = await mappingPostHandler(row)
+        finalReult.push( await mappingPostHandler(row.newData,row.rawData,row.rawData))
     }
 
-    return mappedData;
+    return finalReult;
 
 }
 

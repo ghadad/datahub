@@ -100,7 +100,7 @@ export default {
     this.entity = this.$parent.$data.entityModel;
 
     // if (self.$_.get(self, "$parent.$data.flowData.mapping"))
-    self.$parent.$data.flowData.mapping.handler = self.defaultHandler;
+    self.$parent.$data.flowData.mapping.handler = self.$parent.$data.flowData.mapping.handler || self.defaultHandler;
     this.editor = self.$refs.mapHandler.editor;
     this.editor.refresh();
     this.editor.on("beforeChange", function(cm, change) {

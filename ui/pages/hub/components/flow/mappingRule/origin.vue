@@ -91,7 +91,6 @@
     <!--div>{{entity.properties}}</div-->
   </section>
 </template>
-
 <script>
 import Suggestions from "./suggestions.vue";
 export default {
