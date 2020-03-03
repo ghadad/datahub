@@ -1,7 +1,5 @@
 <template>
   <div>
-  
-
     <div class="columns">
       <div class="column is-2">
         <div class="field">
@@ -64,6 +62,17 @@
             </div>
           </div>
         </div>
+        <div class v-if="formData.prefetch">
+          <h3 class="title is-5">prefetch keys</h3>
+          <div v-for="(p,index) in parameters" :key="p" class="field has-addons">
+            <p class="control">
+              <a class="button is-static">{{index+1}}</a>
+            </p>
+            <div class="control">
+              <input class="input" type="text" placeholder="Parameter name" :value="p" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div>
@@ -102,9 +111,9 @@ export default {
       }
     };
   },
-  watch:{
-    'parameters':function() { 
-       this.$set(this.formData,'parameters',this.parameters);
+  watch: {
+    parameters: function() {
+      this.$set(this.formData, "parameters", this.parameters);
     }
   },
   async mounted() {
@@ -133,8 +142,9 @@ export default {
     }
   },
   computed: {
-    parameters(){ return  this.$_.uniq(this.formData.query.match(/:\w+/g));}     
-    
+    parameters() {
+      return this.$_.uniq(this.formData.query.match(/:\w+/g));
+    }
   }
 };
 </script>
