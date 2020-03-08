@@ -49,6 +49,12 @@
             <codemirror ref="handler" :cmOptions="cmOptions" v-model="formData.query"></codemirror>
           </div>
         </div>
+        <div class="field" v-if="formData.prefetch">
+          <label class="label">Filter result handler</label>
+          <div class="control">
+            <codemirror ref="handler" :cmOptions="cmOptions" v-model="formData.filterHandler"></codemirror>
+          </div>
+        </div>
       </div>
       <div class="column is-5">
         <label class="label">Parameters</label>
@@ -124,6 +130,9 @@ export default {
         "formData",
         await this.$http.get("datasets/" + this.$route.query.id)
       );
+
+      this.formData.filterHandler =
+        this.formData.filterHandler || "function(data){ \n}";
     }
   },
   methods: {
