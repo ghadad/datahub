@@ -20,7 +20,6 @@ const flowExe = async function (flow, step) {
 
     let collector = new Collector(flow.collector.config);
 
-    console.log("flow.collector.handler:", flow.collector.handler)
     let collectorPostHandler = rfs('module.exports = ' + flow.collector.handler);
     let mappingPostHandler = rfs('module.exports = ' + flow.mapping.handler);
     let resultSet = {};
@@ -30,11 +29,11 @@ const flowExe = async function (flow, step) {
     if (step == "collector")
         return result;
 
-
+    let testResult = [];    
     for (let row of result) {
-        row = await runFlowHandler(row, step)
+        testResult.push(await runFlowHandler(row, step))
     }
-    return result;
+    return testResult;
 
 }
 
