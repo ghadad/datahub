@@ -87,11 +87,11 @@
           </div>
         </div>
       </div>
-      <div class="column is-4" v-if="collector.keyType=='pkField'">
+      <div class="column is-4" v-if="collector.keyType=='pkPath'">
         <div class="field">
-          <label class="label">Field Name (must existgs in Query result)</label>
+          <label class="label">Json path value (must existgs in Query result) e.g  : data.info.id</label>
           <div class="control">
-            <input class="input" v-model="collector.pkField" type="text" />
+            <input class="input" v-model="collector.pkPath" type="text" />
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
        keyType: null,
        keyTypes: {
         pkHandler: "function/handler",
-        pkField: "Header field"
+        pkPath: "json path"
         }
       };
     },
