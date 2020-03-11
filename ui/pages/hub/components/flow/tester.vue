@@ -47,6 +47,7 @@ export default {
       this.$set(this, "result", []);
       this.testerTitle = tester;
       this.error = null;
+      const loadingComponent = this.$buefy.loading.open({});
 
       try {
         let result = await this.$http.post(`flow/test/${tester}`, this.flow);
@@ -54,6 +55,8 @@ export default {
       } catch (error) {
         this.error = error;
       }
+
+      loadingComponent.close();
     }
   },
   computed: {

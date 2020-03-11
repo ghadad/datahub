@@ -53,7 +53,7 @@ argv.appType = "ui";
 let appRoutes = [];
 
 fastify.setErrorHandler(function (error, request, reply) {
-  __app.logger.error(error)
+  __app.logger.error("ERROR DETECTED:", error)
   var statusCode = error.statusCode >= 400 ? error.statusCode : 500
   reply
     .code(statusCode)
