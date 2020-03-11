@@ -76,31 +76,31 @@
         <hr />
       </div>
     </div>
-    <div class="columns">
+        <div class="columns">
       <div class="column is-2">
         <div class="field">
           <label class="label">Define the entity key method</label>
           <div class="select">
-            <select v-model="keyType">
+            <select v-model="collector.keyType">
               <option v-for="(desc,kt) in keyTypes" :key="kt" :value="kt">{{desc}}</option>
             </select>
           </div>
         </div>
       </div>
-      <div class="column is-4" v-if="keyType=='pkPath'">
+      <div class="column is-4" v-if="collector.keyType=='pkPath'">
         <div class="field">
-          <label class="label">any depth path to key value e.g "customerInfo.customerId"</label>
+          <label class="label">Json path value (must existgs in Query result) e.g  : data.info.id</label>
           <div class="control">
             <input class="input" v-model="collector.pkPath" type="text" />
           </div>
         </div>
       </div>
-      <div class="column is-10" v-if="keyType=='pkHandler'">
+      <div class="column is-10" v-if="collector.keyType=='pkHandler'">
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-            <textarea rows="15" class="textarea" v-model="collector.pkHandler"></textarea>
-          </div>
+           <codemirror style="min-height:200px"  :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+         </div>
         </div>
       </div>
     </div>
@@ -124,10 +124,10 @@
         // for example : 
         // return __app.$_.get(data,'customerInfo.customerId',999999)
       }`,
-        keyType: null,
-        keyTypes: {
-          pkHandler: "function/handler",
-          pkPath: "Path to key"
+       keyType: null,
+       keyTypes: {
+        pkHandler: "function/handler",
+        pkPath: "json path"
         }
       };
     },

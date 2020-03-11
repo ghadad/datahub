@@ -76,7 +76,7 @@
     <div class="columns">
       <div class="column is-2">
         <div class="field">
-          <label class="label">Define the entity key</label>
+          <label class="label">Define the entity key method</label>
           <div class="select">
             <select v-model="collector.keyType">
               <option v-for="(desc,kt) in keyTypes" :key="kt" :value="kt">{{desc}}</option>
@@ -84,28 +84,20 @@
           </div>
         </div>
       </div>
-      <div class="column is-1" v-if="collector.keyType=='index'">
+      <div class="column is-4" v-if="collector.keyType=='pkField'">
         <div class="field">
-          <label class="label">Field Position</label>
+          <label class="label">Field Name (must existgs in csv property)</label>
           <div class="control">
-            <input class="input" v-model="collector.pkSource" type="integer" />
+            <input class="input" v-model="collector.pkField" type="text" />
           </div>
         </div>
       </div>
-      <div class="column is-2" v-if="collector.keyType=='property'">
-        <div class="field">
-          <label class="label">Field /property</label>
-          <div class="control">
-            <input class="input" v-model="collector.pkSource" type="text" />
-          </div>
-        </div>
-      </div>
-      <div class="column is-10" v-if="collector.keyType=='handler'">
+      <div class="column is-10" v-if="collector.keyType=='pkHandler'">
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-            <textarea rows="15" class="textarea" v-model="collector.pkSource"></textarea>
-          </div>
+           <codemirror style="min-height:200px"  :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+         </div>
         </div>
       </div>
     </div>
@@ -130,9 +122,8 @@ export default {
       csvField: null,
       keyType: null,
       keyTypes: {
-        index: "Field position",
-        handler: "function/handler",
-        property: "Header field"
+        pkHandler: "function/handler",
+        pkField: "Header field"
       }
     };
   },
