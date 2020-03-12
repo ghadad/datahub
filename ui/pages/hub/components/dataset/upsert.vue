@@ -46,7 +46,7 @@
         <div class="field">
           <label class="label">SQL query</label>
           <div class="control">
-            <codemirror ref="handler" :cmOptions="cmOptions" v-model="formData.query"></codemirror>
+            <codemirror ref="handler" :options="{mode:'sql'}" v-model="formData.query"></codemirror>
           </div>
         </div>
         <div class="field" v-if="formData.prefetch">
