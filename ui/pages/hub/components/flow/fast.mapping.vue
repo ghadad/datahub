@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="columns">
-      <div class="column is-4">
+      <div class="column is-5">
         <table class="fast-mapping table is-bordered is-fullwidth">
           <thead>
             <th colspan="3" class>Collector properties</th>

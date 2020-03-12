@@ -1,15 +1,21 @@
 <template>
   <div v-if="flowData.collector">
-    <h1>FLOW</h1>
-
     <section>
       <b-steps v-model="activeStep" :animated="true" :has-navigation="false">
-        <b-step-item  icon="info"  label="flowConfig" :clickable="true"></b-step-item>
-        <b-step-item  icon="download" label="Collector" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item  icon="cog" label="Test station" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item  icon="adjust" label="Mapping" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item  icon="cog"  label="Test station" :clickable="flowData.config.name? true:false"></b-step-item>
-        <b-step-item icon="check-square" label="Discover" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item icon="info" label="flowConfig" :clickable="true"></b-step-item>
+        <b-step-item
+          icon="download"
+          label="Collector"
+          :clickable="flowData.config.name? true:false"
+        ></b-step-item>
+        <b-step-item icon="cog" label="Test station" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item icon="adjust" label="Mapping" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item icon="cog" label="Test station" :clickable="flowData.config.name? true:false"></b-step-item>
+        <b-step-item
+          icon="check-square"
+          label="Discover"
+          :clickable="flowData.config.name? true:false"
+        ></b-step-item>
       </b-steps>
     </section>
     <router-view></router-view>
@@ -78,3 +84,8 @@ export default {
   }
 };
 </script>
+<style>
+.b-steps .steps + .step-content {
+  padding: 13px;
+}
+</style>

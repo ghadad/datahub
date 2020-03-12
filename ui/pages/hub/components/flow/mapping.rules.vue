@@ -2,29 +2,23 @@
   <div v-if="functions">
     <div class="columns">
       <div class="rules-list column is-3">
-        <h1 class="strong title is-6 strong" style="direction:ltr">
-          Exists rules
-          <span
-            class="clickable"
-            @click="setNewRule(rules.length)"
-            title="Add new mapping rule at the endof all existing rules"
-          >
-            <b-icon
-              class="is-pulled-right clickable"
-              icon="plus-circle"
-              size="is-medium"
-              type="is-info"
-            ></b-icon>
-          </span>
-        </h1>
+        <div class="top-btns" style="direction:ltr">
+          <button class="button is-link is-small" @click="update">Save work</button>
+          <button class="button is-info is-small" @click="setNewRule(rules.length)">New rule</button>
+        </div>
+
         <table id="mapping-rules" class="table is-fullwidth is-dark">
+          <thead>
+            <th colspan="3" class="has-text-left">Rules</th>
+          </thead>
+
           <tr v-show="rules.length==0">
             <th>No exists rules found ... be creative</th>
           </tr>
           <tr v-show="rules.length==0">
             <th class="has-text-centered">
               <button
-                class="button is-primary is-large"
+                class="button has-background-grey-lighter is-medium"
                 @click="displayFastAssign()"
               >Fast assignments mapping</button>
             </th>
@@ -70,16 +64,13 @@
         <div class="columns">
           <div v-if="0">newActiveIndex:{{newActiveIndex}} ,activeIndex:{{activeIndex}}</div>
           <div class="column is-2" v-if="activeIndex != null && activeIndex>=0">
-            <h2 class="title is-3">Rule # {{activeIndex +1}}</h2>
+            <h2 class="title is-5">Rule # {{activeIndex +1}}</h2>
           </div>
-          <div class="column is-4" v-if="newActiveIndex >=0 && newActiveIndex != null">
-            <h2 class="title is-3">New rule at position #{{newActiveIndex}}</h2>
+          <div class="column is-3" v-if="newActiveIndex >=0 && newActiveIndex != null">
+            <h2 class="title is-6">New rule at position #{{newActiveIndex}}</h2>
           </div>
-          <div class="column is-4">
-            <div class="field is-horizontal">
-              <div class="field-label">
-                <label class="label">short name</label>
-              </div>
+          <div class="column is-5">
+            <div class="field">
               <div class="field-body">
                 <div class="field">
                   <p class="control">
@@ -106,7 +97,7 @@
                 class="button is-danger is-small"
                 v-show="cRules.length &&  activeIndex>=0 && dStep==0"
                 @click="delRule(1)"
-              >Delete</button>
+              >Delete rule</button>
               <button
                 class="button is-danger is-small"
                 v-show="activeIndex>=0 && dStep==1"
@@ -214,9 +205,6 @@
           <span class="tag is-default" v-for="(v,idx) in activeRule.drop" :key="idx">{{v}}</span>
         </div>
       </div>
-    </div>
-    <div class="column is-12">
-      <button class="button is-link" @click="update">Update</button>
     </div>
   </div>
 </template>
@@ -368,5 +356,8 @@ tr.active {
   height: auto;
   overflow-y: hidden;
   overflow-x: auto;
+}
+.rules-list .top-btns button {
+  margin-right: 10px;
 }
 </style>

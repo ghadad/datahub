@@ -2,14 +2,14 @@
   <div v-if="flowData.collector">
     <div v-show="!showHandler">
       <div>
-        <h1 class="title">
+        <h3 class="title is-4">
           Collector settings
           <b-button
             class="button is-info is-pulled-right"
             icon-right="code"
             @click="showHandler=true"
           >Collector handler</b-button>
-        </h1>
+        </h3>
         <div class="columns">
           <div class="column is-2">
             <div class="field">
@@ -84,9 +84,10 @@
 
       <div class="field">
         <label class="label">Post collector handler</label>
-         <cite>Arguments: <br />
-           raw - collector data row
-         </cite>
+        <cite>
+          Arguments:
+          <br />raw - collector data row
+        </cite>
         <div class="control">
           <codemirror ref="handler" :cmOptions="cmOptions" v-model="flowData.collector.handler"></codemirror>
         </div>
@@ -171,7 +172,7 @@ export default {
       this.editor = this.$refs.handler.editor;
       this.editor.on("beforeChange", function(cm, change) {
         if (~[0].indexOf(change.from.line)) {
-         change.cancel();
+          change.cancel();
         }
       });
     }, 100);
@@ -179,5 +180,7 @@ export default {
 };
 </script>
 <style scoped>
-cite {font-weight:800}
+cite {
+  font-weight: 800;
+}
 </style>

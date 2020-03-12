@@ -1,14 +1,12 @@
 <template>
   <div id="mapping-rules" v-if="$parent.$data.flowData.mapping">
     <div v-show="showHandler==false">
-      <h1 class="title">
-        Collector settings
-        <b-button
-          class="button is-info is-pulled-right"
-          icon-right="code"
-          @click="showHandler=true"
-        >Mapping post handler</b-button>
-      </h1>
+      <b-button
+        class="button has-background-white-ter is-small"
+        icon-right="code"
+        @click="showHandler=true"
+      >Mapping post handler</b-button>
+
       <mapping-rules
         ref="existsRules"
         :rules.sync="$parent.$data.flowData.mapping.config"
@@ -18,14 +16,10 @@
       ></mapping-rules>
     </div>
     <div v-show="showHandler==true">
-      <h1 class="title">
-        Collector settings
-        <b-button
-          class="button is-info is-pulled-right"
-          icon-right="code"
-          @click="showHandler=false"
-        >Mapping rules</b-button>
-      </h1>
+      <b-button
+        class="button has-background-white-ter is-small"
+        @click="showHandler=false"
+      >Mapping rules</b-button>
 
       <div class="field">
         <label class="label">Post mapping Handler</label>
