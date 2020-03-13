@@ -52,6 +52,15 @@ const menu = function (routes) {
                         title: "Data sets"
                     }
                 },
+            },{
+                title: "Sql statements",
+                icon: "move_to_inbox",
+                routing: {
+                    name: "sqlIndex",
+                    meta: {
+                        title: "Sql statements"
+                    }
+                },
             }, {
                 title: "Configuration",
                 icon: "move_to_inbox",
