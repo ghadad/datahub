@@ -16,6 +16,8 @@ Vue.use(Buefy, {
 })
 
 import VueCodeMirror from 'vue-codemirror-lite'
+require('codemirror/mode/javascript/javascript')
+require('codemirror/mode/sql/sql')
 
 Vue.component('codemirror', VueCodeMirror.codemirror);
 

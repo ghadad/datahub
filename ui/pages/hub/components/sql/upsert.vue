@@ -3,12 +3,12 @@
     <div class="columns">
       <div class="column is-2">
         <div class="field">
-          <label class="label">Dataset id</label>
+          <label class="label">sql id</label>
           <div class="control">
             <input
               class="input"
               type="text"
-              placeholder="Dataset id"
+              placeholder="Sql id"
               v-model="formData._id"
               pattern="/\w+/"
               :disabled="$route.query.id"
@@ -16,14 +16,6 @@
             />
           </div>
           <p class="help">unique name . use only alphanumeric letters</p>
-        </div>
-      </div>
-      <div class="column is-1">
-        <div class="field">
-          <label class="label">Prefetch ?</label>
-          <div class="control">
-            <b-checkbox v-model="formData.prefetch"></b-checkbox>
-          </div>
         </div>
       </div>
       <div class="column is-5">
@@ -49,12 +41,6 @@
             <codemirror ref="handler" :options="{mode:'sql'}" v-model="formData.query"></codemirror>
           </div>
         </div>
-        <div class="field" v-if="formData.prefetch">
-          <label class="label">Filter result handler</label>
-          <div class="control">
-            <codemirror ref="handler" :cmOptions="cmOptions" v-model="formData.filterHandler"></codemirror>
-          </div>
-        </div>
       </div>
       <div class="column is-5">
         <label class="label">Parameters</label>
@@ -68,17 +54,7 @@
             </div>
           </div>
         </div>
-        <div class v-if="formData.prefetch">
-          <h3 class="title is-5">prefetch keys</h3>
-          <div v-for="(p,index) in parameters" :key="p" class="field has-addons">
-            <p class="control">
-              <a class="button is-static">{{index+1}}</a>
-            </p>
-            <div class="control">
-              <input class="input" type="text" placeholder="Parameter name" :value="p" />
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
     <div>
@@ -93,7 +69,7 @@
 </template>
 <script>
 export default {
-  name: "datasetUpert",
+  name: "sqlUpsert",
   data() {
     return {
       testSuccess: false,
@@ -128,7 +104,7 @@ export default {
       this.$set(
         this,
         "formData",
-        await this.$http.get("datasets/" + this.$route.query.id)
+        await this.$http.get("sqls/" + this.$route.query.id)
       );
 
       this.formData.filterHandler =
@@ -137,16 +113,16 @@ export default {
   },
   methods: {
     async test() {
-      await this.$http.post("datasets/test", this.formData);
+      await this.$http.post("sqls/test", this.formData);
       this.testSuccess = true;
       setTimeout(() => (this.testSuccess = false), 3000);
     },
     async update() {
-      await this.$saveModel("datasets", this.formData);
+      await this.$saveModel("sqls", this.formData);
     },
     async create() {
-      await this.$saveModel("datasets", this.formData, {
-        name: "datasetsIndex"
+      await this.$saveModel("sqls", this.formData, {
+        name: "sqlIndex"
       });
     }
   },

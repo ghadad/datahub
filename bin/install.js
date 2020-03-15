@@ -22,6 +22,7 @@ main.init(argv).then(async function () {
   await __app.couchDb.createDbIfNotExists("databases");
   await __app.couchDb.createDbIfNotExists("projects");
   await __app.couchDb.createDbIfNotExists("datasets");
+  await __app.couchDb.createDbIfNotExists("sqls");
   await __app.couchDb.createDbIfNotExists("config");
   await __app.couchDb.createDbIfNotExists("errors");
 
