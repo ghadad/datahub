@@ -2,22 +2,19 @@
   <div v-if="value">
     <target class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></target>
     <origin class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></origin>
-    <div class="buttons rules-buttons-group">
-      <b-button
-        :type="cloneRule.hasTransform ? 'is-light':'is-info'"
-        @click="cloneRule.hasTransform = !cloneRule.hasTransform"
-        class="is-small"
-      >{{cloneRule.hasTransform ? 'Disable transforms':'Enable transforms'}}</b-button>
-      <b-button
-        :type="cloneRule.hasValidation ? 'is-light':'is-info'"
-        @click="cloneRule.hasValidation = !cloneRule.hasValidation"
-        class="is-small"
-      >{{cloneRule.hasValidation ? 'Disable validations':'Enable validations'}}</b-button>
-      <b-button
-        :type="cloneRule.hasDrop ? 'is-light':'is-info'"
-        @click="cloneRule.hasDrop = !cloneRule.hasDrop"
-        class="is-small"
-      >{{cloneRule.hasDrop ? 'Disable drops':'Enable drops'}}</b-button>
+    <div class="rules-checkbox-group">
+       <b-checkbox v-model="cloneRule.hasTransform"
+            type="is-info">
+                Add transforms
+            </b-checkbox>
+                <b-checkbox v-model="cloneRule.hasValidation"
+            type="is-info">
+                 Add validations
+            </b-checkbox>
+                <b-checkbox v-model="cloneRule.hasDrop"
+            type="is-info">
+                  Add Drops
+            </b-checkbox>
     </div>
     <functions
       v-if="cloneRule.hasTransform"
@@ -80,7 +77,7 @@ export default {
   },
   computed: {
     cloneRule: {
-      get(newVal) {
+      get() {
         return this.value;
       },
       set(newVal) {
@@ -115,12 +112,10 @@ export default {
 is-7 {
   font-size: 1.2em;
 }
-.buttons.rules-buttons-group {
-  margin-bottom: 1px !important;
-}
-.rules-buttons-group .is-light {
-  border: 1px solid #ccc;
-  font-weight: 600;
+.rules-checkbox-group .checkbox{
+  margin-bottom: 5px !important;
+  font-weight:700;
+  margin-right:30px
 }
 </style>
 <style>

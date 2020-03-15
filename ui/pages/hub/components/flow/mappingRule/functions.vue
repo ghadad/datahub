@@ -17,19 +17,15 @@
     <div class="columns" v-show="1">
       <div class="column is-full functions-list">
         <div>
-          <drop class="dropzone is-pulled-right" @drop="handleDrop">
-            <b-icon type="is-danger" icon="trash"></b-icon>
-          </drop>
           <draggable v-model="dragableList">
             <span v-for="(t,index) in dragableList" :key="index">
               <span class="op" v-show="index>0">{{op}}</span>
-              <drag
-                :transfer-data="index"
-                :title="functions[t[0]]? functions[t[0]].desc:''"
-                class="func-tag tag"
-              >
-                <span>{{displayT(t)}}</span>
-              </drag>
+              <div class="func-tag tag">
+                  <span>{{displayT(t)}}  
+                      
+                  </span>                      
+                  <span @click="handleDrop(index)" class="icon is-small clickable"><i class="fas fa-times-circle"></i></span>
+                  </div>
             </span>
           </draggable>
         </div>
@@ -83,7 +79,7 @@
 
 <script>
 import draggable from "vuedraggable";
-import { Drag, Drop } from "vue-drag-drop";
+//import { Drag, Drop } from "vue-drag-drop";
 
 export default {
   props: ["title", "list", "functions", "op", "collapse"],
@@ -98,7 +94,7 @@ export default {
       //  dragableList:[]
     };
   },
-  components: { draggable, Drag, Drop },
+  components: { draggable },
   watch: {
     "$props.collapse": function() {
       this.isOpen = this.$props.collapse;
@@ -119,7 +115,6 @@ export default {
       let errorFound = false;
       if (!self.activeFunc) return;
 
-      let paramsSchema = self.functions[self.activeFunc].params || [];
       self.$set(
         self,
         "activeParamsError",
@@ -147,7 +142,6 @@ export default {
 
       for (var i = 0; i < self.activeFuncDesc.params.length; i++) {
         let schema = self.activeFuncDesc.params[i];
-        console.log("schema:", schema, "val:", self.activeParams[i]);
         if (schema.required && !self.activeParams[i]) {
           errorFound = true;
           self.activeParamsError[i].error = "Value is required";
@@ -165,7 +159,7 @@ export default {
     },
     displayT: function(t) {
       let func = t[0];
-      let ps = this.functions[func.replace("!", "")].params || [];
+  //    let ps = this.functions[func.replace("!", "")].params || [];
       let params = [];
       for (let i = 1; i < t.length; i++) {
         params.push(t[i]);
@@ -199,7 +193,9 @@ export default {
   cursor: pointer;
   background-color: White !important;
   border: 1px solid #bbb;
+  font-weight:700
 }
+div.func-tag .icon  {padding-left:15px;padding-right:10px}
 .tag-head .title {
   margin-bottom: 10px;
 }

@@ -175,7 +175,18 @@ export default {
     }, 100);
   },
   computed: {
-    sources: () => $serverConfig.sources
+    sources: () =>  [{
+            type: "csv",
+            description: "csv"
+        }, {
+            type: "query",
+            description: "sql Query"
+        },
+        {
+            type: "restapi",
+            description: "restapi"
+        }
+    ]
   }
 };
 </script>

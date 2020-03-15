@@ -1,12 +1,13 @@
 <template>
-  <div id="mapping-rules" v-if="$parent.$data.flowData.mapping">
+  <div id="mapping-rules" v-if="$parent.$data.flowData.mapping" class="mapping-area">
     <div v-show="showHandler==false">
       <b-button
-        class="button has-background-white-ter is-small"
+        class="button has-background-white-ter is-small top-btn"
         icon-right="code"
+         icon-left="chevron-right"
         @click="showHandler=true"
-      >Mapping post handler</b-button>
-
+      >   Mapping post handler</b-button>
+            <section>
       <mapping-rules
         ref="existsRules"
         :rules.sync="$parent.$data.flowData.mapping.config"
@@ -14,11 +15,13 @@
         :entity="entity"
         :collector="$parent.$data.flowData.collector.config"
       ></mapping-rules>
+      </section>
     </div>
     <div v-show="showHandler==true">
       <b-button
-        class="button has-background-white-ter is-small"
+        class="button has-background-white-ter is-small top-btn"
         @click="showHandler=false"
+          icon-left="chevron-right"
       >Mapping rules</b-button>
 
       <div class="field">
@@ -114,4 +117,6 @@ div.editor.control {
   border: 1px solid #ccc;
   border-round: 3px;
 }
+.mapping-area button.is-small {font-weight:700}
+.top-btn {margin-bottom: 5px;}
 </style>
