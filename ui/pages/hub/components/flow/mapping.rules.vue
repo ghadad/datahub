@@ -241,6 +241,17 @@ export default {
   watch: {
     // fullfill function if missing
     activeRule: function() {
+      this.$set(
+        this.activeRule,
+        "hasTransform",
+        this.activeRule.hasTransform || false
+      );
+      this.$set(
+        this.activeRule,
+        "hasValidation",
+        this.activeRule.hasValidation || false
+      );
+      this.$set(this.activeRule, "hasDrop", this.activeRule.hasDrop || false);
       this.$set(this.activeRule, "transform", this.activeRule.transform || []);
       this.$set(this.activeRule, "validate", this.activeRule.validate || []);
       this.$set(this.activeRule, "drop", this.activeRule.drop || []);

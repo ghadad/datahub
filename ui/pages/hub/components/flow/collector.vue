@@ -130,16 +130,13 @@ export default {
       entitiesKeys: [],
       errors: [],
       showHandler: false,
-      sources: $serverConfig.sources,
       flowData: {},
       project: {}
     };
   },
   watch: {
-    showHandler: function(val) {
+    showHandler: function() {
       //this.editor.setSize(500, 300);
-      console.log("this.$refs", this.$refs.handler.editor);
-
       setTimeout(() => {
         this.editor.refresh();
       }, 1);
@@ -176,6 +173,9 @@ export default {
         }
       });
     }, 100);
+  },
+  computed: {
+    sources: () => $serverConfig.sources
   }
 };
 </script>

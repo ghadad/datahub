@@ -13,7 +13,7 @@
         <b-step-item icon="cog" label="Test station" :clickable="flowData.config.name? true:false"></b-step-item>
         <b-step-item
           icon="check-square"
-          label="Discover"
+          label="Finalize"
           :clickable="flowData.config.name? true:false"
         ></b-step-item>
       </b-steps>
@@ -38,7 +38,7 @@ export default {
         { name: "tester_collector", params: { tester: "collector" } },
         { name: "mapping" },
         { name: "tester_mapping", params: { tester: "mapping" } },
-        { name: "discover" }
+        { name: "finalize" }
       ],
       activeStep: null,
       project: null,

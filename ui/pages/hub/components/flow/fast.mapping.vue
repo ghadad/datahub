@@ -64,15 +64,12 @@
   </div>
 </template>
 <script>
-import draggable from "vuedraggable";
-import ruleForm from "./mappingRule/rule.form.vue";
 import { Drag, Drop } from "vue-drag-drop";
 
 export default {
   name: "fast-mapping",
   props: ["rules", "entity", "collector"],
   components: {
-    draggable,
     Drag,
     Drop
   },

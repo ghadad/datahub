@@ -22,10 +22,11 @@
             <section>
               <div class="block">
                 <b-radio v-model="value.originType" native-value="collector">Collector property</b-radio>
-                <b-radio v-model="value.originType" native-value="value">Simple value</b-radio>
+                <b-radio v-model="value.originType" native-value="eval">Evaluate</b-radio>
+                <!--b-radio v-model="value.originType" native-value="value">Simple value</b-radio-->
                 <b-radio v-model="value.originType" native-value="query">Select Query</b-radio>
                 <b-radio v-model="value.originType" native-value="dataset">Predefine dataset</b-radio>
-                <b-radio v-model="value.originType" native-value="eval">Evaluate</b-radio>
+                <b-radio v-model="value.originType" native-value="function">function</b-radio>
               </div>
             </section>
           </div>

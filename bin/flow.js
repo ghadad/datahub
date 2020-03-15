@@ -38,15 +38,18 @@ const main = require(upath.join(__dirname, "..", "lib/main"));
 main.init(argv).then(async () => {
   const Project = __app.require(__app.lib, "project");
   const Flow = __app.require(__app.lib, "flow");
-  let project = new Project({name: argv.project});
+  let project = new Project({
+    name: argv.project
+  });
   await project.get()
   let flowConfig = project.getFlow(argv.flow);
   let flow = new Flow(flowConfig);
   await flow.init();
-  let t1  =__app.ts();
+  let t1 = __app.ts();
   __app.logger.info("flow start")
   await flow.exec();
-  let t2  =__app.ts();
+  await flow.cleanup();
+  let t2 = __app.ts();
   __app.logger.info(`flow end and took ${t2-t1} MS`)
   process.exit(0)
 }).catch(err => {

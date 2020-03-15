@@ -27,7 +27,18 @@ const flowExe = async function (flow, step) {
 
     let testResult = [];
     for (let row of result) {
-        testResult.push(await runFlowHandler(row, step))
+        let stepRowResult = await runFlowHandler(row, step);
+        if (stepRowResult.$error) {
+            let error = stepRowResult.$error;
+            delete stepRowResult.$error;
+            testResult.push({
+                $error: error,
+                ...stepRowResult
+            })
+        } else {
+            testResult.push(stepRowResult)
+        }
+
     }
     return testResult;
 

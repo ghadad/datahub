@@ -5,7 +5,7 @@ import Tester from "./tester.vue";
 import FlowConfig from "./flow.config.vue";
 
 import Mapping from "./mapping.vue";
-import Discover from "./discover.vue";
+import Finalize from "./finalize.vue";
 
 export default {
     path: "/project/explore/:project/flow/:flow/",
@@ -37,9 +37,9 @@ export default {
         name: "mapping",
         meta:{title:"Mapping rules"}
     }, {
-        path: "discover",
-        component: Discover,
-        name: "discover",
-        meta:{title:"Discover"}
+        path: "finalize",
+        component: Finalize,
+        name: "finalize",
+        meta:{title:"Finalize"}
     }]
 }

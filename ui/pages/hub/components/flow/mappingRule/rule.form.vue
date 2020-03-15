@@ -2,26 +2,46 @@
   <div v-if="value">
     <target class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></target>
     <origin class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></origin>
+    <div class="buttons rules-buttons-group">
+      <b-button
+        :type="cloneRule.hasTransform ? 'is-light':'is-info'"
+        @click="cloneRule.hasTransform = !cloneRule.hasTransform"
+        class="is-small"
+      >{{cloneRule.hasTransform ? 'Disable transforms':'Enable transforms'}}</b-button>
+      <b-button
+        :type="cloneRule.hasValidation ? 'is-light':'is-info'"
+        @click="cloneRule.hasValidation = !cloneRule.hasValidation"
+        class="is-small"
+      >{{cloneRule.hasValidation ? 'Disable validations':'Enable validations'}}</b-button>
+      <b-button
+        :type="cloneRule.hasDrop ? 'is-light':'is-info'"
+        @click="cloneRule.hasDrop = !cloneRule.hasDrop"
+        class="is-small"
+      >{{cloneRule.hasDrop ? 'Disable drops':'Enable drops'}}</b-button>
+    </div>
     <functions
+      v-if="cloneRule.hasTransform"
       title="Transform rules"
       class="rule-section"
-      :list.sync="value.transform"
+      :list.sync="cloneRule.transform"
       :functions="functions.transforms"
       op="->"
       :collapse="collapse"
     ></functions>
     <functions
+      v-if="cloneRule.hasValidation"
       title="Validtion rules"
       class="rule-section"
-      :list.sync="value.validate"
+      :list.sync="cloneRule.validate"
       :functions="functions.validations"
       op="and"
       :collapse="collapse"
     ></functions>
     <functions
+      v-if="cloneRule.hasDrop"
       title="Drop  rules"
       class="rule-section"
-      :list.sync="value.drop"
+      :list.sync="cloneRule.drop"
       :functions="functions.validations"
       op="or"
       :collapse="collapse"
@@ -57,6 +77,16 @@ export default {
         this.flowData.config.targetEntity
       ];
     else this.entityData = {};
+  },
+  computed: {
+    cloneRule: {
+      get(newVal) {
+        return this.value;
+      },
+      set(newVal) {
+        this.$emit("input", newVal);
+      }
+    }
   }
 };
 </script>
@@ -84,6 +114,13 @@ export default {
 }
 is-7 {
   font-size: 1.2em;
+}
+.buttons.rules-buttons-group {
+  margin-bottom: 1px !important;
+}
+.rules-buttons-group .is-light {
+  border: 1px solid #ccc;
+  font-weight: 600;
 }
 </style>
 <style>
