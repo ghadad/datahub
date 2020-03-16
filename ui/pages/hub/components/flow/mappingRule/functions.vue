@@ -21,7 +21,7 @@
             <span v-for="(t,index) in dragableList" :key="index">
               <span class="op" v-show="index>0">{{op}}</span>
               <div class="func-tag tag">
-                  <span>{{displayT(t)}}  
+                  <span @click="setActive(t)">{{displayT(t)}}  
                       
                   </span>                      
                   <span @click="handleDrop(index)" class="icon is-small clickable"><i class="fas fa-times-circle"></i></span>
@@ -90,8 +90,10 @@ export default {
       activeFunc: null,
       activeParamsRules: [],
       activeParams: [],
-      activeNot: null
+      activeNot: null,
+      activeDragItem:null
       //  dragableList:[]
+
     };
   },
   components: { draggable },
@@ -157,6 +159,15 @@ export default {
       self.activeFunc = "";
       self.activeNot = null;
     },
+    setActive:function(t){ 
+         let func = t[0];
+         this.activeParams =[]
+  //    let ps = this.functions[func.replace("!", "")].params || [];
+      for (let i = 1; i < t.length; i++) {
+        this.activeParams.push(t[i]);
+      }
+      this.activeFunc = func;
+        },
     displayT: function(t) {
       let func = t[0];
   //    let ps = this.functions[func.replace("!", "")].params || [];
