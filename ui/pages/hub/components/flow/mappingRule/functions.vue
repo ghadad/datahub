@@ -21,11 +21,11 @@
             <span v-for="(t,index) in dragableList" :key="index">
               <span class="op" v-show="index>0">{{op}}</span>
               <div class="func-tag tag">
-                  <span @click="setActive(t)">{{displayT(t)}}  
-                      
-                  </span>                      
-                  <span @click="handleDrop(index)" class="icon is-small clickable"><i class="fas fa-times-circle"></i></span>
-                  </div>
+                <span @click="setActive(t,index)">{{displayT(t)}}</span>
+                <span @click="handleDrop(index)" class="icon is-small clickable">
+                  <i class="fas fa-times-circle"></i>
+                </span>
+              </div>
             </span>
           </draggable>
         </div>
@@ -68,7 +68,12 @@
         </span>
         <div class="column is-1">
           <div style="padding-top:20px">
-            <button @click="addFunc" class="button is-dark">Add</button>
+            <button v-show="activeIndex==null" @click="upsertFunc" class="button is-dark">Add</button>
+            <button
+              v-show="activeIndex != null"
+              @click="upsertFunc(activeIndex)"
+              class="button is-dark"
+            >Update</button>
           </div>
         </div>
       </div>
@@ -91,9 +96,8 @@ export default {
       activeParamsRules: [],
       activeParams: [],
       activeNot: null,
-      activeDragItem:null
+      activeIndex: null
       //  dragableList:[]
-
     };
   },
   components: { draggable },
@@ -111,8 +115,9 @@ export default {
   methods: {
     handleDrop: function(index) {
       this.dragableList.splice(index, 1);
+      this.activeIndex = null;
     },
-    addFunc: function() {
+    upsertFunc: function(updatePosition = null) {
       let self = this;
       let errorFound = false;
       if (!self.activeFunc) return;
@@ -151,26 +156,35 @@ export default {
       }
 
       if (errorFound) return;
-      self.dragableList.push([
-        (self.activeNot ? "!" : "") + self.activeFunc,
-        ...self.activeParams
-      ]);
+      if (updatePosition >= 0)
+        self.dragableList[updatePosition] = [
+          (self.activeNot ? "!" : "") + self.activeFunc,
+          ...self.activeParams
+        ];
+      else
+        self.dragableList.push([
+          (self.activeNot ? "!" : "") + self.activeFunc,
+          ...self.activeParams
+        ]);
       self.activeParams = [];
       self.activeFunc = "";
       self.activeNot = null;
+      self.activeIndex = null;
     },
-    setActive:function(t){ 
-         let func = t[0];
-         this.activeParams =[]
-  //    let ps = this.functions[func.replace("!", "")].params || [];
+    setActive: function(t, index) {
+      let func = t[0];
+      this.activeParams = [];
+      //    let ps = this.functions[func.replace("!", "")].params || [];
       for (let i = 1; i < t.length; i++) {
         this.activeParams.push(t[i]);
       }
-      this.activeFunc = func;
-        },
+      this.activeFunc = func.replace("!", "");
+      this.activeNot = func.match(/\!/) ? true : false;
+      this.activeIndex = index;
+    },
     displayT: function(t) {
       let func = t[0];
-  //    let ps = this.functions[func.replace("!", "")].params || [];
+      //    let ps = this.functions[func.replace("!", "")].params || [];
       let params = [];
       for (let i = 1; i < t.length; i++) {
         params.push(t[i]);
@@ -204,9 +218,12 @@ export default {
   cursor: pointer;
   background-color: White !important;
   border: 1px solid #bbb;
-  font-weight:700
+  font-weight: 700;
 }
-div.func-tag .icon  {padding-left:15px;padding-right:10px}
+div.func-tag .icon {
+  padding-left: 15px;
+  padding-right: 10px;
+}
 .tag-head .title {
   margin-bottom: 10px;
 }
