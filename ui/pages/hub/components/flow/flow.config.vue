@@ -35,6 +35,20 @@
               </div>
             </div>
           </div>
+          <div class="column is-3">
+            <div class="field">
+              <div class="control">
+                <b-checkbox v-model="flowData.config.createRevisions">Create revisions collection</b-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="column is-2">
+            <div class="field">
+              <div class="control">
+                <b-checkbox v-model="flowData.config.isFinalFlow">is final flow</b-checkbox>
+              </div>
+            </div>
+          </div>
           <div class="column is-2">
             <div class="field">
               <div class="control">
@@ -44,7 +58,7 @@
           </div>
         </div>
         <div class="columns">
-          <div class="column is-6">
+          <div class="column is-8">
             <b-field label="Description">
               <b-input
                 rows="6"
