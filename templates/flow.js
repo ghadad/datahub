@@ -18,32 +18,30 @@ module.exports = {
             // __app.logger
             // __app.lodash
             // etc ..
-            __app.logger.info("in collector handler:",data);
             return data;
          }`,
     },
     mapping: {
         config: [],
-        handler: `async function(data) { 
+        handler: `async function(newData,oldData,rawData){ 
                 //all good things are exposed 
                 // __app.dal
                 // __app.logger
                 // __app.lodash
-                // etc ..
-                __app.logger.info("in collector handler:",data);
-                return data;
+                // etc ..              
+                return newData;
              }`,
     },
-    discover: {
+    finalize: {
         config: {},
-        handler: `async function(data) { 
+        handler: `async function(newData,oldData,rawData) { 
                 //all good things are exposed 
                 // __app.dal
                 // __app.logger
                 // __app.lodash
                 // etc ..
-                __app.logger.info("in collector handler:",data);
-                return data;
+               
+                return newData;
              }`,
     }
 }
