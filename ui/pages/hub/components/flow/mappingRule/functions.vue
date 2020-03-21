@@ -179,7 +179,7 @@ export default {
         this.activeParams.push(t[i]);
       }
       this.activeFunc = func.replace("!", "");
-      this.activeNot = func.match(/\!/) ? true : false;
+      this.activeNot = func.match(/!/) ? true : false;
       this.activeIndex = index;
     },
     displayT: function(t) {

@@ -47,7 +47,7 @@ main.init(argv).then(async () => {
   await flow.init();
   let t1 = __app.ts();
   __app.logger.info("flow start")
-  await flow.exec();
+  let rows =await flow.exec();
   await flow.cleanup();
   let t2 = __app.ts();
   __app.logger.info(`flow end and took ${t2-t1} MS`)
