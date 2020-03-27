@@ -25,12 +25,13 @@ import Http from "@/services/http";
 Vue.prototype.$http = Http;
 Vue.prototype.$createProject = async function (project, routeParams = {}) {
     let self = this;
-
     let res = await self.$http.post("projects", project);
     self.$set(project, '_rev', res.rev);
     self.$root.$emit("global-ok", res.ok || false);
-    if (routeParams.name)
-        self.$router.push(routeParams);
+    if (routeParams&& routeParams.name)
+       return  self.$router.push(routeParams);
+       return res;
+
 };
 Vue.prototype.$saveProject = async function (project, routeParams = {}) {
     let self = this;

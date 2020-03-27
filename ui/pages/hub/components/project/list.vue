@@ -65,7 +65,7 @@ export default {
   methods: {
     async deleteProject(p) {
       if (this.projectsToDelete[p._id]) {
-        await this.$http.delete("projects", { id: p._id, rev: p._rev });
+        await this.$http.delete("projects", { _id: p._id, _rev: p._rev });
         this.list = await this.$parent.fetch();
         return;
       }

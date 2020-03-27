@@ -43,7 +43,7 @@ main.init(argv).then(async () => {
   });
   await project.get()
   let flowConfig = project.getFlow(argv.flow);
-  let flow = new Flow(flowConfig);
+  let flow = new Flow(flowConfig,argv.flow);
   await flow.init();
   let t1 = __app.ts();
   __app.logger.info("flow start")

@@ -71,7 +71,7 @@
           :list.sync="entityData.properties"
           :datatypes="datatypes"
         ></properties>
-      </div>
+      </div> 
     </div>
     <div></div>
   </div>

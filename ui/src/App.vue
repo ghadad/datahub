@@ -58,6 +58,7 @@
           <b-notification
             :active.sync="globalError.err"
             type="is-danger"
+            duration="4000"
             aria-close-label="Close notification"
             role="alert"
             :auto-close="true"

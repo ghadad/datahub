@@ -19,9 +19,13 @@ let Http = class {
     async post(service, params, options) {
         let result = await axios.post(service, params, options).
         catch((function(error) { 
-            let errorMEssage = lodash.get(error,"response.data.info","Cannot fetch error from server response")
-           throw Error(`Failed on POST request ${service} ${errorMEssage}`)
+           
+      
+            let errorMEssage = lodash.get(error,"response.data.message","Cannot fetch error from server response")
+            
+           throw Error(`post ${service} : ${errorMEssage}`)
         }));
+       
         if (result.data)
             return result.data;
         

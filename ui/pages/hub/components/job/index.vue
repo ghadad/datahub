@@ -1,54 +1,79 @@
 <template>
-  <div v-if="entityData">
+  <div v-if="jobData">
     <div class="columns">
       <div class="column is-6">
         <section>
           <div class="columns">
-            <div class="column is-4">
+            <div class="column is-6">
               <div class="field">
-                <label class="label">Job name</label>
+                <label class="label">Short description</label>
                 <div class="control">
                   <input
                     class="input"
                     type="text"
                     placeholder="Entity name"
-                    v-model="entityData.name"
-                    pattern="/\w+/"
-                    @change="entityData.name=$normalizeName(entityData.name)"
+                    v-model="jobData.description"
                   />
                 </div>
-                <p class="help">unique name . use only alphanumeric letters</p>
-               
               </div>
             </div>
-            <div class="column is-5">
+            </div><div class="columns">
+            <div class="column is-6">
               <div class="field">
                 <div class="label">
                   <label class="label">Available flows</label>
                 </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
                       <div class="select is-fullwidth">
                         <select v-model="selectedFlow">
                           <option v-for="(flow,index) in flows" :key="index" :value="flow.config.name">{{flow.config.name}}:{{flow.config.shortDescription}}</option>
                         </select>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
+              <div class="field">
+                 <button class="button is-primary" v-show="!origEntityKeyName" @click="create">Add flow to job</button>
+              </div>
+                            <div class="field">
+                 <button class="button is-info" v-show="!origEntityKeyName" @click="create">Save</button>
+              </div>
             </div>
-                        <div class="column is-5">
-            <button class="button is-primary" v-show="!origEntityKeyName" @click="create">Add to job</button>
 
-            </div>
+          
+    <div class="columns">
+      <div class="column is-3">
+        <div class="label">Name</div>
+      </div>
+      <div class="column is-8">
+        <div class="label">Value</div>
+      </div>
+      <div class="column is-1"></div>
+    </div>
+    <div v-for="(h,index) in jobData.flows" :key="index" class="columns">
+      <div class="column is-3">
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" placeholder="Entity name" v-model="h.name" pattern="/\w+/" />
+          </div>
+        </div>
+      </div>
+      <div class="column is-8">
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" placeholder="Entity name" v-model="h.value" pattern="/\w+/" />
+          </div>
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="field">
+          <button class="button is-danger is-small" @click="delFlow(index)">Remove</button>
+        </div>
+      </div>
+    </div>
           </div>
         </section>
         <section>
 
           <div class="buttons">
-            <button class="button is-primary" v-show="!origEntityKeyName" @click="create">Create</button>
+            
             <button class="button is-link" v-show="origEntityKeyName" @click="update">Update</button>
             <button
               class="button is-danger"
@@ -82,11 +107,20 @@ export default {
       origEntityKeyName: null,
       project: {},
       errors: [],
-      entityData: { name: null, description: null, properties: [] },
+      jobData: { name: null, description: null, flows: [] },
       selectedFlow:null
     };
   },
   methods: {
+        delFlow(index) {
+        this.jobData.flows.splice(index, 1);
+      },
+      addFlow() {
+        this.jobData.flows.push({
+          name: "",
+          value: ""
+        });
+      },
     async deleteEntity(flag) {
       let self = this;
       this.deleteFlag = flag;
@@ -105,27 +139,27 @@ export default {
       }
     },
     async update() {
-      if (this.origEntityKeyName != this.entityData.name) {
-        if (this.project.entities[this.entityData.name]) {
+      if (this.origEntityKeyName != this.jobData.name) {
+        if (this.project.entities[this.jobData.name]) {
           throw new Error(
-            `entity ${this.entityData.name} already exists in this project`
+            `entity ${this.jobData.name} already exists in this project`
           );
         }
 
-        this.project.entities[this.entityData.name] = this.$_.cloneDeep(
-          this.entityData
+        this.project.entities[this.jobData.name] = this.$_.cloneDeep(
+          this.jobData
         );
         delete this.project.entities[this.origEntityKeyName];
-        this.origEntityKeyName = this.entityData.name;
+        this.origEntityKeyName = this.jobData.name;
       }
 
-      this.$route.params.entity = this.entityData.name;
+      this.$route.params.entity = this.jobData.name;
 
       await this.$saveProject(this.project);
     },
 
     async create() {
-      this.$set(this.project.entities, this.entityData.name, this.entityData);
+      this.$set(this.project.entities, this.jobData.name, this.jobData);
       await this.$saveProject(this.project);
     }
   },
@@ -153,7 +187,7 @@ export default {
     if (this.$route.params.entity)
       this.$set(
         this,
-        "entityData",
+        "jobData",
         this.project.entities[this.$route.params.entity] || {
           properties: []
         }
@@ -167,10 +201,10 @@ export default {
       return window.$serverConfig;
     },
     datatypes() {
-      if (this.config.dataTypes && this.entityData.dbEngine)
+      if (this.config.dataTypes && this.jobData.dbEngine)
         return [
           { type: "" },
-          ...Object.values(this.config.dataTypes[this.entityData.dbEngine])
+          ...Object.values(this.config.dataTypes[this.jobData.dbEngine])
         ];
       return [];
     },
