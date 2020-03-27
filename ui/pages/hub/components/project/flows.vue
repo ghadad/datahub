@@ -11,7 +11,9 @@
         <div class="card">
           <header class="card-header">
             <p class="card-header-title">
-              <router-link :to="`/project/explore/${project}/flow/${eKey}`">{{e.config.name}}</router-link>
+              <router-link
+                :to="`/project/explore/${project}/flow/${e.config.name}`"
+              >{{e.config.name}}</router-link>
             </p>
           </header>
           <div class="card-content">

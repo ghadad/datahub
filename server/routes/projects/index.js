@@ -47,7 +47,7 @@ module.exports = function (fastify, opts, next) {
     });
 
     fastify.delete('/', async function (req, res, next) {
-        return res.send(await __app.couchDb.delete("projects", req.query.id, req.query.rev));
+        return res.send(await __app.couchDb.delete("projects", req.query._id, req.query._rev));
     });
 
     next()

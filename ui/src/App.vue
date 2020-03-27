@@ -51,18 +51,20 @@
         <h1 class="main-title title" v-if="$route.name!='home'">
           {{$route.meta.title|| $route.name||$route.path}}
           <b-tag type="is-info" size="is-medium" v-for="(v,p) in routeParams" :key="p">{{p}}:{{v}}</b-tag>
-           <b-tag type="is-default" size="is-medium" v-for="(v,p) in routeQuery" :key="p">{{p}}:{{v}}</b-tag>
-
+          <b-tag type="is-default" size="is-medium" v-for="(v,p) in routeQuery" :key="p">{{p}}:{{v}}</b-tag>
         </h1>
         <div v-if="globalError">
           <b-notification
             :active.sync="globalError.err"
             type="is-danger"
+            duration="4000"
             aria-close-label="Close notification"
             role="alert"
             :auto-close="true"
           >
             <h1 class="h1 title">Error</h1>
+            <p>{{globalError}}</p>
+
             <p>{{globalError.err}}</p>
             <p>{{globalError.component}}</p>
             <p>{{globalError.info}}</p>
@@ -91,7 +93,8 @@ export default {
     this.$set(this, "globalError", {
       err: err.toString(),
       component: vm.$options.name,
-      info: info
+      info: info,
+      stack: err.stack
     });
   },
   async mounted() {
@@ -180,6 +183,8 @@ body {
 .CodeMirror {
   height: 100%;
 }
-.breadcrumb {margin-bottom: 10px}
+.breadcrumb {
+  margin-bottom: 10px;
+}
 </style>
 

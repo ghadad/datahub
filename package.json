@@ -90,6 +90,7 @@
     "rfc6902": "^3.0.4",
     "sequelize": "^5.21.2",
     "serialize-javascript": "^2.1.2",
+    "shortid": "^2.2.15",
     "simple-oracledb": "^1.4.2",
     "sqlite3": "^4.1.1",
     "upath": "^1.2.0",

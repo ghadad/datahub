@@ -58,6 +58,13 @@
           </div>
         </div>
         <div class="columns">
+          <div class="column is-4">
+            <b-field label="Short description">
+              <b-input type="text" v-model="flowData.config.shortDescription"></b-input>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns">
           <div class="column is-8">
             <b-field label="Description">
               <b-input
@@ -105,7 +112,11 @@ export default {
       let self = this;
       this.deleteFlag = flag;
       if (this.deleteFlag == 2) {
-        this.$delete(this.project.flows, this.$route.params.flow);
+        let itemIndex = this.$_.findIndex(
+          this.project.flows,
+          e => e.config.name == this.$route.params.flow
+        );
+        this.project.flows.splice(itemIndex, 1);
 
         await this.$saveProject(this.project, {
           name: "explore",
@@ -120,18 +131,7 @@ export default {
       }
     },
     async create() {
-      if (this.project.flows[this.flowData.config.name]) {
-        throw new Error(
-          `entity ${this.flowData.config.name} already exists in this project`
-        );
-      }
-
-      this.$set(
-        this.project.flows,
-        this.flowData.config.name,
-        this.$_.cloneDeep(this.flowData)
-      );
-
+      this.project.flows.push(this.$_.cloneDeep(this.flowData));
       this.origFlowKeyName = this.flowData.config.name;
       this.$route.params.flow = this.flowData.config.name;
 

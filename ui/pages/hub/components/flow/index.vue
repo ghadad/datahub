@@ -27,6 +27,7 @@ export default {
   name: "flow",
   data: function() {
     return {
+      targetEntity: "",
       breadcrumbs: [
         { name: "projects" },
         { name: "explore", title: this.$route.params.project },
@@ -75,11 +76,20 @@ export default {
     });
 
     if (self.$route.params.flow) {
-      this.flowData = this.project.flows[this.$route.params.flow];
-      let targetEntity = this.flowData.config.targetEntity.toLowerCase();
-      this.$set(this, "entityModel", this.project.entities[targetEntity] || {});
+      this.flowData = this.$_.find(
+        self.project.flows,
+        e => e.config.name == this.$route.params.flow
+      );
+
+      if (self.flowData.config.targetEntity)
+        self.targetEntity = self.flowData.config.targetEntity.toLowerCase();
+      self.$set(
+        self,
+        "entityModel",
+        self.project.entities[self.targetEntity] || {}
+      );
     } else {
-      this.flowData = await this.$http.get(`projects/template/flow`);
+      self.flowData = await self.$http.get(`projects/template/flow`);
     }
   }
 };

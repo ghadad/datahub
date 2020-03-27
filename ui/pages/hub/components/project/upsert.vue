@@ -19,6 +19,7 @@
               placeholder="Project name"
               v-model="project.projectName"
               pattern="/\w+/"
+              @change="project.projectName=$normalizeName(project.projectName)"
             />
           </div>
 
@@ -42,10 +43,11 @@
         </div>
       </div>
       <div class="buttons">
-        <button class="button is-primary" v-show="!$route.query.id" @click="create">Create</button>
+        <button class="button is-primary" v-show="!$route.query.id" @click="create(true)">Create</button>
         <button class="button is-link" v-show="$route.query.id" @click="update">Update</button>
       </div>
     </div>
+    {{origProjectName}}: {{project}}
   </div>
 </template>
 <script>
@@ -55,20 +57,19 @@ export default {
     return {
       list: {},
       errors: [],
-      origProjectName:null,
+      origProjectName: null,
       project: {
         projectName: null,
         description: null,
         generated: null,
-        flows:{},
-        entities:{},
-        jobs:{}
+        flows: [],
+        entities: {},
+        jobs: []
       }
     };
   },
   async mounted() {
-    if (this.$route.query.id){
-
+    if (this.$route.query.id) {
       this.project = await this.$http.get("projects/" + this.$route.query.id);
       this.origProjectName = this.$route.query.id;
     }
@@ -92,29 +93,36 @@ export default {
       }
 
       //      this.project._id = this.project.projectName = this.project.projectName.toLowerCase();
-      this.project._id = this.project.projectName = this.project.projectName.toLowerCase();
       return hasError;
     },
     async update() {
       let self = this;
-      if (this.validate()) return;
-      
-        if (self.origProjectName != self.project.projectName) {
-          let origId = self.project._id;
-          let origRev = self.project._rev;
-          self.project._rev=null;
-          delete self.project._rev;
-          await self.create(false);
-          await self.$http.delete("projects", { id: self.origProjectName, rev: origRev });
-        } else {
-          await this.$saveProject(self.project);
-        }
+      if (self.validate()) return;
 
+      if (self.origProjectName != self.project.projectName) {
+        let origRev = self.project._rev;
+        delete self.project._rev;
+        let tmpOrigId = self.project.projectName + "_to_be_replace";
+        self.project._id = tmpOrigId;
+        await self.create(false);
+        let origRev2 = self.project._rev;
+        await self.$http.delete("projects", {
+          _id: self.origProjectName,
+          _rev: origRev
+        });
+        self.project._id = self.project.projectName;
+        delete self.project._rev;
+        await self.create(false);
+        await self.$http.delete("projects", { _id: tmpOrigId, _rev: origRev2 });
+        self.origProjectName = self.project.projectName;
+      } else {
+        await this.$saveProject(self.project);
+      }
     },
-    async create(list=true) {
+    async create(list = true) {
       if (this.validate()) return;
-
-      await this.$createProject(this.project, this.project.generated, list ? { name: "projects" }:{});
+      this.project._id = this.project.projectName;
+      await this.$createProject(this.project, list ? { name: "projects" } : {});
     }
   },
   computed: {}

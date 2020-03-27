@@ -12,7 +12,7 @@ export default [{
     },
     {
         name: "upsertDataset",
-        path: "dataset/upsert",
+        path: "/dataset/upsert",
         component: Upsert,
         meta: {
             title: "Upsert dataset"

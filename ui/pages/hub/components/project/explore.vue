@@ -28,11 +28,11 @@
             >New Flow</router-link>
           </p>
           <router-link
-            :to="`/project/explore/${project}/flow/${fkey}`"
+            :to="`/project/explore/${project}/flow/${f.config.name}`"
             class="panel-block"
             v-for="(f,fkey) in flows"
             :key="fkey"
-          >{{fkey}} > {{f.collector.config.name}}</router-link>
+          >{{f.config.name}} > {{f.collector.config.name}}</router-link>
         </article>
       </div>
       <div class="column">
