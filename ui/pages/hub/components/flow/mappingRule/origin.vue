@@ -39,7 +39,12 @@
           <div class="column is-10">
             <div class="field">
               <label class="label">Query</label>
-              <codemirror class="control" :cmOptions="cmOptions" v-model="value.originQuery"></codemirror>
+              <codemirror
+                ref="queryEditor"
+                class="control"
+                :cmOptions="cmOptions"
+                v-model="value.originQuery"
+              ></codemirror>
             </div>
           </div>
           <div class="column is-2">
@@ -61,7 +66,7 @@
       </div>
 
       <div class="column is-11" v-if="value.originType=='eval'">
-        <codemirror :cmOptions="cmOptions" v-model="value.originEval"></codemirror>
+        <codemirror ref="evalEditor" :cmOptions="cmOptions" v-model="value.originEval"></codemirror>
       </div>
       <div class="column is-3" v-if="value.originType=='value'">
         <input type="text" class="input text" v-model="value.originValue" />
@@ -154,6 +159,10 @@ export default {
     }
   },
   mounted: async function() {
+    setTimeout(() => this.$refs.evalEditor.editor.refresh(), 100);
+
+    setTimeout(() => this.$refs.queryEditor.editor.refresh(), 100);
+
     let dbs = await this.$http.get("databases");
     this.$set(
       this,

@@ -2,96 +2,129 @@ module.exports = {
     nosql: [{
         type: "text"
     }, {
+        type: "integer"
+    }, {
         type: "number"
     }],
     oracle: [{
-            type: "NCHAR"
+            type: "NCHAR",
+            noSqlType: "text"
         }, {
             type: "NVARCHAR2",
-            size: true
+            size: true,
+            noSqlType: "text"
         },
         {
-            type: "NUMBER"
+            type: "NUMBER",
+            noSqlType: "number"
         },
         {
-            type: "DATE"
+            type: "DATE",
+            noSqlType: "date"
         },
         {
-            type: "DATETIME"
+            type: "DATETIME",
+            noSqlType: "datetime"
         },
         {
-            type: "TIMESTAMP"
+            type: "TIMESTAMP",
+            noSqlType: "timestamp"
         },
         {
             type: "CHAR",
-            
-        },   {
+            noSqlType: "text"
+
+        }, {
             type: "VARCHAR",
-            
+            noSqlType: "text"
+
         }, {
             type: "VARCHAR2",
-            
+            noSqlType: "text"
+
         }, {
-            type: "LOB"
+            type: "LOB",
+            noSqlType: "text"
         }, {
-            type: "CLOB"
+            type: "CLOB",
+            noSqlType: "text"
         }
     ],
     mysql: [{
-            type: "NUMERIC"
+            type: "NUMERIC",
+            noSqlType: "number"
         }, {
-            type: "SMALLINT"
+            type: "SMALLINT",
+            noSqlType: "integer"
         },
         {
-            type: "DECIMAL"
+            type: "DECIMAL",
+            noSqlType: "number"
         },
         {
-            type: "INTEGER"
+            type: "INTEGER",
+            noSqlType: "integer"
         },
         {
-            type: "DATE"
+            type: "DATE",
+            noSqlType: "date"
         },
         {
-            type: "DATETIME"
+            type: "DATETIME",
+            noSqlType: "datetime"
         },
         {
-            type: "TIMESTAMP"
+            type: "TIMESTAMP",
+            noSqlType: "timestamp"
         },
         {
-            type: "TEXT"
+            type: "TEXT",
+            noSqlType: "text"
         },
         {
-            type: "CHAR"
+            type: "CHAR",
+            noSqlType: "text"
         },
         {
-            type: "VARCHAR"
+            type: "VARCHAR",
+            noSqlType: "text"
         }, {
-            type: "BLOB"
+            type: "BLOB",
+            noSqlType: "text"
         }
     ],
     postgres: [{
-            type: "varchar"
+            type: "varchar",
+            noSqlType: "text"
         },
         {
-            type: "varchar2"
+            type: "varchar2",
+            noSqlType: "text"
         },
         {
-            type: "date"
+            type: "date",
+            noSqlType: "date"
         },
         {
-            type: "datatime"
+            type: "datatime",
+            noSqlType: "datetime"
         },
         {
-            type: "number"
+            type: "number",
+            noSqlType: "number"
         }
     ],
     sqlite: [{
-        type: "INTEGER"
+        type: "INTEGER",
+        noSqlType: "integer"
     }, {
-        type: "REAL"
+        type: "REAL",
+        noSqlType: "number"
     }, {
-        type: "TEXT"
+        type: "TEXT",
+        noSqlType: "text"
     }, {
-        type: "BLOB"
+        type: "BLOB",
+        noSqlType: "text"
     }]
 }
