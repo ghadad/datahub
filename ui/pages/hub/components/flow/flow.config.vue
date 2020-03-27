@@ -57,6 +57,16 @@
             </div>
           </div>
         </div>
+                <div class="columns">
+          <div class="column is-4">
+            <b-field label="Short description">
+              <b-input
+                type="text"
+                v-model="flowData.config.shortDescription"
+              ></b-input>
+            </b-field>
+          </div>
+        </div>
         <div class="columns">
           <div class="column is-8">
             <b-field label="Description">
