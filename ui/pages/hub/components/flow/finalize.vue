@@ -1,5 +1,8 @@
 <template>
   <div v-if="flowData.collector">
+    <h2 class="title is-4">Build result in target db in case of stagin is enable</h2>
+    <h2 class="title is-4">This will be done only on final flow</h2>
+
     <b-message
       title="flowData.finalize.config"
       type="is-info"

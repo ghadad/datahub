@@ -49,7 +49,7 @@
             class="panel-block"
             v-for="(j,jKey) in jobs"
             :key="jKey"
-          >{{j.name}}</router-link>
+          >{{j.description}}</router-link>
         </article>
       </div>
     </div>
@@ -60,7 +60,7 @@ export default {
   name: "explore",
   data: function() {
     return {
-      projectData: { entities: {}, flows: {}, jobs: {} }
+      projectData: { entities: {}, flows: [], jobs: [] }
     };
   },
   async mounted() {
