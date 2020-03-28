@@ -60,7 +60,7 @@
     "json5": "^2.1.1",
     "jsondiffpatch": "^0.3.11",
     "klaw-sync": "^6.0.0",
-    "knex": "^0.20.4",
+    "knex": "^0.20.13",
     "lockfile": "^1.0.4",
     "lodash": "^4.17.15",
     "lowdb": "^1.0.0",
