@@ -40,7 +40,7 @@
           <p class="panel-heading">
             Jobs
             <router-link
-              :to="{name:'job' ,params:{project:$route.params.project}}"
+              :to="{name:'job' ,params:{project:$route.params.project,job:null}}"
               class="button is-pulled-right is-link is-light is-small"
             >New Job</router-link>
           </p>

@@ -2,7 +2,7 @@
   <div>
     <h2>
       <router-link
-        :to="{name:'flow',params:{project:$route.params.project,flow:null}}"
+        :to="{name:'job',params:{project:$route.params.project,job:null}}"
         class="button is-pulled-right is-link is-light is-medium"
       >New job</router-link>
     </h2>
@@ -11,7 +11,7 @@
         <div class="card">
           <header class="card-header">
             <p class="card-header-title">
-              <router-link :to="`/project/explore/${project}/job/${eKey}`">{{e.name}}</router-link>
+              <router-link :to="`/project/explore/${project}/job/${eKey}`">{{e.description}}</router-link>
             </p>
           </header>
           <div class="card-content">
@@ -27,7 +27,7 @@ export default {
   name: "entities",
   data: function() {
     return {
-      projectData: { jobs: {} }
+      projectData: { jobs: [] }
     };
   },
   async mounted() {

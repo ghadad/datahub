@@ -124,7 +124,6 @@ export default {
   },
 
   methods: {
-    edit(index) {},
     del(index) {
       this.dragableList.splice(index, 1);
     },

@@ -32,7 +32,14 @@
           <button class="button is-primary" v-show="!origEntityKeyName" @click="add">Add flow to job</button>
         </div>
         <div class="field">
-          <button class="button is-info" v-show="!origEntityKeyName" @click="create">Save</button>
+          <button class="button is-info" v-show="$route.params.job" @click="update">Apply</button>
+          <button class="button is-info" v-show="!$route.params.job" @click="create">Create</button>
+          <button
+            class="button is-danger"
+            v-show="$route.params.job && delStep==0"
+            @click="delStep=1"
+          >Delete job</button>
+          <button class="button is-danger" v-show="delStep==1" @click="delJob">Are you sure ?</button>
         </div>
       </div>
       <div class="column is-5">
@@ -218,6 +225,7 @@ export default {
   components: {},
   data: function() {
     return {
+      delStep: 0,
       cronToString: "",
       errors: {
         seconds: null,
@@ -275,12 +283,24 @@ export default {
       this.selectedFlow = "";
     },
 
+    async delJob() {
+      this.project.jobs.splice(this.$route.params.job, 1);
+      await this.$saveProject(this.project, { name: "jobs" });
+    },
     async create() {
       this.project.jobs.push(this.jobData);
       await this.$saveProject(this.project);
+    },
+    async update() {
+      this.$set(this.project.jobs, this.$route.params.job, this.jobData);
+      await this.$saveProject(this.project);
     }
   },
-
+  watch: {
+    delStep(newVal) {
+      if (newVal == 1) setTimeout(() => (this.delStep = 0), 2500);
+    }
+  },
   async mounted() {
     this.project = await this.$http.get(
       `projects/${this.$route.params.project}`
@@ -305,7 +325,9 @@ export default {
         title: this.$route.params.project
       },
       {
-        title: this.$route.params.entity + "Entity",
+        title: this.$route.params.job
+          ? "Job # " + this.$route.params.job
+          : "New job",
         active: true
       }
     ]);

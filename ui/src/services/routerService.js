@@ -15,7 +15,7 @@ let RouterService = class {
                 }
             })
         } else {
-            this.routes.push(c);
+            this.routes.push(e);
         }
 
         return this.routes;
