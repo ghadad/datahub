@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-  name: "entities",
+  name: "jobs",
   data: function() {
     return {
       projectData: { jobs: [] }

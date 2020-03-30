@@ -29,7 +29,23 @@
           </div>
         </div>
         <div class="field">
-          <button class="button is-primary" v-show="!origEntityKeyName" @click="add">Add flow to job</button>
+          <button class="button is-primary" @click="add">Add flow to job</button>
+        </div>
+        <div class="block">
+          <table class="table is-fullwidth is-dark">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Flow</th>
+              </tr>
+            </thead>
+            <draggable v-model="jobData.flows" tag="tbody">
+              <tr v-for="(flow,index) in jobData.flows" :key="index" class="clickable">
+                <td>{{ index+1 }}</td>
+                <td>{{ flow }}</td>
+              </tr>
+            </draggable>
+          </table>
         </div>
         <div class="field">
           <button class="button is-info" v-show="$route.params.job" @click="update">Apply</button>
@@ -219,10 +235,11 @@
 <script>
 import cronstrue from "cronstrue";
 import cronParser from "cron-parser";
+import draggable from "vuedraggable";
 
 export default {
   name: "job",
-  components: {},
+  components: { draggable },
   data: function() {
     return {
       delStep: 0,
