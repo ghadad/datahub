@@ -95,6 +95,7 @@ export default {
   name: "flowConfig",
   data: function() {
     return {
+      otherFlows: [],
       entitiesKeys: [],
 
       deleteFlag: 0,
@@ -108,6 +109,14 @@ export default {
   },
 
   methods: {
+    checkUnique(flow) {
+      //alert(this.flowData.config.name + ":" + this.otherFlows.join(","));
+      //  alert(this.$_.includes(this.otherFlows, this.flowData.config.name));
+      if (this.$_.includes(this.otherFlows, this.flowData.config.name))
+        throw new Error(
+          `Flow name : ${this.flowData.config.name} is already registerd`
+        );
+    },
     async deleteFlow(flag) {
       let self = this;
       this.deleteFlag = flag;
@@ -131,38 +140,32 @@ export default {
       }
     },
     async create() {
-      this.project.flows.push(this.$_.cloneDeep(this.flowData));
-      this.origFlowKeyName = this.flowData.config.name;
-      this.$route.params.flow = this.flowData.config.name;
+      this.checkUnique();
 
-      await this.$saveProject(this.project);
+      this.project.flows.push(this.$_.cloneDeep(this.flowData));
+      this.$route.params.flow = this.flowData.config.name;
+      this.$route.params.project = this.flowData.config.name;
+      await this.$saveProject(this.project, {
+        name: "flowConfig",
+        params: { project: this.project._id, flow: this.flowData.config.name }
+      });
     },
     async update() {
-      if (this.origFlowKeyName != this.flowData.config.name) {
-        if (this.project.flows[this.flowData.config.name]) {
-          throw new Error(
-            `entity ${this.flowData.config.name} already exists in this project`
-          );
-        }
-        this.$set(
-          this.project.flows,
-          this.flowData.config.name,
-          this.$_.cloneDeep(this.flowData)
-        );
-        this.$delete(this.project.flows, this.$origFlowKeyName);
-        this.origFlowKeyName = this.flowData.config.name;
-      }
-
-      this.$route.params.flow = this.flowData.config.name;
-
+      this.checkUnique();
       await this.$saveProject(this.project);
     }
   },
 
   async mounted() {
+    this.project = this.$parent.$data.project;
+    this.otherFlows = this.$_.cloneDeep(
+      this.project.flows
+        .filter(f => f.config.name != this.$route.params.flow)
+        .map(f => f.config.name)
+    );
     this.origFlowKeyName = this.$route.params.flow;
     this.flowData = this.$parent.$data.flowData;
-    this.project = this.$parent.$data.project;
+
     this.flowData.config = this.flowData.config || {};
     this.entitiesKeys = Object.keys(this.$parent.$data.project.entities);
   }

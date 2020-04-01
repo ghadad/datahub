@@ -77,8 +77,13 @@
             ></b-icon>
           </button>
           <b-radio v-model="jobData.method" native-value="crontab">Crontab</b-radio>
-          <b-radio v-model="jobData.method" native-value="interval">Interval</b-radio>
+          <b-radio v-if="0" v-model="jobData.method" native-value="interval">Interval</b-radio>
           <b-radio v-model="jobData.method" :native-value="'request'">By request</b-radio>
+          <b-checkbox
+            v-show="jobData.method=='crontab'"
+            class="is-pulled-right"
+            v-model="jobData.startImmediately"
+          >start immediately</b-checkbox>
         </div>
         <div class="block" v-show="cronHelp">
           <ul class="list">

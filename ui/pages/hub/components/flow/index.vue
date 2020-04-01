@@ -68,13 +68,6 @@ export default {
       `projects/${this.$route.params.project}`
     );
 
-    self.$root.$on("update-project", async function(routeParams = {}) {
-      let res = await self.$http.put("projects", self.project);
-      self.$set(self.project, "_rev", res.rev);
-      self.$root.$emit("global-ok", res.ok || false);
-      if (routeParams.name) self.$router.push(routeParams);
-    });
-
     if (self.$route.params.flow) {
       this.flowData = this.$_.find(
         self.project.flows,

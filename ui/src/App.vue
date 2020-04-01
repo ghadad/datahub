@@ -57,13 +57,13 @@
           <b-notification
             :active.sync="globalError.err"
             type="is-danger"
-            duration="4000"
+            duration="14000"
             aria-close-label="Close notification"
             role="alert"
             :auto-close="true"
           >
             <h1 class="h1 title">Error</h1>
-            <p>{{globalError}}</p>
+            <p v-if="0">{{globalError}}</p>
 
             <p>{{globalError.err}}</p>
             <p>{{globalError.component}}</p>

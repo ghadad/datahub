@@ -175,17 +175,19 @@ export default {
     }, 100);
   },
   computed: {
-    sources: () =>  [{
-            type: "csv",
-            description: "csv"
-        }, {
-            type: "query",
-            description: "sql Query"
-        },
-        {
-            type: "restapi",
-            description: "restapi"
-        }
+    sources: () => [
+      {
+        type: "csv",
+        description: "csv"
+      },
+      {
+        type: "query",
+        description: "sql Query"
+      },
+      {
+        type: "restapi",
+        description: "restapi"
+      }
     ]
   }
 };

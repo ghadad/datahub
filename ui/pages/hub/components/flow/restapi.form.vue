@@ -197,7 +197,7 @@ export default {
           this.$parent.flowData
         );
       }
-      if (result.length) this.$set(this, "dragableList", result);
+      if (result.length) this.dragableList = result;
     },
     add(name) {
       if (!name) return;

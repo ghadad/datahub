@@ -29,12 +29,11 @@ main.init(argv).then(async () => {
 
 
   for (let jobData of await JobClass.getAllJobsTable()) {
-    var job = new CronJob('* */2 * * * *', function () {
+    var job = new CronJob('*/10 * * * * *', function () {
       JobClass.exec(jobData)
     }, null, true);
     job.start();
   }
-
 
 }).catch(err => {
   __app.logger.error("jobManager failed:", err.stack);

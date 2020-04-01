@@ -6,6 +6,8 @@ const Collector = require(upath.join(__app.lib, "collector"));
 const Mapper = require(upath.join(__app.lib, "mapper"));
 
 const fetchInfo = async function (flow) {
+    let FlowObject = new Flow(flow);
+    await FlowObject.init();
     let collector = new Collector(flow.collector.config);
     let result = await collector.fetchInfo()
     return result;

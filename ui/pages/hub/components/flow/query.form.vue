@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1 class="title is-4">
-      Collector  properties
+      Collector properties
       <button
         class="button is-dark"
         v-show="fetchStep==1"
         @click="fetchInfo()"
-      >Fetch properties from query result </button>
+      >Fetch properties from query result</button>
       <button class="button is-dark" v-show="fetchStep==2" @click="fetchInfo()">Are you sure ?</button>
     </h1>
-        <div class="columns">
+    <div class="columns">
       <div class="column is-4">
         <div class="field is-horizontal">
           <div class="field-label has-text-left">
@@ -32,7 +32,11 @@
       <div class="column is-12">
         <div>
           <draggable v-model="dragableList">
-            <div v-for="(t,index) in dragableList" :key="index" class="dragable property-tag tag is-default">
+            <div
+              v-for="(t,index) in dragableList"
+              :key="index"
+              class="dragable property-tag tag is-default"
+            >
               {{index}} : {{t}}
               <span class="clickable" @click="del(index)">
                 <b-icon class="is-pulled-right clickable" icon="trash" size="is-small" type></b-icon>
@@ -42,12 +46,13 @@
         </div>
         <hr />
       </div>
-    </div>    <div class="columns">
+    </div>
+    <div class="columns">
       <div class="column is-9">
         <div class="field">
           <label class="label">Source query</label>
           <div class="control">
-            <codemirror style="min-height:300px"  :options="cmOptions" v-model="collector.query"></codemirror>
+            <codemirror style="min-height:300px" :options="cmOptions" v-model="collector.query"></codemirror>
           </div>
         </div>
       </div>
@@ -90,8 +95,8 @@
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-           <codemirror style="min-height:200px"  :options="cmOptions" v-model="collector.pkHandler"></codemirror>
-         </div>
+            <codemirror style="min-height:200px" :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+          </div>
         </div>
       </div>
     </div>
@@ -103,10 +108,10 @@ import draggable from "vuedraggable";
 export default {
   name: "query-collector",
   props: ["collector", "properties"],
-  components:{draggable},
+  components: { draggable },
   data: function() {
     return {
-      column:null,
+      column: null,
       fetchStep: 1,
       cmOptions: {
         mode: "sql",
@@ -159,8 +164,9 @@ export default {
           this.$parent.flowData
         );
       }
-      if (result.length) this.$set(this, "dragableList", result);
-    },    add(name) {
+      if (result.length) this.dragableList = result;
+    },
+    add(name) {
       if (!name) return;
       this.dragableList.push(this.column);
       this.column = null;
@@ -182,10 +188,10 @@ export default {
       })
     );
   },
-computed: {
+  computed: {
     dragableList: {
       get() {
-        return this.properties || [];
+        return this.$props.properties || [];
       },
       set(newValue) {
         this.$emit("update:properties", newValue);
@@ -197,7 +203,9 @@ computed: {
 <style scoped>
 .vue-codemirror-wrap {
   border: 1px solid #ccc;
-  padding:2px; 
+  padding: 2px;
 }
-.dragable {cursor:grab}
+.dragable {
+  cursor: grab;
+}
 </style>
