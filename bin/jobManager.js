@@ -27,11 +27,15 @@ let jobs;
 
 main.init(argv).then(async () => {
 
-  console.log(await JobClass.getAllJobsTable())
-  var job = new CronJob('*/14 * * * * *', function () {
-    console.log('You will see this message every second');
-  }, null, true, 'America/Los_Angeles');
-  job.start();
+
+  for (let jobData of await JobClass.getAllJobsTable()) {
+    var job = new CronJob('* */2 * * * *', function () {
+      JobClass.exec(jobData)
+    }, null, true);
+    job.start();
+  }
+
+
 }).catch(err => {
   __app.logger.error("jobManager failed:", err.stack);
   process.exit(-1)

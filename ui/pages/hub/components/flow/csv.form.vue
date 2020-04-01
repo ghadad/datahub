@@ -1,8 +1,13 @@
 <template>
   <div>
-    <div class="title is-5">CSV Source properties 
-    <button class="button is-dark" v-show="fetchStep==1" @click="fetchInfo()">Fetch properties from first header row</button>
-    <button class="button is-dark" v-show="fetchStep==2"  @click="fetchInfo()">Are you sure ?</button>
+    <div class="title is-5">
+      CSV Source properties
+      <button
+        class="button is-dark"
+        v-show="fetchStep==1"
+        @click="fetchInfo()"
+      >Fetch properties from first header row</button>
+      <button class="button is-dark" v-show="fetchStep==2" @click="fetchInfo()">Are you sure ?</button>
     </div>
     <div class="columns">
       <div class="column is-1">
@@ -55,7 +60,7 @@
         <button class="button is-info" @click="add">Add</button>
       </div>
     </div>
-    
+
     <div class="columns">
       <div class="column is-12">
         <div>
@@ -96,8 +101,8 @@
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-           <codemirror style="min-height:200px"  :options="cmOptions" v-model="collector.pkHandler"></codemirror>
-         </div>
+            <codemirror style="min-height:200px" :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+          </div>
         </div>
       </div>
     </div>
@@ -113,7 +118,7 @@ export default {
 
   data: function() {
     return {
-      fetchStep:1,
+      fetchStep: 1,
       handlerTemplate: `function(data){
         //data is the current gatthered document
         // for example : 
@@ -137,22 +142,26 @@ export default {
     this.dragableList = this.dragableList;
   },
   methods: {
-   async fetchInfo() {
-     let result ;
-      if(this.fetchStep==1 && this.dragableList.length==0) {
-         result  = await this.$http.post(`flow/fetch-info`, this.$parent.flowData);
+    async fetchInfo() {
+      let result;
+      if (this.fetchStep == 1 && this.dragableList.length == 0) {
+        result = await this.$http.post(
+          `flow/fetch-info`,
+          this.$parent.flowData
+        );
       }
-     if(this.fetchStep==1 && this.dragableList.length>0) {
-           this.fetchStep =2; 
-        setTimeout(()=>this.fetchStep=1,3000);
-        return ;
+      if (this.fetchStep == 1 && this.dragableList.length > 0) {
+        this.fetchStep = 2;
+        setTimeout(() => (this.fetchStep = 1), 3000);
+        return;
       }
-      if(this.fetchStep==2 && this.dragableList.length>0) {
-         result  = await this.$http.post(`flow/fetch-info`, this.$parent.flowData);
+      if (this.fetchStep == 2 && this.dragableList.length > 0) {
+        result = await this.$http.post(
+          `flow/fetch-info`,
+          this.$parent.flowData
+        );
       }
-      if(result.length)
-      this.$set(this,'dragableList',result);
-
+      if (result.length) this.$set(this, "dragableList", result);
     },
     add(name) {
       if (!name) return;
@@ -180,7 +189,7 @@ export default {
   margin-left: 5px;
   font-size: 14px;
   border: 1px solid #ccc;
-  margin:3px;
+  margin: 3px;
 }
 
 .property-tag.tag .icon {

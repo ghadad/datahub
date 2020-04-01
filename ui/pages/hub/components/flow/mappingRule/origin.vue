@@ -66,6 +66,7 @@
       </div>
 
       <div class="column is-11" v-if="value.originType=='eval'">
+        <emp>Use rawData & newData & $vars objects to access collector data and new mapped data</emp>
         <codemirror ref="evalEditor" :cmOptions="cmOptions" v-model="value.originEval"></codemirror>
       </div>
       <div class="column is-3" v-if="value.originType=='value'">

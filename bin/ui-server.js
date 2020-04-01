@@ -59,7 +59,7 @@ fastify.setErrorHandler(function (error, request, reply) {
     .code(statusCode)
     //.type('text/plain')
     .send({
-      error: statusCode >= 500 ? 'Internal server error' + error.message : error.message,
+      error: statusCode >= 500 ? 'Internal server error ' + error.message : error.message,
       info: error.message
     })
 })

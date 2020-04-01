@@ -12,10 +12,10 @@ const fetchInfo = async function (flow) {
 }
 
 const flowExe = async function (flow, step) {
-    console.log("flow.collector.handler:", flow.collector.handler)
 
     let FlowObject = new Flow(flow);
     await FlowObject.init();
+
     let runFlowHandler = FlowObject.runFlow(FlowObject);
 
     let collector = new Collector(flow.collector.config);
@@ -46,7 +46,6 @@ const flowExe = async function (flow, step) {
 
 module.exports = function (fastify, opts, next) {
     fastify.post('/test/:what', async function (req, res, next) {
-        console.log(req.body)
         let result = await flowExe(req.body, req.params.what);
         return result;
     });

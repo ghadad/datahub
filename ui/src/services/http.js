@@ -1,5 +1,5 @@
 const axios = require("axios");
-axios.defaults.baseURL = location.protocol + '//' + location.host+"/api";
+axios.defaults.baseURL = location.protocol + '//' + location.host + "/api";
 import lodash from 'lodash';
 //axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 //axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -14,27 +14,26 @@ let Http = class {
         }, options);
         if (result.data)
             return result.data;
-        
+
     }
     async post(service, params, options) {
         let result = await axios.post(service, params, options).
-        catch((function(error) { 
-           
-      
-            let errorMEssage = lodash.get(error,"response.data.message","Cannot fetch error from server response")
-            
-           throw Error(`post ${service} : ${errorMEssage}`)
+        catch((function (error) {
+
+            let errorMEssage = lodash.get(error, "response.data.error", "Cannot fetch error from server response")
+
+            throw Error(`post ${service} ${errorMEssage} `)
         }));
-       
+
         if (result.data)
             return result.data;
-        
+
     }
     async put(service, params, options) {
         let result = await axios.put(service, params, options);
         if (result.data)
             return result.data;
-       
+
     }
     async delete(service, params, options) {
         let result = await axios.delete(service, {

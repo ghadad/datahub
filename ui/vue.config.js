@@ -27,8 +27,12 @@ pages = {
 console.log("pages", pages)
 
 module.exports = {
+    lintOnSave: false,
     pages: pages,
-    chainWebpack: config => config.plugins.delete('named-chunks'),
+    chainWebpack: config => {
+        config.plugins.delete('named-chunks');
+        config.module.rules.delete('eslint');
+    },
     devServer: {
         proxy: {
             '/api': {

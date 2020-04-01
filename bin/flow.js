@@ -43,11 +43,11 @@ main.init(argv).then(async () => {
   });
   await project.get()
   let flowConfig = project.getFlow(argv.flow);
-  let flow = new Flow(flowConfig,argv.flow);
+  let flow = new Flow(flowConfig);
   await flow.init();
   let t1 = __app.ts();
   __app.logger.info("flow start")
-  let rows =await flow.exec();
+  let rows = await flow.exec();
   await flow.cleanup();
   let t2 = __app.ts();
   __app.logger.info(`flow end and took ${t2-t1} MS`)

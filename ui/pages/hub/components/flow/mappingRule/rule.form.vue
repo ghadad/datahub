@@ -3,18 +3,9 @@
     <target class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></target>
     <origin class="rule-section" v-model="value" :entity="entityData" :collapse="collapse"></origin>
     <div class="rules-checkbox-group">
-       <b-checkbox v-model="cloneRule.hasTransform"
-            type="is-info">
-                Add transforms
-            </b-checkbox>
-                <b-checkbox v-model="cloneRule.hasValidation"
-            type="is-info">
-                 Add validations
-            </b-checkbox>
-                <b-checkbox v-model="cloneRule.hasDrop"
-            type="is-info">
-                  Add Drops
-            </b-checkbox>
+      <b-checkbox v-model="cloneRule.hasTransform" type="is-info">Add transforms</b-checkbox>
+      <b-checkbox v-model="cloneRule.hasValidation" type="is-info">Add validations</b-checkbox>
+      <b-checkbox v-model="cloneRule.hasDrop" type="is-info">Add Drops</b-checkbox>
     </div>
     <functions
       v-if="cloneRule.hasTransform"
@@ -56,7 +47,9 @@ export default {
   components: { Target, Origin, Functions },
   data: function() {
     return {
-      flowData: this.$parent.$data.project.flows[this.$route.params.flow],
+      flowData: this.$parent.$data.project.flows.find(
+        f => f.config.name == this.$route.params.flow
+      ),
       entityData: {},
       handlerTemplate: `function(data){
         //data is the current gatthered document
@@ -112,10 +105,10 @@ export default {
 is-7 {
   font-size: 1.2em;
 }
-.rules-checkbox-group .checkbox{
+.rules-checkbox-group .checkbox {
   margin-bottom: 5px !important;
-  font-weight:700;
-  margin-right:30px
+  font-weight: 700;
+  margin-right: 30px;
 }
 </style>
 <style>
