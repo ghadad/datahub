@@ -1,91 +1,87 @@
 <template>
   <div v-if="flowData.config">
-    <div v-if="!$route.query.handler">
-      <div>
-        <h1 class="title is-4">FLOW settings</h1>
-        <div class="columns">
-          <div class="column is-2">
-            <div class="field">
-              <label class="label">Flow name</label>
+    <div>
+      <div class="columns">
+        <div class="column is-5">
+          <h1 class="title is-5">
+            Flow settings
+            <b-checkbox v-model="flowData.config.active" class="is-pulled-right">is flow active ?</b-checkbox>
+          </h1>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-2">
+          <div class="field">
+            <label class="label">Flow name</label>
 
-              <div class="control">
-                <input
-                  class="input"
-                  type="text"
-                  placeholder="Flow uniqueue name"
-                  v-model="flowData.config.name"
-                  @change="flowData.config.name=$normalizeName(flowData.config.name)"
-                  pattern="/\w+/"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="column is-2">
-            <div class="field">
-              <label class="label">Target entity</label>
-              <div class="select">
-                <select v-model="flowData.config.targetEntity">
-                  <option value>----</option>
-                  <option
-                    v-for="entityName in entitiesKeys"
-                    :key="entityName"
-                    :value="entityName"
-                  >{{entityName}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="column is-3">
-            <div class="field">
-              <div class="control">
-                <b-checkbox v-model="flowData.config.createRevisions">Create revisions collection</b-checkbox>
-              </div>
-            </div>
-          </div>
-          <div class="column is-2">
-            <div class="field">
-              <div class="control">
-                <b-checkbox v-model="flowData.config.isFinalFlow">is final flow</b-checkbox>
-              </div>
-            </div>
-          </div>
-          <div class="column is-2">
-            <div class="field">
-              <div class="control">
-                <b-checkbox v-model="flowData.config.enableStaging">Enable staging</b-checkbox>
-              </div>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                placeholder="Flow uniqueue name"
+                v-model="flowData.config.name"
+                @change="flowData.config.name=$normalizeName(flowData.config.name)"
+                pattern="/\w+/"
+              />
             </div>
           </div>
         </div>
-        <div class="columns">
-          <div class="column is-4">
-            <b-field label="Short description">
-              <b-input type="text" v-model="flowData.config.shortDescription"></b-input>
-            </b-field>
+        <div class="column is-2">
+          <div class="field">
+            <label class="label">Target entity</label>
+            <div class="select">
+              <select v-model="flowData.config.targetEntity">
+                <option value>----</option>
+                <option
+                  v-for="entityName in entitiesKeys"
+                  :key="entityName"
+                  :value="entityName"
+                >{{entityName}}</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="columns">
-          <div class="column is-8">
-            <b-field label="Description">
-              <b-input
-                rows="6"
-                maxlength="300"
-                type="textarea"
-                v-model="flowData.config.description"
-              ></b-input>
-            </b-field>
+        <div class="column is-3">
+          <div class="field">
+            <div class="control">
+              <b-checkbox v-model="flowData.config.createRevisions">Create revisions collection</b-checkbox>
+            </div>
           </div>
         </div>
-        <div class="column buttons-group">
-          <button class="button is-primary" v-show="!$route.params.flow" @click="create">Create</button>
-          <button class="button is-link" v-show="$route.params.flow" @click="update">Update</button>
-          <button class="button is-danger" v-show="deleteFlag==0" @click="deleteFlow(1)">Delete</button>
-          <button
-            class="button is-danger"
-            v-show="deleteFlag==1"
-            @click="deleteFlow(2)"
-          >Are you sure</button>
+        <div class="column is-2">
+          <div class="field">
+            <div class="control">
+              <b-checkbox v-model="flowData.config.isFinalFlow">is final flow</b-checkbox>
+            </div>
+          </div>
         </div>
+        <div class="column is-2">
+          <div class="field">
+            <div class="control">
+              <b-checkbox v-model="flowData.config.enableStaging">Enable staging</b-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-4">
+          <b-field label="Short description">
+            <b-input type="text" v-model="flowData.config.shortDescription"></b-input>
+          </b-field>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-8">
+          <b-field label="Description">
+            <b-input rows="6" maxlength="300" type="textarea" v-model="flowData.config.description"></b-input>
+          </b-field>
+        </div>
+      </div>
+      <div class="column buttons-group">
+        <button class="button is-primary" v-show="!$route.params.flow" @click="create">Create</button>
+        <button class="button is-link" v-show="$route.params.flow" @click="update">Update</button>
+        <button class="button is-danger" v-show="deleteFlag==0" @click="deleteFlow(1)">Delete</button>
+        <button class="button is-danger" v-show="deleteFlag==1" @click="deleteFlow(2)">Are you sure</button>
       </div>
     </div>
   </div>

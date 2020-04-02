@@ -4,7 +4,6 @@ const upath = require("upath");
 const yargs = require("yargs");
 const delay = require("delay");
 var CronJob = require('cron').CronJob;
-const JobClass = require(upath.join(__dirname, "..", "lib/job"));
 var argv = yargs
   .usage("Usage: $0 -e dev")
   .option("env", {
@@ -27,6 +26,7 @@ let jobs;
 
 main.init(argv).then(async () => {
 
+  const JobClass = require(upath.join(__dirname, "..", "lib/job"));
 
   for (let jobData of await JobClass.getAllJobsTable()) {
     var job = new CronJob('*/10 * * * * *', function () {
