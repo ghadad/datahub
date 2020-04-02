@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 class="title" v-show="!dbAlias">Set new project</h2>
-    <h2 class="title" v-show="dbAlias">Update project</h2>
+    <h2 class="title is-4" v-show="!$route.query.id">Set new project</h2>
+    <h2 class="title is-4" v-show="$route.query.id">Update project : {{$route.query.id}}</h2>
     <div class="columns">
       <div class="column">
         <p v-for="(e,index) in errors" :key="index" class="has-text-danger">{{e}}</p>
@@ -35,6 +35,11 @@
       </div>
     </div>
     <div>
+      <div class="columns">
+        <div class="column is-7">
+          <b-checkbox v-model="project.active">Is project active ?</b-checkbox>
+        </div>
+      </div>
       <div class="columns">
         <div class="column is-7">
           <b-field label="Description">

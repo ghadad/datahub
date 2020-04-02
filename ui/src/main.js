@@ -23,14 +23,18 @@ Vue.component('codemirror', VueCodeMirror.codemirror);
 
 import Http from "@/services/http";
 Vue.prototype.$http = Http;
+
+import Helpers from "@/services/helpers";
+Vue.prototype.$helpers = Helpers;
+
 Vue.prototype.$createProject = async function (project, routeParams = {}) {
     let self = this;
     let res = await self.$http.post("projects", project);
     self.$set(project, '_rev', res.rev);
     self.$root.$emit("global-ok", res.ok || false);
-    if (routeParams&& routeParams.name)
-       return  self.$router.push(routeParams);
-       return res;
+    if (routeParams && routeParams.name)
+        return self.$router.push(routeParams);
+    return res;
 
 };
 Vue.prototype.$saveProject = async function (project, routeParams = {}) {
@@ -54,7 +58,7 @@ Vue.prototype.$saveModel = async function (model, data, routeParams = {}) {
 
 
 Vue.prototype.$normalizeName = function (str = "") {
-    return Lodash.kebabCase(str.trim()).replace(/-/g, "_").replace(/__+/g, "_");        
+    return Lodash.kebabCase(str.trim()).replace(/-/g, "_").replace(/__+/g, "_");
 }
 Vue.prototype.$saveInterface = async function () {
     await 1;

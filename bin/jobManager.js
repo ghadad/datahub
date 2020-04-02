@@ -29,7 +29,7 @@ main.init(argv).then(async () => {
   const JobClass = require(upath.join(__dirname, "..", "lib/job"));
 
   for (let jobData of await JobClass.getAllJobsTable()) {
-    var job = new CronJob('*/10 * * * * *', function () {
+    var job = new CronJob(JobClass.cronString(jobData), function () {
       JobClass.exec(jobData)
     }, null, true);
     job.start();

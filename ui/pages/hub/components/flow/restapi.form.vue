@@ -124,7 +124,7 @@
           </div>
         </div>
       </div>
-      <div class="column is-4" v-if="collector.keyType=='pkPath'">
+      <div class="column is-4" v-show="collector.keyType=='pkPath'">
         <div class="field">
           <label class="label">Json path value (must existgs in Query result) e.g : data.info.id</label>
           <div class="control">
@@ -132,11 +132,16 @@
           </div>
         </div>
       </div>
-      <div class="column is-10" v-if="collector.keyType=='pkHandler'">
+      <div class="column is-10" v-show="collector.keyType=='pkHandler'">
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-            <codemirror style="min-height:200px" :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+            <codemirror
+              style="min-height:100px"
+              ref="functionEditor"
+              :options="$helpers.cmOptions()"
+              v-model="collector.pkHandler"
+            ></codemirror>
           </div>
         </div>
       </div>
@@ -191,6 +196,7 @@ export default {
         setTimeout(() => (this.fetchStep = 1), 3000);
         return;
       }
+      const loadingComponent = this.$buefy.loading.open({});
       if (this.fetchStep == 2 && this.dragableList.length > 0) {
         result = await this.$http.post(
           `flow/fetch-info`,
@@ -209,13 +215,17 @@ export default {
     }
   },
   watch: {
-    keyType: function(newVal) {
+    "collector.keyType": function(newVal) {
       if (newVal == "pkHandler")
         this.collector.pkHandler = this.handlerTemplate;
     }
   },
+  created() {
+    this.collector.pkHandler = this.collector.pkHandler || this.handlerTemplate;
+  },
   async mounted() {
     if (!this.collector.headers) this.$set(this.collector, "headers", []);
+    this.$helpers.lock1Line(this.$refs.functionEditor);
   },
   computed: {
     dragableList: {

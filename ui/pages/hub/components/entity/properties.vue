@@ -28,16 +28,16 @@
           </div>
         </div>
       </div>
-      <div class="column is-3">
-        <label class="label">Restrictions</label>
-        <div class="control">
-          <input
-            class="input"
-            type="text"
-            placeholder="Restrictions"
-            v-model="property.restriction"
-            pattern="/\w+/"
-          />
+      <div class="column is-2">
+        <label class="label">Not null ?</label>
+        <div class>
+          <b-checkbox type="text" placeholder="Not" v-model="property.notNull" pattern="/\w+/"></b-checkbox>
+        </div>
+      </div>
+      <div class="column is-2">
+        <label class="label">Pk ?</label>
+        <div class>
+          <b-checkbox type="text" placeholder="Pk" v-model="property.pk" pattern="/\w+/"></b-checkbox>
         </div>
       </div>
       <div class="column is-2">
@@ -59,7 +59,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Type</th>
                 <th scope="col">PK</th>
-                <th scope="col">Restrictions</th>
+                <th scope="col">Not null</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -75,13 +75,17 @@
                 <td v-if="activeEditIndex==index">
                   <input class="input" type="text" v-model="item.type" />
                 </td>
-                <td v-if="activeEditIndex!=index">{{ item.pk }}</td>
-                <td v-if="activeEditIndex==index">
-                  <input class="input" type="text" v-model="item.pk" />
+                <td v-if="activeEditIndex!=index">
+                  <b-checkbox :disabled="true" class="input" v-model="item.pk"></b-checkbox>
                 </td>
-                <td v-if="activeEditIndex!=index">{{ item.restrictions }}</td>
                 <td v-if="activeEditIndex==index">
-                  <input class="input" type="text" v-model="item.restrictions" />
+                  <b-checkbox class="input" v-model="item.pk"></b-checkbox>
+                </td>
+                <td v-if="activeEditIndex!=index">
+                  <b-checkbox :disabled="true" class="input" v-model="item.notNull"></b-checkbox>
+                </td>
+                <td v-if="activeEditIndex==index">
+                  <b-checkbox class="input" v-model="item.notNull"></b-checkbox>
                 </td>
                 <td>
                   <span class="icon clickable" @click="term='';activeEditIndex=index">

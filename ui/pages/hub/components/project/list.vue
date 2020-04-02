@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="columns">
+    <div class="columns">
       <div class="column is-2">
         <router-link class="button is-link" :to="{name:'projectUpsert'}">New project</router-link>
       </div>
@@ -8,9 +8,10 @@
     <table class="table">
       <thead>
         <tr>
-        <th>#</th>
+          <th>#</th>
           <th>Project name</th>
           <th>Description</th>
+          <th>Is active</th>
           <th>version</th>
           <th>Actions</th>
         </tr>
@@ -30,6 +31,9 @@
           <td>{{index+1}}</td>
           <td>{{p._id}}</td>
           <td>{{p.description}}</td>
+          <td>
+            <b-checkbox v-model="p.active" :disabled="true"></b-checkbox>
+          </td>
           <td>{{p.version}}</td>
           <td>
             <div class="buttons">

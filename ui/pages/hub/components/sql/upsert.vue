@@ -38,7 +38,11 @@
         <div class="field">
           <label class="label">SQL query</label>
           <div class="control">
-            <codemirror ref="handler" :options="{mode:'sql'}" v-model="formData.query"></codemirror>
+            <codemirror
+              ref="handler"
+              :options="$helpers.cmOptions({mode:'sql'})"
+              v-model="formData.query"
+            ></codemirror>
           </div>
         </div>
       </div>
@@ -54,7 +58,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
     <div>

@@ -89,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div class="column is-4" v-if="collector.keyType=='pkField'">
+      <div class="column is-4" v-show="collector.keyType=='pkField'">
         <div class="field">
           <label class="label">Field Name (must existgs in csv property)</label>
           <div class="control">
@@ -97,11 +97,16 @@
           </div>
         </div>
       </div>
-      <div class="column is-10" v-if="collector.keyType=='pkHandler'">
+      <div class="column is-10" v-show="collector.keyType=='pkHandler'">
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-            <codemirror style="min-height:200px" :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+            <codemirror
+              style="min-height:100px"
+              ref="functionEditor"
+              :options="$helpers.cmOptions()"
+              v-model="collector.pkHandler"
+            ></codemirror>
           </div>
         </div>
       </div>
@@ -132,14 +137,12 @@ export default {
       }
     };
   },
-  watch: {
-    "collector.keyType": function(newVal) {
-      if (newVal == "pkHandler")
-        this.collector.pkHandler = this.handlerTemplate;
-    }
+  created() {
+    this.collector.pkHandler = this.collector.pkHandler || this.handlerTemplate;
   },
   async mounted() {
     this.dragableList = this.dragableList;
+    this.$helpers.lock1Line(this.$refs.functionEditor);
   },
   methods: {
     async fetchInfo() {

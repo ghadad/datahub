@@ -42,7 +42,7 @@
               <codemirror
                 ref="queryEditor"
                 class="control"
-                :cmOptions="cmOptions"
+                :options="$helpers.cmOptions({mode:'sql'})"
                 v-model="value.originQuery"
               ></codemirror>
             </div>

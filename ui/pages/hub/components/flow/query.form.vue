@@ -52,7 +52,11 @@
         <div class="field">
           <label class="label">Source query</label>
           <div class="control">
-            <codemirror style="min-height:300px" :options="cmOptions" v-model="collector.query"></codemirror>
+            <codemirror
+              style="min-height:300px"
+              :options="$helpers.cmOptions({mode:'sql'})"
+              v-model="collector.query"
+            ></codemirror>
           </div>
         </div>
       </div>
@@ -83,7 +87,7 @@
           </div>
         </div>
       </div>
-      <div class="column is-4" v-if="collector.keyType=='pkField'">
+      <div class="column is-4" v-show="collector.keyType=='pkField'">
         <div class="field">
           <label class="label">Field Name (must existgs in Query result)</label>
           <div class="control">
@@ -91,11 +95,16 @@
           </div>
         </div>
       </div>
-      <div class="column is-10" v-if="collector.keyType=='pkHandler'">
+      <div class="column is-10" v-show="collector.keyType=='pkHandler'">
         <div class="field">
           <label class="label">Define the key using function</label>
           <div class="control">
-            <codemirror style="min-height:200px" :options="cmOptions" v-model="collector.pkHandler"></codemirror>
+            <codemirror
+              style="min-height:100px"
+              ref="functionEditor"
+              :options="$helpers.cmOptions()"
+              v-model="collector.pkHandler"
+            ></codemirror>
           </div>
         </div>
       </div>
@@ -113,23 +122,9 @@ export default {
     return {
       column: null,
       fetchStep: 1,
-      cmOptions: {
-        mode: "sql",
-        lineNumbers: true,
-        lineWrapping: true,
-        extraKeys: {
-          "Ctrl-Q": function(cm) {
-            cm.foldCode(cm.getCursor());
-          }
-        },
-        foldGutter: true,
-        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
-      },
       dbAliases: [],
       handlerTemplate: `function(data){
-        //data is the current gatthered document
-        // for example : 
-        // return data[3] +"/"+ data[2];
+        //return data.myKeyfield;
       }`,
       keyType: null,
       keyTypes: {
@@ -138,12 +133,7 @@ export default {
       }
     };
   },
-  watch: {
-    keyType: function(newVal) {
-      if (newVal == "pkHandler")
-        this.collector.pkHandler = this.handlerTemplate;
-    }
-  },
+
   methods: {
     async fetchInfo() {
       let result;
@@ -175,7 +165,12 @@ export default {
       this.dragableList.splice(index, 1);
     }
   },
+  created() {
+    this.collector.pkHandler = this.collector.pkHandler || this.handlerTemplate;
+  },
   async mounted() {
+    this.$helpers.lock1Line(this.$refs.functionEditor);
+
     let dbs = await this.$http.get("databases");
     this.$set(
       this,

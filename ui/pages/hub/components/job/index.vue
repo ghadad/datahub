@@ -37,12 +37,18 @@
               <tr>
                 <th scope="col">No</th>
                 <th scope="col">Flow</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <draggable v-model="jobData.flows" tag="tbody">
               <tr v-for="(flow,index) in jobData.flows" :key="index" class="clickable">
                 <td>{{ index+1 }}</td>
                 <td>{{ flow }}</td>
+                <td>
+                  <span class="icon clickable" @click="del(index)">
+                    <b-icon icon="trash" type="is-danger" size="is-small"></b-icon>
+                  </span>
+                </td>
               </tr>
             </draggable>
           </table>
@@ -275,6 +281,9 @@ export default {
     };
   },
   methods: {
+    del(index) {
+      this.jobData.flows.splice(index, 1);
+    },
     normalizeCron(el, pos, e) {
       this.errors[el] = null;
       let arr = ["*", "*", "*", "*", "*", "*"];

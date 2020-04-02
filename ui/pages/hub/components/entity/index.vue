@@ -1,10 +1,10 @@
 <template>
   <div v-if="entityData">
     <div class="columns">
-      <div class="column is-6">
+      <div class="column is-4">
         <section>
           <div class="columns">
-            <div class="column is-6">
+            <div class="column is-8">
               <div class="field">
                 <label class="label">Entity name</label>
                 <div class="control">
@@ -18,10 +18,9 @@
                   />
                 </div>
                 <p class="help">unique name . use only alphanumeric letters</p>
-                <p v-for="(e,index) in errors" :key="index">{{e}}</p>
               </div>
             </div>
-            <div class="column is-6">
+            <div class="column is-5">
               <div class="field">
                 <div class="label">
                   <label class="label">Target Database engine</label>
@@ -64,14 +63,14 @@
           </div>
         </section>
       </div>
-      <div class="column is-6">
+      <div class="column is-7">
         <properties
           ref="properties"
           v-if="entityData.properties"
           :list.sync="entityData.properties"
           :datatypes="datatypes"
         ></properties>
-      </div> 
+      </div>
     </div>
     <div></div>
   </div>
