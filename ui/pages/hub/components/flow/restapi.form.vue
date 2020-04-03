@@ -196,11 +196,12 @@ export default {
         setTimeout(() => (this.fetchStep = 1), 3000);
         return;
       }
-      const loadingComponent = this.$buefy.loading.open({});
+
       if (this.fetchStep == 2 && this.dragableList.length > 0) {
         result = await this.$http.post(
           `flow/fetch-info`,
-          this.$parent.flowData
+          this.$parent.flowData,
+          { spin: 8000 }
         );
       }
       if (result.length) this.dragableList = result;

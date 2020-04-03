@@ -1,5 +1,6 @@
 import Lodash from 'lodash';
-
+import Vue from 'vue';
+const VueInstance = new Vue();
 let Helpers = class {
     constructor() {
 
@@ -36,6 +37,12 @@ let Helpers = class {
             });
         }, 100)
 
+    }
+
+    spin(duration = 2000) {
+        const loadingComponent = VueInstance.$buefy.loading.open({});
+        setTimeout(() => loadingComponent.close(), duration);
+        return loadingComponent;
     }
 }
 

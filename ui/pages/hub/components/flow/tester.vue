@@ -50,17 +50,15 @@ export default {
       this.$set(this, "result", []);
       this.testerTitle = tester;
       this.error = null;
-      const loadingComponent = this.$buefy.loading.open({});
 
       try {
-        let result = await this.$http.post(`flow/test/${tester}`, this.flow);
-
+        let result = await this.$http.post(`flow/test/${tester}`, this.flow, {
+          spin: 5000
+        });
         this.$set(this, "result", result);
       } catch (error) {
         this.error = error;
       }
-
-      loadingComponent.close();
     }
   },
   computed: {
