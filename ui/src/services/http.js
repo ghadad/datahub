@@ -31,16 +31,18 @@ let Http = class {
             this.spinner = Helpers.spin(options.spin)
         }
 
-        let result = await axios.post(service, params, options).
-        catch((function (error) {
-
+        try {
+            let result = await axios.post(service, params, options);
+            if (this.spinner) this.spinner.close();
+            if (result.data)
+                return result.data;
+            throw new Error("no result data retreived from api")
+        } catch (error) {
             let errorMEssage = lodash.get(error, "response.data.error", "Cannot fetch error from server response")
             if (this.spinner) this.spinner.close();
             throw Error(`post ${service} ${errorMEssage} `)
-        }));
-        if (this.spinner) this.spinner.close();
-        if (result.data)
-            return result.data;
+        }
+
     }
 
     async put(service, params, options = {}) {
