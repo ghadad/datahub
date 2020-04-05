@@ -8,8 +8,11 @@ new Vue({
   render: h => h(App, {
     props: {
       menu: Menu,
-      title: "Interface"
+      title: "Admin"
     }
   }),
+  data: {
+    serverCofig: {}
+  },
   router,
 }).$mount('#app')

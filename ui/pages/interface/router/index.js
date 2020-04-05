@@ -1,25 +1,28 @@
 "use strict";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../components/pages/home";
-import NotFound from "@/components/pages/notFound";
-import Interfaces from "../components/interface/routes.js";
-import Databases from "@/components/database/routes.js";
-import Job from "@/components/job/routes.js";
-import Api from "@/components/api/routes.js";
+import RouterService from "@/services/routerService.js";
+
+import Home from "../components/pages/home.vue";
+import NotFound from "@/components/pages/notFound.vue";
+
+import Projects from "../components/project/routes.js";
+
+
+let rs = new RouterService();
+rs.add([Projects, {
+		name: "home",
+		path: "/",
+		component: Home
+	},
+	{
+		path: "*",
+		component: NotFound
+	}
+])
 
 Vue.use(VueRouter);
 export default new VueRouter({
 	mode: "hash",
-	routes: [Interfaces,Databases,Job,Api,
-		{
-			path: "/",
-			component: Home
-		},
-		// { path: "/users", component: User, meta: { needRole: "admin" } },
-		{
-			path: "*",
-			component: NotFound
-		}
-	]
+	routes: rs.get()
 });
