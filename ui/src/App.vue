@@ -102,9 +102,6 @@ export default {
     this.$root.$on("global-ok", function(data) {
       self.globalOk = data;
     });
-    this.prototype.$serverConfig = this.serverConfig = await this.$http.get(
-      "config"
-    );
   },
   computed: {
     routeTitle: function() {

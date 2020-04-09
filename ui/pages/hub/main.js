@@ -13,20 +13,16 @@ import App from '@/App.vue'
 import router from "./router/";
 import Menu from "./config/menu";
 import Http from "@/services/http";
-Http.get("config").then((response) => {
-  window.$serverConfig = response;
-  start();
-})
+
 
 function start() {
-
   new Vue({
     render: function (h) {
       let self = this;
       return h(App, {
         props: {
           menu: self.dmenu,
-          title: "Hub"
+          title: "Interfaces"
         }
       })
     },
@@ -36,5 +32,11 @@ function start() {
       }
     },
     router,
+
   }).$mount('#app')
 }
+
+Http.get("config").then((response) => {
+  Vue.prototype.$serverConfig = response;
+  start();
+})

@@ -44,6 +44,14 @@ let Helpers = class {
         setTimeout(() => loadingComponent.close(), duration);
         return loadingComponent;
     }
+    toast(options = {}) {
+        VueInstance.$buefy.toast.open({
+            message: options.message || "OK",
+            type: options.type || 'is-success',
+            position: options.positions || "is-top-left"
+        })
+
+    }
 }
 
 

@@ -6,7 +6,7 @@
           <h1 class="title is-1">Interfaces</h1>
           <h2 class="subtitle">Create interfaces quickly and without any hard work</h2>
           <p>
-            <router-link :to="{name:'projects'}" class="button is-rounded">Manage Inerfaces</router-link>
+            <router-link :to="{name:'interfaces'}" class="button is-rounded">Manage Inerfaces</router-link>
           </p>
         </div>
       </div>

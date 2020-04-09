@@ -19,10 +19,10 @@ let Http = class {
 
             if (result.data)
                 return result.data;
-        } catch (e) {
+        } catch (error) {
             let errorMEssage = lodash.get(error, "response.data.error", "Cannot fetch error from server response")
             if (this.spinner) this.spinner.close();
-            throw Error(`post ${service} ${errorMEssage} `)
+            throw Error(`GET  ${service} ${errorMEssage} `)
         }
 
     }
@@ -34,10 +34,23 @@ let Http = class {
         try {
             let result = await axios.post(service, params, options);
             if (this.spinner) this.spinner.close();
-            if (result.data)
+            if (result.data) {
+                Helpers.toast({
+                    message: "OK",
+                    type: "is-success"
+                });
                 return result.data;
+            }
+            Helpers.toast({
+                message: "Error",
+                type: "is-danger"
+            });
             throw new Error("no result data retreived from api")
         } catch (error) {
+            Helpers.toast({
+                message: "Error",
+                type: "is-danger"
+            });
             let errorMEssage = lodash.get(error, "response.data.error", "Cannot fetch error from server response")
             if (this.spinner) this.spinner.close();
             throw Error(`post ${service} ${errorMEssage} `)
@@ -52,9 +65,19 @@ let Http = class {
 
         try {
             let result = await axios.put(service, params, options);
-            if (result.data)
+            if (result.data) {
+                Helpers.toast({
+                    message: "OK",
+                    type: "is-success"
+                });
                 return result.data;
-        } catch (e) {
+            }
+
+        } catch (error) {
+            Helpers.toast({
+                message: "Error",
+                type: "is-danger"
+            });
             let errorMEssage = lodash.get(error, "response.data.error", "Cannot fetch error from server response")
             if (this.spinner) this.spinner.close();
             throw Error(`post ${service} ${errorMEssage} `)
@@ -68,12 +91,26 @@ let Http = class {
             let result = await axios.delete(service, {
                 params: params
             }, options);
-            if (result.data)
+            if (result.data) {
+                Helpers.toast({
+                    message: "OK",
+                    type: "is-success"
+                });
                 return result.data;
-        } catch (e) {
+            }
+            Helpers.toast({
+                message: "Error",
+                type: "is-danger"
+            });
+
+        } catch (error) {
+            Helpers.toast({
+                message: "Error",
+                type: "is-danger"
+            });
             let errorMEssage = lodash.get(error, "response.data.error", "Cannot fetch error from server response")
             if (this.spinner) this.spinner.close();
-            throw Error(`post ${service} ${errorMEssage} `)
+            throw Error(`DELETE ${service} ${errorMEssage} `)
         }
     }
 }

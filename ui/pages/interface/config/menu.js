@@ -1,11 +1,11 @@
 export default {
     leftMenu: [{
-            title: "Databases",
+            title: "Interfaces",
             icon: "storage",
             routing: {
-                name: "databases"
-              },
+                name: "interfaces"
+            },
         }
-      
+
     ]
 };

@@ -26,6 +26,7 @@ main.init(argv).then(async function () {
   await __app.couchDb.createDbIfNotExists("config");
   await __app.couchDb.createDbIfNotExists("errors");
   await __app.couchDb.createDbIfNotExists("jobs");
+  await __app.couchDb.createDbIfNotExists("interfaces");
 
 }).catch(function (err) {
   __app.logger.error("flow exec failed:", err.stack);

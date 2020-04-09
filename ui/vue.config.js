@@ -3,6 +3,7 @@ const titles = require("./titles");
 let pages = {}
 pages = {
     index: {
+
         // entry for the page
         entry: 'src/index.js',
         // the source template

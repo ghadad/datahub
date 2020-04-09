@@ -6,11 +6,11 @@ import RouterService from "@/services/routerService.js";
 import Home from "../components/pages/home.vue";
 import NotFound from "@/components/pages/notFound.vue";
 
-import Projects from "../components/project/routes.js";
+import Interfaces from "../components/interface/routes.js";
 
 
 let rs = new RouterService();
-rs.add([Projects, {
+rs.add([Interfaces, {
 		name: "home",
 		path: "/",
 		component: Home

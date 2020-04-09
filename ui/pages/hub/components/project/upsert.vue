@@ -103,25 +103,20 @@ export default {
     async update() {
       let self = this;
       if (self.validate()) return;
-
+      self.project._id = self.origProjectName;
+      let res = await this.$saveProject(self.project);
       if (self.origProjectName != self.project.projectName) {
-        let origRev = self.project._rev;
-        delete self.project._rev;
-        let tmpOrigId = self.project.projectName + "_to_be_replace";
-        self.project._id = tmpOrigId;
-        await self.create(false);
-        let origRev2 = self.project._rev;
-        await self.$http.delete("projects", {
-          _id: self.origProjectName,
-          _rev: origRev
+        let res = await self.$http.post("docs/rename", {
+          db: "projects",
+          id: self.origProjectName,
+          rev: self.project._rev,
+          targetId: self.project.projectName
         });
-        self.project._id = self.project.projectName;
-        delete self.project._rev;
-        await self.create(false);
-        await self.$http.delete("projects", { _id: tmpOrigId, _rev: origRev2 });
+
         self.origProjectName = self.project.projectName;
-      } else {
-        await this.$saveProject(self.project);
+        self.project._id = self.project.projectName;
+        self.project._rev = res.rev;
+        self.$route.query.id = self.project.projectName;
       }
     },
     async create(list = true) {
