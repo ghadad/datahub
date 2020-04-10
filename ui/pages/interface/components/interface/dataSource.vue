@@ -26,31 +26,62 @@
         </div>
       </div>
     </div>
-    <div v-if="computedValue.dbAlias=='systemdb'" class="columns">
-      <div class="column is-9">
-        <div class="field">
+    <div class="columns">
+      <div class="column is-7">
+        <div v-if="computedValue.dbAlias=='systemdb'" class="field">
           <label class="label">json orgainzer</label>
           <div class="control">
             <codemirror
-              style="min-height:300px; border:1px solid #CCC"
+              ref="queryEditor"
+              style="min-height:400px; border:1px solid #CCC"
+              :options="$helpers.cmOptions({mode:'sql'})"
+              v-model="computedValue.query"
+            ></codemirror>
+          </div>
+        </div>
+
+        <div v-if="computedValue.dbAlias!='systemdb'" class="field">
+          <label class="label">Source query</label>
+          <div class="control">
+            <codemirror
+              ref="queryEditor"
+              style="min-height:400px; border:1px solid #CCC"
               :options="$helpers.cmOptions({mode:'sql'})"
               v-model="computedValue.query"
             ></codemirror>
           </div>
         </div>
       </div>
-    </div>
-
-    <div v-if="computedValue.dbAlias!='systemdb'" class="columns">
-      <div class="column is-9">
-        <div class="field">
-          <label class="label">Source query</label>
-          <div class="control">
-            <codemirror
-              style="min-height:300px; border:1px solid #CCC"
-              :options="$helpers.cmOptions({mode:'sql'})"
-              v-model="computedValue.query"
-            ></codemirror>
+      <div class="column is-5">
+        <div class="block">
+          <div class="field">
+            <label class="label">Define the entity key method</label>
+            <div class="select">
+              <select v-model="computedValue.keyType">
+                <option v-for="(desc,kt) in keyTypes" :key="kt" :value="kt">{{desc}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="block" v-show="computedValue.keyType=='pkField'">
+          <div class="field">
+            <label class="label">Field Name (must existgs in Query result)</label>
+            <div class="control">
+              <input class="input" v-model="computedValue.pkField" type="text" />
+            </div>
+          </div>
+        </div>
+        <div class="block" v-show="computedValue.keyType=='pkHandler'">
+          <div class="field">
+            <label class="label">Define the key using function</label>
+            <div class="control">
+              <codemirror
+                style="min-height:100px"
+                ref="functionEditor"
+                :options="$helpers.cmOptions()"
+                v-model="computedValue.pkHandler"
+              ></codemirror>
+            </div>
           </div>
         </div>
       </div>
@@ -62,11 +93,23 @@
 <script>
 export default {
   name: "data-source",
-  props: { value: Object },
+  props: { value: Object, active: Number },
   data() {
     return {
+      keyTypes: {
+        pkHandler: "function/handler",
+        pkField: "Header field"
+      },
       databases: []
     };
+  },
+  watch: {
+    active() {
+      this.$nextTick(() => {
+        this.$helpers.refresh(this.$refs.functionEditor);
+        this.$helpers.refresh(this.$refs.queryEditor);
+      });
+    }
   },
   async mounted() {
     this.databases = [

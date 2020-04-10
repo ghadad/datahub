@@ -11,6 +11,7 @@ let Helpers = class {
             mode: "javascript",
             lineNumbers: true,
             lineWrapping: true,
+            autoRefresh: true,
             extraKeys: {
                 "Ctrl-Q": function (cm) {
                     cm.foldCode(cm.getCursor());
@@ -36,9 +37,13 @@ let Helpers = class {
                 }
             });
         }, 100)
-
     }
 
+    refresh(el) {
+        setTimeout(function () {
+            el.editor.refresh();
+        }, 200)
+    }
     spin(duration = 2000) {
         const loadingComponent = VueInstance.$buefy.loading.open({});
         setTimeout(() => loadingComponent.close(), duration);

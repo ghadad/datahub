@@ -183,5 +183,9 @@ body {
 .breadcrumb {
   margin-bottom: 10px;
 }
+.vue-codemirror-wrap {
+  border: 1px solid #ccc;
+  padding: 2px;
+}
 </style>
 

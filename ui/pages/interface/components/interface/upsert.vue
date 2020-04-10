@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <b-tabs :multiline="true">
+      <b-tabs v-model="activeTab" :multiline="true">
         <template>
           <b-tab-item label="Settings">
             <div class="columns">
@@ -51,20 +51,24 @@
               </div>
             </div>
           </b-tab-item>
-          <b-tab-item label="source data">
-            <data-source v-model="interfaceModel.source"></data-source>
+          <b-tab-item label="Source data">
+            <data-source v-model="interfaceModel.source" :active="activeTab"></data-source>
           </b-tab-item>
-          <b-tab-item label="Properties">
-            <properties v-model="interfaceModel.properties"></properties>
+          <b-tab-item label="Interface data props">
+            <properties
+              v-model="interfaceModel.properties"
+              :source="interfaceModel.source"
+              :active="activeTab"
+            ></properties>
           </b-tab-item>
           <b-tab-item label="Output">
-            <product-output v-model="interfaceModel.output"></product-output>
+            <product-output v-model="interfaceModel.output" :active="activeTab"></product-output>
           </b-tab-item>
           <b-tab-item label="Notifications">
-            <notifications v-model="interfaceModel.notifications"></notifications>
+            <notifications v-model="interfaceModel.notifications" :active="activeTab"></notifications>
           </b-tab-item>
           <b-tab-item label="Jobs">
-            <jobs v-model="interfaceModel.jobs"></jobs>
+            <jobs v-model="interfaceModel.jobs" :active="activeTab"></jobs>
           </b-tab-item>
           <b-tab-item label="Help">
             <help></help>
@@ -103,6 +107,7 @@ export default {
     return {
       list: {},
       errors: [],
+      activeTab: 0,
       origInterfaceName: null,
       interfaceModel: {
         interfaceName: "",

@@ -43,6 +43,43 @@
           </tr>
         </tbody>
       </table>
+      <h2 class="title is-5">Postdefined vars</h2>
+      <div class="block">
+        <table class="table">
+          <thead>
+            <th>Variable name</th>
+            <th>meaning</th>
+            <th>sql example</th>
+            <th>eval example</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>end_run</td>
+              <td>end date of current job</td>
+              <td>Interface ended at :end_run</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>total_rows</td>
+              <td>Total rows</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>:job_status</td>
+              <td>current job status</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>:job_error</td>
+              <td>current job error</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
