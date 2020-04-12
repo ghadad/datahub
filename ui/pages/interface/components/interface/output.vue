@@ -1,7 +1,12 @@
 <template>
   <div>
-    <h1>product-output</h1>
-    <input v-model="computedValue.dsdsds" />
+    <input class="input" v-model="computedValue.fileName" />
+    <b-checkbox>Provide API ?</b-checkbox>
+    <div class="block">format : CSV</div>
+    <div class="block">format : JSON</div>
+    <div class="block">format : XML (template engine)</div>
+    <div class="block">format : Any (/template engine) includes fixed size</div>
+    <div class="block">format : Html,PDF (template engine)</div>
   </div>
 </template>
 <script>
