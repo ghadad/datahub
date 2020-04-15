@@ -3,6 +3,16 @@
     <h1 class="title is-5">Data source</h1>
     <div class="columns">
       <div class="column is-2">
+        <div class="label">Source type</div>
+
+        <div class="select">
+          <select v-model="computedValue.sourceType">
+            <option value="query">Sql Query</option>
+            <option value="systemDb">Nosql system DB</option>
+          </select>
+        </div>
+      </div>
+      <div class="column is-2">
         <div class="label">DB alias</div>
 
         <div class="select">

@@ -12,15 +12,9 @@ var argv = yargs
     type: "string",
     demand: true
   })
-  .option("project", {
-    alias: "p",
-    describe: "project name",
-    type: "string",
-    demand: true
-  })
-  .option("flow", {
-    alias: "f",
-    describe: "flow  name",
+  .option("interface", {
+    alias: "i",
+    describe: "interface name",
     type: "string",
     demand: true
   })
@@ -36,21 +30,15 @@ const main = require(upath.join(__dirname, "..", "lib/main"));
 
 
 main.init(argv).then(async () => {
-  const Project = __app.require(__app.lib, "project");
+  const Interface = __app.require(__app.lib, "interface");
   const Flow = __app.require(__app.lib, "flow");
-  let project = new Project({
-    name: argv.project
+  let interface = new Interface({
+    name: argv.interface
   });
-  await project.get()
-  let flowConfig = project.getFlow(argv.flow);
-  let flow = new Flow(flowConfig);
-  await flow.init();
-  let t1 = __app.ts();
-  __app.logger.info("flow start")
-  let rows = await flow.exec();
-  await flow.cleanup();
-  let t2 = __app.ts();
-  __app.logger.info(`flow end and took ${t2-t1} MS`)
+
+  __app.logger.info("interface start")
+  let rows = await interface.exec();
+  await interface.cleanup();
   process.exit(0)
 }).catch(err => {
   __app.logger.error("flow exec failed:", err.stack);

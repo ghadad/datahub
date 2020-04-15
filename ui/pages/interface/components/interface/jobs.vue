@@ -187,6 +187,7 @@ import draggable from "vuedraggable";
 export default {
   name: "job",
   components: { draggable },
+  props: ["value"],
   data: function() {
     return {
       delStep: 0,
@@ -203,7 +204,7 @@ export default {
       project: { flows: [] },
       jobData: {
         description: "",
-        flows: [],
+        method: "",
         scheduling: {
           seconds: null,
           minutes: null,
@@ -212,8 +213,7 @@ export default {
           months: null,
           dayOfWeeks: null
         }
-      },
-      selectedFlow: null
+      }
     };
   },
   methods: {
