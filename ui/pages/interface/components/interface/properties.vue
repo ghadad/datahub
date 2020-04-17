@@ -10,11 +10,19 @@
     <div class="columns">
       <div class="column is-4">
         <table class="table is-fullwidth">
+          {{delItems}}
           <draggable v-model="computedValue.props" tag="tbody">
             <tr class="clickable" v-for="(p,index) in computedValue.props" :key="p.name">
               <td @click="activate(p)">{{index +1}}</td>
               <td @click="activate(p)">{{p.name}}</td>
-              <td>[-]</td>
+              <td>
+                <span class="icon" v-show="!delItems[index]" @click="delProp(index,1)">
+                  <b-icon icon="trash" type="is-danger" size="is-small"></b-icon>
+                </span>
+                <span v-show="delItems[index]==1" @click="delProp(index,2)">
+                  <button class="button is-danger">Confirm</button>
+                </span>
+              </td>
               <td>[+]</td>
             </tr>
           </draggable>
@@ -100,9 +108,19 @@ export default {
   components: { draggable, Functions },
   props: ["value", "source"],
   data() {
-    return { functions: {}, activeRule: {}, list: [] };
+    return { functions: {}, activeRule: {}, list: [], delItems: {} };
   },
   methods: {
+    delProp(index, step) {
+      if (step == 1) {
+        this.$set(this.delItems, index, step);
+        setTimeout(() => (this.delItems[index] = 0), 3000);
+      }
+      if (step == 2) {
+        delete this.delItems[index];
+        this.computedValue.props.splice(index, 1);
+      }
+    },
     activate(p) {
       this.$set(this, "activeRule", p);
     },

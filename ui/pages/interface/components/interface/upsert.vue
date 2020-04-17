@@ -70,6 +70,9 @@
           <b-tab-item label="Jobs">
             <jobs v-model="interfaceModel.jobs" :active="activeTab"></jobs>
           </b-tab-item>
+          <b-tab-item label="Test">
+            <test :interface="interfaceModel" :active="activeTab"></test>
+          </b-tab-item>
           <b-tab-item label="Help">
             <help></help>
           </b-tab-item>
@@ -90,7 +93,10 @@ import DataSource from "./dataSource.vue";
 import Properties from "./properties.vue";
 import ProductOutput from "./output.vue";
 import Notifications from "./notifications.vue";
+
 import Jobs from "./jobs.vue";
+import Test from "./test.vue";
+
 import Help from "./help.vue";
 
 export default {
@@ -101,7 +107,8 @@ export default {
     ProductOutput,
     Notifications,
     Jobs,
-    Help
+    Help,
+    Test
   },
   data() {
     return {
