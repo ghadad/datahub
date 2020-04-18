@@ -202,6 +202,8 @@ export default {
       },
       cronHelp: false,
       project: { flows: [] },
+      nextRun: null,
+      prevRun: null,
       jobData: {
         description: "",
         method: "",

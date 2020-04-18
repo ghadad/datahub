@@ -7,12 +7,13 @@
 
         <div class="select">
           <select v-model="computedValue.sourceType">
+            <option value=" ">Choose source</option>
             <option value="query">Sql Query</option>
-            <option value="systemDb">Nosql system DB</option>
+            <option value="systemDB">Nosql system DB</option>
           </select>
         </div>
       </div>
-      <div class="column is-2">
+      <div class="column is-2" v-if="computedValue.sourceType== 'query'">
         <div class="label">DB alias</div>
 
         <div class="select">
@@ -38,28 +39,35 @@
     </div>
     <div class="columns">
       <div class="column is-7">
-        <div v-if="computedValue.dbAlias=='systemdb'" class="field">
-          <label class="label">json orgainzer</label>
+        <div v-show="computedValue.sourceType=='systemDB'" class="field">
+          <label class="label">Source entity</label>
+          <div class="control">
+            <input class="input" v-model="computedValue.sourceEntity" type="text" />
+          </div>
+        </div>
+
+        <div v-show="computedValue.sourceType== 'query'" class="field">
+          <label class="label">Source query</label>
           <div class="control">
             <codemirror
               ref="queryEditor"
-              style="min-height:400px; border:1px solid #CCC"
+              style="min-height:200px; border:1px solid #CCC"
               :options="$helpers.cmOptions({mode:'sql'})"
               v-model="computedValue.query"
             ></codemirror>
           </div>
         </div>
+        <b-checkbox v-model="computedValue.hasFilter">Add filter handler</b-checkbox>
 
-        <div v-if="computedValue.dbAlias!='systemdb'" class="field">
-          <label class="label">Source query</label>
-          <div class="control">
-            <codemirror
-              ref="queryEditor"
-              style="min-height:400px; border:1px solid #CCC"
-              :options="$helpers.cmOptions({mode:'sql'})"
-              v-model="computedValue.query"
-            ></codemirror>
-          </div>
+        <div v-show="computedValue.hasFilter" class="control">
+          <label class="label">Filtering result</label>
+          <em>Handler must retrieve true/false value</em>
+          <codemirror
+            ref="filterEditor"
+            style="min-height:200px; border:1px solid #CCC"
+            :options="$helpers.cmOptions()"
+            v-model="computedValue.filter"
+          ></codemirror>
         </div>
       </div>
       <div class="column is-5">
@@ -106,6 +114,7 @@ export default {
   props: { value: Object, active: Number },
   data() {
     return {
+      handlerTemplate: "function(data){ \n return data; \n }",
       keyTypes: {
         pkHandler: "function/handler",
         pkField: "Header field"
@@ -118,10 +127,28 @@ export default {
       this.$nextTick(() => {
         this.$helpers.refresh(this.$refs.functionEditor);
         this.$helpers.refresh(this.$refs.queryEditor);
+        this.$helpers.refresh(this.$refs.filterEditor);
       });
     }
   },
+  methods: {
+    addFilter() {
+      this.computedValue.hasFilter = true;
+      this.$set(
+        this.computedValue,
+        "filter",
+        this.computedValue.filter || this.handlerTemplate
+      );
+    },
+    removeFilter() {
+      this.computedValue.hasFilter = false;
+    }
+  },
   async mounted() {
+    let self = this;
+    this.$helpers.lock1Line(this.$refs.filterEditor);
+
+    this.$helpers.refresh(this.$refs.filterEditor);
     this.databases = [
       { _id: "systemdb", db: { client: "nosql" } },
       ...(await this.$http.get("docs/databases"))
