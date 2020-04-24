@@ -38,29 +38,14 @@
       </div>
     </div>
     <div class="block">
-      <csv-output v-if="computedValue.type=='CSV'" v-model="computedValue.csvConfig"></csv-output>
-      <json-output v-if="computedValue.type=='JSON'" v-model="computedValue.jsonConfig"></json-output>
-      <template-output
-        type="XML"
-        v-if="computedValue.type=='XML'"
-        v-model="computedValue.templateConfig"
-      ></template-output>
-      <template-output
-        type="FIXED"
-        v-if="computedValue.type=='FIXED'"
-        v-model="computedValue.templateConfig"
-      ></template-output>
-      <template-output
-        type="HTML"
-        v-if="computedValue.type=='HTML'"
-        v-model="computedValue.templateConfig"
-      ></template-output>
-      <template-output
-        type="PDF"
-        v-if="computedValue.type=='PDF'"
-        v-model="computedValue.templateConfig"
-      ></template-output>
+      <csv-output v-if="computedValue.type=='CSV'" v-model="computedValue"></csv-output>
+      <json-output v-if="computedValue.type=='JSON'" v-model="computedValue"></json-output>
+      <template-output type="XML" v-if="computedValue.type=='XML'" v-model="computedValue"></template-output>
+      <template-output type="FIXED" v-if="computedValue.type=='FIXED'" v-model="computedValue"></template-output>
+      <template-output type="HTML" v-if="computedValue.type=='HTML'" v-model="computedValue"></template-output>
+      <template-output type="PDF" v-if="computedValue.type=='PDF'" v-model="computedValue"></template-output>
     </div>
+    computedValue.config:{{computedValue}}
   </div>
 </template>
 <script>
@@ -76,9 +61,14 @@ export default {
     JsonOutput,
     TemplateOutput
   },
-  mounted() {
-    this.computedValue.description = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+  data() {
+    return {
+      initconfig: {
+        engine: ""
+      }
+    };
   },
+  created() {},
   computed: {
     computedValue: {
       get() {
