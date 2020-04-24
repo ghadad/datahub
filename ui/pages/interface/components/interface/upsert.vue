@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="upsert-section">
     <section>
       <b-tabs v-model="activeTab" :multiline="true">
         <template>
@@ -21,6 +21,13 @@
                   <p class="help">unique name . use only alphanumeric letters</p>
                 </div>
               </div>
+              <div class="column is-2">
+                <div class="field">
+                  <label class="label">Is interface active ?</label>
+                  <b-checkbox v-model="interfaceModel.active"></b-checkbox>
+                </div>
+              </div>
+
               <div class="column is-8">
                 <div class="field">
                   <label class="label">Tags</label>
@@ -37,10 +44,15 @@
             </div>
 
             <div>
-              <div class="columns">
-                <div class="column is-7">
-                  <b-checkbox v-model="interfaceModel.active">Is interface active ?</b-checkbox>
-                </div>
+              <div class="field">
+                <div class="label">Interface resuls type</div>
+                <b-radio v-model="interfaceModel.resultType" native-value="all">All entries</b-radio>
+                <b-radio v-model="interfaceModel.resultType" native-value="changes">Only changes</b-radio>
+                <b-radio v-model="interfaceModel.resultType" native-value="new">Only new entries</b-radio>
+                <b-radio
+                  v-model="interfaceModel.resultType"
+                  native-value="delete"
+                >Only deleted entries</b-radio>
               </div>
               <div class="columns">
                 <div class="column is-7">
@@ -123,7 +135,8 @@ export default {
         properties: {},
         output: {},
         notifications: {},
-        jobs: {}
+        jobs: {},
+        resultType: ""
       }
     };
   },
@@ -187,3 +200,8 @@ export default {
   computed: {}
 };
 </script>
+<style scoped>
+.b-radio.radio + .radio {
+  margin-left: 50px;
+}
+</style>

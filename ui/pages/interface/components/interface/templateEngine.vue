@@ -1,12 +1,11 @@
 <template>
   <div>
     <h1 class="title is-4">Template engine : {{type}}</h1>
-    <div class="block">
-      <div class="radios">
-        <b-radio v-model="computedValue.engine" native-value="mustache">Mustach</b-radio>
-        <b-radio v-model="computedValue.engine" native-value="pug" title="Pug">Pug</b-radio>
-        <b-radio native-value="handler" v-model="computedValue.engine" title="Handlebars">Handlebars</b-radio>
-      </div>
+    <div class="field">
+      <div class="label">Choose your favorite template engine</div>
+      <b-radio v-model="computedValue.engine" native-value="mustache">Mustach</b-radio>
+      <b-radio v-model="computedValue.engine" native-value="pug" title="Pug">Pug</b-radio>
+      <b-radio native-value="handler" v-model="computedValue.engine" title="Handlebars">Handlebars</b-radio>
     </div>
     <div class="field">
       <label class="label">Template code</label>
@@ -48,3 +47,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.b-radio.radio + .radio {
+  margin-left: 50px;
+}
+</style>
