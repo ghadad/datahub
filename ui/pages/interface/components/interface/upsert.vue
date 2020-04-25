@@ -21,14 +21,8 @@
                   <p class="help">unique name . use only alphanumeric letters</p>
                 </div>
               </div>
-              <div class="column is-2">
-                <div class="field">
-                  <label class="label">Is interface active ?</label>
-                  <b-checkbox v-model="interfaceModel.active"></b-checkbox>
-                </div>
-              </div>
 
-              <div class="column is-8">
+              <div class="column is-10">
                 <div class="field">
                   <label class="label">Tags</label>
                   <div class="control">
@@ -44,6 +38,11 @@
             </div>
 
             <div>
+              <div class="checkboxes">
+                <b-checkbox v-model="interfaceModel.active">Is interface active ?</b-checkbox>
+                <b-checkbox v-model="interfaceModel.listingAPI">Provide Listing API</b-checkbox>
+              </div>
+
               <div class="field">
                 <div class="label">Interface resuls type</div>
                 <b-radio v-model="interfaceModel.resultType" native-value="all">All entries</b-radio>

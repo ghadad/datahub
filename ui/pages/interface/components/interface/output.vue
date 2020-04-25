@@ -28,6 +28,9 @@
       </div>
     </div>
     <div class="columns">
+      <div v-if="computedValue.type=='JSON'" class="column is-2">
+        <b-checkbox v-model="computedValue.prettify">Prettify json data ?</b-checkbox>
+      </div>
       <div class="column is-2">
         <b-checkbox v-model="computedValue.provideAPI">Provide API ?</b-checkbox>
       </div>
@@ -38,8 +41,8 @@
       </div>
     </div>
     <div class="block">
-      <csv-output v-if="computedValue.type=='CSV'" v-model="computedValue"></csv-output>
-      <json-output v-if="computedValue.type=='JSON'" v-model="computedValue"></json-output>
+      <template-output type="CSV" v-if="computedValue.type=='CSV'" v-model="computedValue"></template-output>
+      <template-output type="JSON" v-if="computedValue.type=='JSON'" v-model="computedValue"></template-output>
       <template-output type="XML" v-if="computedValue.type=='XML'" v-model="computedValue"></template-output>
       <template-output type="FIXED" v-if="computedValue.type=='FIXED'" v-model="computedValue"></template-output>
       <template-output type="HTML" v-if="computedValue.type=='HTML'" v-model="computedValue"></template-output>
