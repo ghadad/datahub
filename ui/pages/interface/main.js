@@ -6,7 +6,7 @@ import router from "./router/";
 import Menu from "./config/menu";
 import Http from "@/services/http";
 
-function start() {
+function start(conf) {
 
   new Vue({
     render: h => h(App, {
@@ -16,13 +16,13 @@ function start() {
       }
     }),
     data: {
-      serverCofig: {}
+      sysConfig: conf
     },
     router,
   }).$mount('#app')
 }
 
 Http.get("config").then((response) => {
-  Vue.prototype.$serverConfig = response;
-  start();
+  Vue.prototype.$sysConfig = response;
+  start(response);
 })

@@ -31,7 +31,6 @@
                   <button class="button is-danger">Confirm</button>
                 </span>
               </td>
-              <td>[+]</td>
             </tr>
           </draggable>
         </table>

@@ -22,7 +22,7 @@
         <codemirror
           ref="templateEditor"
           style="min-height:200px; border:1px solid #CCC"
-          :options="$helpers.cmOptions({mode:'htmlmixed'})"
+          :options="$helpers.cmOptions({mode:'html'})"
           v-model="computedValue.template"
         ></codemirror>
       </div>
@@ -40,10 +40,16 @@ export default {
       }
     };
   },
+  watch: {
+    "$route.query.activeTab": function() {
+      this.$helpers.refresh(this.$refs.templateEditor);
+    }
+  },
   created() {},
   mounted() {
-    setTimeout(() => this.$helpers.refresh(this.$refs.templateEditor), 1000);
+    this.$helpers.refresh(this.$refs.templateEditor);
   },
+  updated() {},
   computed: {
     computedValue: {
       get() {

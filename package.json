@@ -39,6 +39,7 @@
     "acron": "latest",
     "async": "^3.2.0",
     "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "csv-parse": "^4.8.8",
     "csv-parser": "^2.3.2",
     "csvtojson": "^2.0.10",

@@ -369,7 +369,7 @@ export default {
     },
 
     config() {
-      return window.$serverConfig;
+      return window.$sysConfig;
     },
     datatypes() {
       if (this.config.dataTypes && this.jobData.dbEngine)

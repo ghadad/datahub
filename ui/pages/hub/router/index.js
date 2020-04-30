@@ -12,7 +12,7 @@ import Sql from "../components/sql/routes.js";
 
 
 import Entities from "../components/entity/routes.js";
-import Flows from "../components/flow/routes.js";
+import Flows from "../components/flowv2/routes.js";
 import Jobs from "../components/job/routes.js";
 let rs = new RouterService();
 rs.add([Projects, Datasets,Entities, Flows, Jobs,Sql, {

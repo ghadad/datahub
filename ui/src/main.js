@@ -42,6 +42,9 @@ Vue.prototype.$saveProject = async function (project, routeParams = {}) {
     let res = await self.$http.put("projects", project);
     self.$set(project, '_rev', res.rev);
     self.$root.$emit("global-ok", res.ok || false);
+    if (routeParams.reload)
+        self.$router.go(0);
+
     if (routeParams.name)
         self.$router.push(routeParams);
 };
@@ -59,7 +62,7 @@ Vue.prototype.$saveModel = async function (model, data, routeParams = {}) {
 
 Vue.prototype.$normalizeName = function (str = "") {
     // return Lodash.kebabCase(str.trim()).replace(/-/g, "_").replace(/__+/g, "_");
-    return str.toLowerCase().replace(/\W/g, '').replace(/_+/g, "_");
+    return str.trim().toLowerCase().replace(/\W/g, '').replace(/_+/g, "_");
 
 }
 Vue.prototype.$saveInterface = async function () {

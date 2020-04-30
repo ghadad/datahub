@@ -28,6 +28,21 @@ main.init(argv).then(async function () {
   await __app.couchDb.createDbIfNotExists("jobs");
   await __app.couchDb.createDbIfNotExists("interfaces");
 
+  //create config doc per env
+
+
+  await __app.couchDb.create("config", {
+    _id: "dev"
+  });
+  await __app.couchDb.create("config", {
+    _id: "qa"
+  });
+  await __app.couchDb.create("config", {
+    _id: "prod"
+  });
+
+
+
 }).catch(function (err) {
   __app.logger.error("flow exec failed:", err.stack);
   process.exit(-1)

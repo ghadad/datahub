@@ -167,7 +167,7 @@ export default {
   },
   computed: {
     config() {
-      return this.$serverConfig;
+      return this.$sysConfig;
     },
     datatypes() {
       if (this.config.dataTypes && this.entityData.dbEngine)

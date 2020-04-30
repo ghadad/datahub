@@ -15,7 +15,7 @@ import Menu from "./config/menu";
 import Http from "@/services/http";
 
 
-function start() {
+function start(conf) {
   new Vue({
     render: function (h) {
       let self = this;
@@ -25,6 +25,8 @@ function start() {
           title: "Interfaces"
         }
       })
+    }, data: {
+      sysConfig: conf
     },
     computed: {
       dmenu() {
@@ -37,6 +39,6 @@ function start() {
 }
 
 Http.get("config").then((response) => {
-  Vue.prototype.$serverConfig = response;
-  start();
+  Vue.prototype.$sysConfig = response;
+  start(response);
 })

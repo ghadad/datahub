@@ -1,7 +1,7 @@
 <template>
   <div id="upsert-section">
     <section>
-      <b-tabs v-model="activeTab" :multiline="true">
+      <b-tabs v-model="activeTab" :animated="false" :multiline="true">
         <template>
           <b-tab-item label="Settings">
             <div class="columns">
@@ -139,6 +139,15 @@ export default {
       }
     };
   },
+  watch: {
+    activeTab: function() {
+      // this.$router.push({ query: { activeTab: this.activeTab } });
+      //   this.$set(this.$route.query, "activeTab", this.activeTab);
+      this.$router.push({
+        query: { ...this.$route.query, activeTab: this.activeTab }
+      });
+    }
+  },
   async mounted() {
     if (this.$route.query.id) {
       Object.assign(
@@ -147,6 +156,7 @@ export default {
       );
       this.origInterfaceName = this.$route.query.id;
     }
+    this.activeTab = this.$route.query.activeTab || 0;
   },
   methods: {
     validate() {
@@ -199,8 +209,17 @@ export default {
   computed: {}
 };
 </script>
-<style scoped>
+<style>
 .b-radio.radio + .radio {
   margin-left: 50px;
+}
+
+.tabs li.is-active {
+  border-bottom: 2px solid #0066ffa3;
+}
+.tabs li.is-active a {
+  border: 0;
+  font-weight: bolder;
+  color: #000000c7;
 }
 </style>

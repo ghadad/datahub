@@ -1,7 +1,7 @@
 <template>
   <div class>
     <h1 class="h1 title">Base Configuration</h1>
-    <pre>{{serverConfig}}</pre>
+    <pre>{{sysConfig}}</pre>
   </div>
 </template> 
 
@@ -17,10 +17,10 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => (this.conf = window.$serverConfig), 500);
+    setTimeout(() => (this.conf = window.$sysConfig), 500);
   },
   computed: {
-    serverConfig: {
+    sysConfig: {
       get() {
         return this.conf;
       }

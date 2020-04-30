@@ -86,7 +86,7 @@ export default {
       globalError: null,
       globalOk: null,
       menu1: {},
-      serverConfig: null
+      sysConfig: null
     };
   },
   errorCaptured(err, vm, info) {
@@ -145,6 +145,7 @@ body {
 .entry-page {
   height: 100%;
   padding-top: 30px;
+  padding-left: 30px;
 }
 .icon.clickable,
 .icon.clickable svg {
@@ -174,8 +175,7 @@ body {
   margin: 5px;
 }
 .main-view {
-  padding-left: 25px;
-  padding-right: 20px;
+  padding-left: 5px;
 }
 .CodeMirror {
   height: 100%;
