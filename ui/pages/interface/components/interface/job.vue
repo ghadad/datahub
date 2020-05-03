@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="column is-5">
         <div class="title is-6">Scheduling rules</div>
-        <div class="block">
+        <div class>
           <button @click="cronHelp=!cronHelp" class="is-white is-small button">
             <b-icon class="is-pulled-right clickable" icon="info" size="is-white"></b-icon>
             <b-icon
@@ -250,21 +250,7 @@ export default {
     }
   },
   async mounted() {
-    this.$root.$emit("breadcrumbs", [
-      {
-        name: "jobs"
-      },
-      {
-        name: "explore",
-        title: this.$route.params.project
-      },
-      {
-        title: this.$route.params.job
-          ? "Job # " + this.$route.params.job
-          : "New job",
-        active: true
-      }
-    ]);
+    this.computedValue.scheduling = this.computedValue.scheduling || {};
   },
   computed: {
     computedValue: {

@@ -78,8 +78,8 @@
           <b-tab-item label="Notifications">
             <notifications v-model="interfaceModel.notifications" :active="activeTab"></notifications>
           </b-tab-item>
-          <b-tab-item label="Jobs">
-            <jobs v-model="interfaceModel.jobs" :active="activeTab"></jobs>
+          <b-tab-item label="Job Scheduling">
+            <job v-model="interfaceModel.job" :active="activeTab"></job>
           </b-tab-item>
           <b-tab-item label="Test">
             <test :interface="interfaceModel" :active="activeTab"></test>
@@ -105,7 +105,7 @@ import Properties from "./properties.vue";
 import ProductOutput from "./output.vue";
 import Notifications from "./notifications.vue";
 
-import Jobs from "./jobs.vue";
+import Job from "./job.vue";
 import Test from "./test.vue";
 
 import Help from "./help.vue";
@@ -117,7 +117,7 @@ export default {
     Properties,
     ProductOutput,
     Notifications,
-    Jobs,
+    Job,
     Help,
     Test
   },
@@ -134,7 +134,7 @@ export default {
         properties: {},
         output: {},
         notifications: {},
-        jobs: {},
+        job: {},
         resultType: ""
       }
     };
