@@ -31,7 +31,6 @@ const main = require(upath.join(__dirname, "..", "lib/main"));
 
 main.init(argv).then(async () => {
   const Interface = __app.require(__app.lib, "interface");
-  const Flow = __app.require(__app.lib, "flow");
   let interface = new Interface({
     name: argv.interface
   });

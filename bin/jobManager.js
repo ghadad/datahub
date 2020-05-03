@@ -28,9 +28,16 @@ main.init(argv).then(async () => {
 
   const JobClass = require(upath.join(__dirname, "..", "lib/job"));
 
-  for (let jobData of await JobClass.getAllJobsTable()) {
+  for (let jobData of await JobClass.getHubJobs()) {
     var job = new CronJob(JobClass.cronString(jobData), function () {
-      JobClass.exec(jobData)
+      JobClass.execFlow(jobData)
+    }, null, true);
+    job.start();
+  }
+
+  for (let jobData of await JobClass.getInterfacesJobs()) {
+    var job = new CronJob(JobClass.cronString(jobData), function () {
+      JobClass.execInterface(jobData)
     }, null, true);
     job.start();
   }
