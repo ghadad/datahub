@@ -199,6 +199,7 @@ export default {
         this.list.map(e => {
           return {
             name: e,
+            targetType: "property",
             originType: "collector",
             originProperty: e,
             display: true,
@@ -213,6 +214,12 @@ export default {
       );
       this.fetchConfirm = false;
       this.$set(this, "delItems", {});
+    }
+  },
+  watch: {
+    "activeRule.originType": function(newVal) {
+      if (newVal == "eval") this.activeRule.originType = "eval";
+      if (newVal == "collector") this.activeRule.originType = "collector";
     }
   },
   async mounted() {

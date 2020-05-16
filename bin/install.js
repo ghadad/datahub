@@ -28,6 +28,7 @@ main.init(argv).then(async function () {
   await __app.couchDb.createDbIfNotExists("jobs");
   await __app.couchDb.createDbIfNotExists("interfaces");
   await __app.couchDb.createDbIfNotExists("interface_errors");
+  await __app.couchDb.createDbIfNotExists("interface_jobs");
 
 
   //create config doc per env
