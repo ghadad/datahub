@@ -49,7 +49,7 @@
     "event-stream": "^4.0.1",
     "fast-csv": "^3.7.0",
     "fast-json-stringify": "^1.18.0",
-    "fastify": "^2.13.0",
+    "fastify": "^2.15.1",
     "fastify-cors": "^3.0.3",
     "fastify-routes": "^2.0.3",
     "fastify-static": "^2.6.0",
