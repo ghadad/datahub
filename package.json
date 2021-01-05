@@ -38,7 +38,7 @@
     "acorn": "^5.7.4",
     "acron": "latest",
     "async": "^3.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3",
     "csv-parse": "^4.8.8",
     "csv-parser": "^2.3.2",
