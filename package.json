@@ -93,7 +93,7 @@
     "pouchdb": "^7.2.1",
     "pouchdb-find": "^7.2.1",
     "pouchdb-upsert": "^2.2.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "require-from-string": "^2.0.2",
