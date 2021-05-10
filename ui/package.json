@@ -19,7 +19,7 @@
     "fastify-cors": "^3.0.0",
     "iview": "^3.5.4",
     "less-loader": "^5.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "serialize-javascript": "^2.1.2",
     "upath": "^1.2.0",
     "vee-validate": "^3.2.1",
