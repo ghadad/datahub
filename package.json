@@ -105,7 +105,7 @@
     "simple-oracledb": "^1.4.2",
     "sqlite3": "^4.1.1",
     "upath": "^1.2.0",
-    "validator": "^12.2.0",
+    "validator": "^13.7.0",
     "vuedraggable": "^2.23.2",
     "xml-js": "^1.6.11"
   },
